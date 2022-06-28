@@ -31,7 +31,7 @@
         <div v-if="deviseUSD === true" class="values">
             <p><span class="coutTotalAchat">Cout Total d'achat : </span>{{coutTotalAchat}} $</p>
             <p><span class="coutTotalAction">Cout Total / action : </span>{{coutTotalAction}} $</p>
-            <p><span class="investissementTotal">Investissement total : </span>{{investissementTotal}} $</p>
+            <p><span class="investissementTotal">Investissement total SANS LE FRAIS DE VENTE: </span>{{investissementTotal}} $</p>
             <p><span class="investissementTotalApresVente">Investissement total apres vente : </span>{{investissementTotalApresVente}} $</p>
             <p><span class="plusValue">+/- value : </span>{{plusValue}} $</p>
             <p><span class="deviseUSD">Taux de change USD : </span>{{deviseUSDValue}}</p>
