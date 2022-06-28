@@ -1,0 +1,26 @@
+.header {
+    padding: 1rem;
+    ul {
+        display: flex;
+        list-style: none;
+        a {
+            text-decoration: none;
+            width: 125px;
+            text-align: center;
+            border: 0.2rem solid #546fe4;
+            background-color: #546fe4;
+            color: rgb(255, 255, 255);
+            border-radius: 25%;
+            margin-right: 5px;
+            &:hover {
+                background-color: #324ab6
+            }
+        }
+        a.nav-active {
+            background: #2042db;
+            border: 0.2rem solid #2042db;
+        }
+        
+    }
+    
+}
