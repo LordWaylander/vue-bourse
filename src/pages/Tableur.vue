@@ -21,8 +21,6 @@
                 <label for="coursDollar">Cours du dollar</label>
                 <input type="text" name="coursDollar" placeholder="Cours du Dollar"/>
             </div>
-            
-            
             <input type="submit" value="Envoyer" />
         </form>        
     </div>
@@ -55,6 +53,8 @@
     </div>
 </div>
 </template>
+
+
 <script>
 import Header from '@/components/Header.vue'
 export default {
@@ -98,17 +98,17 @@ export default {
                 this.value100 = (this.investissementTotalApresVente-this.plusValue)/quantite;
 
             } else {
-                let coursDollar = 1.0536;
+                let coursDollar = this.deviseUSDValue;
 
                 this.coutTotalAchat = ((coursAchatAction)*quantite)+(fraisAchat); //$
                 this.coutTotalAction = this.coutTotalAchat/quantite; //$
                 this.investissementTotal = quantite*coursAction //$
-                this.investissementTotalApresVente = (this.investissementTotal-fraisVente)/coursDollar //€
-                this.plusValue = (this.investissementTotalApresVente-this.coutTotalAchat)/coursDollar //€
+                this.investissementTotalApresVente = (this.investissementTotal-fraisVente) //$
+                this.plusValue = (this.investissementTotalApresVente-this.coutTotalAchat) //$
 
-                this.value0 = ((this.investissementTotalApresVente-(this.plusValue*(0/100)))*coursDollar)/quantite;
-                this.value50 = ((this.investissementTotalApresVente-(this.plusValue*(50/100)))*coursDollar)/quantite;
-                this.value100 = ((this.investissementTotalApresVente-this.plusValue)*coursDollar)/quantite;
+                this.value0 = ((this.investissementTotalApresVente-(this.plusValue*(0/100))))/quantite;
+                this.value50 = ((this.investissementTotalApresVente-(this.plusValue*(50/100))))/quantite;
+                this.value100 = ((this.investissementTotalApresVente-this.plusValue))/quantite;
             }
         },
 
