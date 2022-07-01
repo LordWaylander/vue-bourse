@@ -1,3 +1,9 @@
+TIINGO
 bbc91cb4a6a8b010a0cc3063d73eb91333ae72ce
-
 https://api.tiingo.com/api/test?token=bbc91cb4a6a8b010a0cc3063d73eb91333ae72ce
+
+Polygon.io
+dpgNWkJsOpCylepMorcGhFYUoQiVsFZK
+https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2021-07-22/2021-07-22?adjusted=true&sort=asc&limit=120&apiKey=dpgNWkJsOpCylepMorcGhFYUoQiVsFZK
+
+https://api.gouv.fr/

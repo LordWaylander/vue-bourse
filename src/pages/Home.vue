@@ -18,12 +18,12 @@ export default {
     },
     mounted() {
         let query = 'apple'
-        axios.get(`https://api.tiingo.com/tiingo/utilities/search?${query}=apple&token=bbc91cb4a6a8b010a0cc3063d73eb91333ae72ce`, {
+        axios(`https://api.polygon.io/v2/aggs/ticker/MSFT/range/1/day/2021-07-22/2021-07-22?adjusted=true&sort=asc&limit=120&apiKey=dpgNWkJsOpCylepMorcGhFYUoQiVsFZK`, {
             headers : {
                 'Content-Type': 'application/json',
             }
         })
-            .then(res => console.log(res))
+            .then(res => console.log(res.data))
             .catch(err => console.warn(err))
     }
 }

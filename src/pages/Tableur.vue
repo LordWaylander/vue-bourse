@@ -99,39 +99,12 @@ export default {
             this.form.coursActionActuelle =  parseFloat(this.form.coursActionActuelle);
             this.form.coursDollar = parseFloat(this.form.coursDollar);
 
-            /*if (!this.deviseUSD) {
-                this.coutTotalAchat = (this.form.coursAchatAction*this.form.quantite)+this.form.fraisAchat;
-                this.coutTotalAction = this.coutTotalAchat/this.form.quantite;
-                this.investissementTotal = this.form.quantite*this.form.coursActionActuelle
-                this.investissementTotalApresVente = this.investissementTotal-this.form.fraisVente
-                this.plusValue = this.investissementTotalApresVente-this.coutTotalAchat
-
-                this.value0 = (this.investissementTotalApresVente-(this.plusValue*(0/100)))/this.form.quantite
-                this.value50 = (this.investissementTotalApresVente-(this.plusValue*(50/100)))/this.form.quantite;
-                this.value100 = (this.investissementTotalApresVente-this.plusValue)/this.form.quantite;
-
-            } else {
-                this.form.coursAchatActionTransition = this.form.coursAchatAction/this.form.coursDollarAchat;
-                this.form.coursActionActuelleTransition = this.form.coursActionActuelle/this.form.coursDollarActuel;
-
-                this.coutTotalAchat = (this.form.coursAchatActionTransition*this.form.quantite+this.form.fraisAchat); // EUR
-                this.coutTotalAction = this.coutTotalAchat/this.form.quantite; //EUR
-                this.investissementTotal = this.form.quantite*this.form.coursActionActuelleTransition; // EUR
-                this.investissementTotalApresVente = (this.investissementTotal-this.form.fraisVente) //EUR
-                this.plusValue = (this.investissementTotalApresVente-this.coutTotalAchat) //EUR
-
-                this.value0 = (this.investissementTotalApresVente-(this.plusValue*(0/100)))/this.form.quantite; // EUR
-                this.value50 = (this.investissementTotalApresVente-(this.plusValue*(50/100)))/this.form.quantite; // EUR
-                this.value100 = (this.investissementTotalApresVente-(this.plusValue))/this.form.quantite; // EUR
-            }*/
-
-            console.log(this.deviseUSD);
-            this.form.coursAchatActionTransition = this.form.coursAchatAction;
-            this.form.coursActionActuelleTransition = this.form.coursActionActuelle;
             if (this.deviseUSD) {
-                console.log('OK');
                 this.form.coursAchatActionTransition = this.form.coursAchatAction/this.form.coursDollarAchat;
                 this.form.coursActionActuelleTransition = this.form.coursActionActuelle/this.form.coursDollarActuel;
+            } else {
+                this.form.coursAchatActionTransition = this.form.coursAchatAction;
+                this.form.coursActionActuelleTransition = this.form.coursActionActuelle;
             }
 
             this.coutTotalAchat = (this.form.coursAchatActionTransition*this.form.quantite)+this.form.fraisAchat;
