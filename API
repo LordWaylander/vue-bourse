@@ -7,3 +7,7 @@ dpgNWkJsOpCylepMorcGhFYUoQiVsFZK
 https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2021-07-22/2021-07-22?adjusted=true&sort=asc&limit=120&apiKey=dpgNWkJsOpCylepMorcGhFYUoQiVsFZK
 
 https://api.gouv.fr/
+
+AlphaVantage
+API_KEY : 0IVKXSY1154XQTGW
+https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo

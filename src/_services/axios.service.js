@@ -1,7 +1,12 @@
 import axios from 'axios';
 
 const Axios = axios.create({
-  baseURL: 'https://api.tiingo.com/'
+  baseURL:'https://www.alphavantage.co/',
+  headers : {
+    'Content-Type': 'application/json',
+  }
 })
 
-export default Axios
+const Token = '0IVKXSY1154XQTGW';
+
+export default {Axios, Token}
