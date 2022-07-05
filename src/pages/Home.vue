@@ -1,6 +1,6 @@
 <template lang="">
     <div class="home">
-        <Header @sendSearchToParent="setSearch"/>
+        <Header @searchIndiceBourse="searchIndiceBourse"/>
         <div class="titre">
             <h1>API DE RECHERCHE</h1>
         <p>Mettre en place à la page d'accueil, la recherche de produits côtés en bourse</p>
@@ -35,7 +35,7 @@ export default {
         }
     },
     methods:{
-        setSearch(payload) {
+        searchIndiceBourse(payload) {
             this.request.query = payload.valueSearch
         },
         requeteAPI(){

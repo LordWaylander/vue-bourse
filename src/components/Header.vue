@@ -10,10 +10,10 @@
           </RouterLink>
         </ul>
       
-      <form v-on:submit.prevent="submit($event)">
+      <form @submit.prevent="submit($event)">
         <div>
-          <input type="text" placeholder="Rechercher une valeur"  />
-          <input type="submit" value="Rechercher" />
+          <input id="search" type="text" placeholder="Rechercher une valeur"  />
+          <input id="submit" type="submit" value="Rechercher" />
         </div>
       </form>
     </div>
@@ -24,7 +24,7 @@ export default {
   methods: {
     submit(e) {
       // envoie une "props" de l'enfant au parent, en l'occurence ici la recherche du header au parent pour faire la requete
-      this.$emit('sendSearchToParent', { valueSearch: e.target[0].value })
+      this.$emit('searchIndiceBourse', { valueSearch: e.target[0].value })
     },
     sendSearch(value) {
       
@@ -36,7 +36,6 @@ export default {
 <style lang="scss">
 .header {
     background-color: rgb(255, 131, 0);
-    padding: 1rem;
     border-radius: 0 0 2rem 2rem;
     display: grid;
     grid-template-columns: 30% 1fr 30%;
@@ -76,11 +75,30 @@ export default {
     form {
       grid-area: form;
       display: grid;
-      grid-template-rows: 1fr 1fr 1fr;
-      grid-template-areas: '.' 'div' '.';
+      grid-template-rows: 1fr 1fr 1fr 1fr;
+      grid-template-areas: '.' 'div' 'div' '.';
+
       div {
         grid-area: div;
-        text-align: center;
+        display: grid;
+        grid-template-columns: 1fr 20% 20% 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        #search{
+          grid-column-start: 1;
+          grid-column-end: 5;
+          height: 25px;
+          border-radius: 10px;
+        }
+        #submit{
+          grid-column-start: 2;
+          grid-column-end: 4;
+          height: 25px;
+          background-color: rgb(0, 110, 255);
+          border-radius: 0 0 10px 10px;
+          color: white;
+          font-weight: bold;
+        }
       }
     }
 }
