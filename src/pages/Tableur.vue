@@ -2,7 +2,7 @@
 <div class="tableur">
     <Header />
      <div>
-        <form v-on:submit.prevent="submit($event)">
+        <form v-on:submit.prevent="submit($event)" id="formTableur">
             <label for="coursAchatAction">Cours de l'action à l'achat</label>
             <input type="text" placeholder="Cout action à l'achat" name="coursAchatAction" v-model="form.coursAchatAction"/>
             <label for="quantite">Quantité</label>
@@ -120,3 +120,77 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+
+
+.tableur {
+    display: block;
+    #formTableur {
+        display:flex;
+        flex-direction: column;
+        margin-left: 25%;
+        margin-right: 25%;
+
+        label,input {
+            text-align: center;
+        }
+        input{
+            margin-bottom: 5px;
+        }
+        #checkbox {
+            text-align: center;
+        }
+        #USD {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+    #recap{
+        margin-top: 2rem;
+    }
+    .values {
+        display: grid;
+        grid-template-columns: 1fr, 1fr, 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: 
+        'a b c'
+        'd e f'
+        'g h i';
+        gap: 10px;
+
+        .coutTotalAchat {
+            grid-area: a;
+        }
+        .coutTotalAction {
+            grid-area: b;
+        }
+        .investissementTotal {
+            grid-area: c;
+        }
+        .investissementTotalApresVente {
+            grid-area: d;
+        }
+        .plusValue {
+            grid-area: e;
+        }
+        .deviseUSD {
+            grid-area: f;
+        }
+        .v0 {
+            grid-area: g;
+        }
+        
+        .v50 {
+            grid-area: h;
+        }
+        .v100 {
+            grid-area: i;
+        }
+        
+    }
+    
+    
+}
+</style>

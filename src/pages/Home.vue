@@ -1,6 +1,6 @@
 <template lang="">
     <div class="home">
-        <Header />
+        <Header @sendSearchToParent="setSearch"/>
         <div class="titre">
             <h1>API DE RECHERCHE</h1>
         <p>Mettre en place à la page d'accueil, la recherche de produits côtés en bourse</p>
@@ -30,13 +30,18 @@ export default {
                 outputsize: 'compact',
                 query:'msft',
                 exchange:''
-            }
+            },
+            valueSearch: 'asasa'
         }
     },
-    beforeMount() {
-        let fonction = this.request.functions;
-        let query = this.request.query;
-        let outputsize = this.request.outputsize
+    methods:{
+        setSearch(payload) {
+            this.request.query = payload.valueSearch
+        },
+        requeteAPI(){
+            let fonction = this.request.functions;
+            let query = this.request.query;
+            let outputsize = this.request.outputsize
         /**
          * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${Axios.Token}
          * TIME_SERIES_DAILY - function=TIME_SERIES_DAILY&symbol=${query}${exchange}&outputsize=compact&apikey=${Axios.Token}
@@ -49,6 +54,26 @@ export default {
         API.Axios.get(`query?function=${fonction.TIME_SERIES_DAILY}&symbol=${query}&outputsize=${outputsize}&apikey=${API.Token}`)
             .then(res => console.log(res.data))
             .catch(err => console.warn(err))
+        }
+    },
+    beforeMount() {
+        this.requeteAPI();
+    },
+    watch:{
+        'request.query'() {
+            this.requeteAPI();
+        }
     }
 }
 </script>
+
+<style lang="scss">
+.home {
+    .titre{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+    }
+    
+}
+</style>
