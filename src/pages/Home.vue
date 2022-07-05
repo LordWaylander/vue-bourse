@@ -51,7 +51,7 @@ export default {
          * TIME_SERIES_MONTHLY - function=TIME_SERIES_MONTHLY&symbol=${query}&apikey=${Axios.Token}
          */
 
-        API.Axios.get(`query?function=${fonction.TIME_SERIES_DAILY}&symbol=${query}&outputsize=${outputsize}&apikey=${API.Token}`)
+        API.Axios.get(`query?function=${fonction.SYMBOL_SEARCH}&keywords=${query}&apikey=${API.Token}`)
             .then(res => console.log(res.data))
             .catch(err => console.warn(err))
         }
