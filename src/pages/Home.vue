@@ -3,10 +3,11 @@
         <Header @searchIndiceBourse="searchIndiceBourse"/>
         <div class="titre">
             <h1>API DE RECHERCHE</h1>
-        <p>Mettre en place à la page d'accueil, la recherche de produits côtés en bourse</p>
+        <p>Mettre en place à la page d'accueil</p>
         </div> 
     </div>
 </template>
+
 <script>
 import Header from '@/components/Header.vue'
 import API from '@/_services/axios.service.js'
@@ -31,7 +32,6 @@ export default {
                 query:'msft',
                 exchange:''
             },
-            valueSearch: 'asasa'
         }
     },
     methods:{
