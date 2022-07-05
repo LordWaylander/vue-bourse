@@ -1,29 +1,16 @@
-# Calcul
+# BourseJS
 
-This template should help get you started developing with Vue 3 in Vite.
+Petite idée de projet, pour voir les indices boursiers grâce à l'API [AlphaVantage](https://www.alphavantage.co/)
+Ce projet en est à ses tout débuts.
 
-## Recommended IDE Setup
+### Partie Front-END
+> En cour de codage
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+J'envisage sur la 1ere page, de pouvoir trouver les indices boursiers voulus (Euronext est indisponible par l'API)
+avec la mise en place d'un graphique qui montre l'évolution sur les 2 dernières années (voie plus), avec des outils tel que le RSI, MACD, etc..., les cours d'ouverture / fermeture du marché, les volumes, les actualités concernant l'entreprise, et les analyses financière concernant la valeur sélectionnée.
+En 2nd page la mise en place d'un calcultateur de +/- value (uniquement en € et $ à l'heure actuelle, mais fonctionnel).
 
-## Customize configuration
+### Partie Back-END
+> Partie non codée, le cahier des charges reste à définir
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+Mise en place d'un système d'authentification, avec un stockage des valeurs achetés (avec date, prix d'achat, taux de change si besoin, etc..) pour un calcul complet et automatique des +/- values avec possibilité d'un export en fichier csv / excel ainsi que la mise en place d'un système "coup de coeur" pour suivre certaines valeurs plus facilement.
