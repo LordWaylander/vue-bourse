@@ -7,9 +7,8 @@
         </div>
 
         <div id="titre">
-            
             <div id="entete">
-                <span id="variation"></span>
+                <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
                 <div v-if="GLOBAL_QUOTE" id="GLOBAL_QUOTE">
                     <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
                     <p>Ouverture : {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
@@ -68,7 +67,8 @@ export default {
                 exchange:'',
             },
             TIME_SERIES_INTRADAY:'',
-            GLOBAL_QUOTE:''
+            GLOBAL_QUOTE:'',
+            variation:1
         }
     },
     methods:{
@@ -91,7 +91,7 @@ export default {
         API.Axios.get(`query?function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token}`)
             .then(
                 (res) => {
-                    this.TIME_SERIES_INTRADAY=res.data;
+                    this.TIME_SERIES_INTRADAY=res.data
                 },
                 API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
                     .then((res) => {
@@ -100,6 +100,8 @@ export default {
                     .then(() => {
                         document.getElementById("loader").style.display="none",
                         document.getElementById("titre").style.display="block"
+                        this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"]
+                        this.variation=(parseFloat(this.variation, 10))
                     })
                 )              
             .catch(err => console.warn(err))
@@ -126,9 +128,6 @@ export default {
 .home {
     #titre{
         display: none;
-        //justify-content: center;
-        //flex-direction: column;
-        //flex-wrap: wrap;
         margin: 50px;
             #entete{
                 display: flex;
@@ -136,7 +135,6 @@ export default {
                 
                 #GLOBAL_QUOTE{
                 border: 2px solid red;
-                //border-radius: 25px;
                 min-height: min-content;
                 padding: 10px;
                 display: grid;
@@ -148,14 +146,10 @@ export default {
                 }
                 }
                 #variation{
-                    //height: 100%;
                     width: 10px;
-                    background-color: green;
                 }
             }
-            
-        
-        
+
         #TIME_SERIES_INTRADAY{
            
         }
