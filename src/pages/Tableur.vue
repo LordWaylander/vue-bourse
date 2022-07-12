@@ -152,7 +152,7 @@ export default {
     }
     .values {
         display: grid;
-        grid-template-columns: 1fr, 1fr, 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr;
         grid-template-areas: 
         'a b c'

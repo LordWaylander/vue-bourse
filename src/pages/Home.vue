@@ -7,15 +7,34 @@
         </div>
 
         <div id="titre">
-            <div v-if="GLOBAL_QUOTE" id="GLOBAL_QUOTE">
-                {{GLOBAL_QUOTE["Global Quote"]}}
-            </div>
-            <div v-else>
-                <h1>Données non disponibles</h1>
+            
+            <div id="entete">
+                <span id="variation"></span>
+                <div v-if="GLOBAL_QUOTE" id="GLOBAL_QUOTE">
+                    <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
+                    <p>Ouverture : {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
+                    <p>+ Haut : {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
+                    <p>+ Bas : {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
+                    <p>Cours Actuel : {{GLOBAL_QUOTE["Global Quote"]["05. price"]}}</p>
+                    <p>Volumes échangés : {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
+                    <p>Mise à jour : {{date}}</p>
+                    <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
+                    <p>Variation ($) : {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
+                    <p>Variation (%) : {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</p>
+                </div>
+                <div v-else>
+                    <h1>Données non disponibles</h1>
+                </div>
             </div>
             
-            <div v-if="TIME_SERIES_INTRADAY" id="TIME_SERIES_INTRADAY">
-                {{TIME_SERIES_INTRADAY["Meta Data"]}}
+            
+          <div v-if="TIME_SERIES_INTRADAY" id="TIME_SERIES_INTRADAY">
+                <p>
+                    {{TIME_SERIES_INTRADAY["Meta Data"]}}
+                </p>
+                <p v-for="item in TIME_SERIES_INTRADAY['Time Series (60min)']">
+                    {{item}}
+                </p>
             </div>
             <div v-else>
                 <h1>Données non disponibles</h1>
@@ -80,7 +99,7 @@ export default {
                     })
                     .then(() => {
                         document.getElementById("loader").style.display="none",
-                        document.getElementById("titre").style.display="grid"
+                        document.getElementById("titre").style.display="block"
                     })
                 )              
             .catch(err => console.warn(err))
@@ -88,13 +107,16 @@ export default {
         }
     },
     mounted() {
-        setTimeout(this.requeteAPI, 1000)
-        
-        
+        this.requeteAPI()
     },
     watch:{
         'request.query'() {
             this.requeteAPI();
+        }
+    },
+    computed:{
+        date() {
+            return this.GLOBAL_QUOTE["Global Quote"]["07. latest trading day"].split('-').reverse().join('/')
         }
     }
 }
@@ -103,13 +125,37 @@ export default {
 <style lang="scss">
 .home {
     #titre{
-            display: grid;
-            grid-template-columns: 6;
-            grid-template-rows: 4;
-            display: none;
-        #GLOBAL_QUOTE{
-           
-        }
+        display: none;
+        //justify-content: center;
+        //flex-direction: column;
+        //flex-wrap: wrap;
+        margin: 50px;
+            #entete{
+                display: flex;
+                justify-content: center;
+                
+                #GLOBAL_QUOTE{
+                border: 2px solid red;
+                //border-radius: 25px;
+                min-height: min-content;
+                padding: 10px;
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                p{
+                    display: flex;
+                    justify-content: center;
+                }
+                }
+                #variation{
+                    //height: 100%;
+                    width: 10px;
+                    background-color: green;
+                }
+            }
+            
+        
+        
         #TIME_SERIES_INTRADAY{
            
         }
