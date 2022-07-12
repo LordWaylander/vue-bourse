@@ -1,9 +1,25 @@
 <template lang="">
     <div class="home">
         <Header @searchIndiceBourse="searchIndiceBourse"/>
-        <div class="titre">
-            <h1>API DE RECHERCHE</h1>
-        <p>Mettre en place à la page d'accueil</p>
+
+        <div id="loader">
+            <img src="../assets/loader.gif"/>
+        </div>
+
+        <div id="titre">
+            <div v-if="GLOBAL_QUOTE" id="GLOBAL_QUOTE">
+                {{GLOBAL_QUOTE["Global Quote"]}}
+            </div>
+            <div v-else>
+                <h1>Données non disponibles</h1>
+            </div>
+            
+            <div v-if="TIME_SERIES_INTRADAY" id="TIME_SERIES_INTRADAY">
+                {{TIME_SERIES_INTRADAY["Meta Data"]}}
+            </div>
+            <div v-else>
+                <h1>Données non disponibles</h1>
+            </div>
         </div> 
     </div>
 </template>
@@ -30,8 +46,10 @@ export default {
                 interval: '',
                 outputsize: 'compact',
                 query:'msft',
-                exchange:''
+                exchange:'',
             },
+            TIME_SERIES_INTRADAY:'',
+            GLOBAL_QUOTE:''
         }
     },
     methods:{
@@ -41,23 +59,38 @@ export default {
         requeteAPI(){
             let fonction = this.request.functions;
             let query = this.request.query;
-            let outputsize = this.request.outputsize
+            let outputsize = this.request.outputsize;
         /**
-         * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${Axios.Token}
-         * TIME_SERIES_DAILY - function=TIME_SERIES_DAILY&symbol=${query}${exchange}&outputsize=compact&apikey=${Axios.Token}
-         * SYMBOL_SEARCH - function=SYMBOL_SEARCH&keywords=${query}&apikey=${Axios.Token}
-         * TIME_SERIES_INTRADAY - function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${Axios.Token}
-         * TIME_SERIES_WEEKLY - function=TIME_SERIES_WEEKLY&symbol=${query}&apikey=${Axios.Token}
-         * TIME_SERIES_MONTHLY - function=TIME_SERIES_MONTHLY&symbol=${query}&apikey=${Axios.Token}
+         * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD
+         * TIME_SERIES_DAILY - function=TIME_SERIES_DAILY&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD par heure
+         * SYMBOL_SEARCH - function=SYMBOL_SEARCH&keywords=${query}&apikey=${API.Token} // recherche d'indices
+         * TIME_SERIES_INTRADAY - function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token} // trading par jour & interval=min         
+         * TIME_SERIES_WEEKLY - function=TIME_SERIES_WEEKLY&symbol=${query}&apikey=${API.Token} // trading par semaine
+         * TIME_SERIES_MONTHLY - function=TIME_SERIES_MONTHLY&symbol=${query}&apikey=${API.Token} // tranding par mois
          */
 
-        API.Axios.get(`query?function=${fonction.SYMBOL_SEARCH}&keywords=${query}&apikey=${API.Token}`)
-            .then(res => console.log(res.data))
+        API.Axios.get(`query?function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token}`)
+            .then(
+                (res) => {
+                    this.TIME_SERIES_INTRADAY=res.data;
+                },
+                API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
+                    .then((res) => {
+                        this.GLOBAL_QUOTE=res.data
+                    })
+                    .then(() => {
+                        document.getElementById("loader").style.display="none",
+                        document.getElementById("titre").style.display="grid"
+                    })
+                )              
             .catch(err => console.warn(err))
+            
         }
     },
-    beforeMount() {
-        this.requeteAPI();
+    mounted() {
+        setTimeout(this.requeteAPI, 1000)
+        
+        
     },
     watch:{
         'request.query'() {
@@ -69,10 +102,27 @@ export default {
 
 <style lang="scss">
 .home {
-    .titre{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+    #titre{
+            display: grid;
+            grid-template-columns: 6;
+            grid-template-rows: 4;
+            display: none;
+        #GLOBAL_QUOTE{
+           
+        }
+        #TIME_SERIES_INTRADAY{
+           
+        }
+    }
+    #loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        //display: none
+        img{
+            width: 100px;
+            height: 100px;
+        }
     }
     
 }
