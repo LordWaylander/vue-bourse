@@ -149,6 +149,7 @@ export default {
                 display: grid;
                 grid-template-columns: repeat(6, 1fr);
                 grid-template-rows: repeat(2, 1fr);
+                flex-grow: 1;
                 p{
                     display: flex;
                     justify-content: center;
