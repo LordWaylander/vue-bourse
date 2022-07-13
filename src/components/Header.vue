@@ -36,7 +36,6 @@ export default {
     border-radius: 0 0 2rem 2rem;
     display: grid;
     grid-template-columns: 30% 1fr 30%;
-    grid-template-rows: 1;
     grid-template-areas: 'btn form .';
 
     ul {
