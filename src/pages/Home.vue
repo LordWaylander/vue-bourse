@@ -27,7 +27,7 @@
                 <div v-if="TIME_SERIES_INTRADAY" id="corps">
                     <div  id="TIME_SERIES_INTRADAY">
                         <p>
-                            {{TIME_SERIES_INTRADAY["Meta Data"]}}
+                            Dernier rafraichissement : {{dernierRafraichissement}}
                         </p>
                         <p v-for="item in TIME_SERIES_INTRADAY['Time Series (60min)']">
                             {{item}}
@@ -44,8 +44,9 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
-import API from '@/_services/axios.service.js'
+import Header from '@/components/Header.vue';
+import API from '@/_services/axios.service.js';
+
 export default {
     components: {
         Header
@@ -60,12 +61,10 @@ export default {
                     TIME_SERIES_INTRADAY: 'TIME_SERIES_INTRADAY',
                     TIME_SERIES_WEEKLY: 'TIME_SERIES_WEEKLY',
                     TIME_SERIES_MONTHLY: 'TIME_SERIES_MONTHLY'
-
                 },
-                interval: '',
-                outputsize: 'compact',
+                interval: '', // à voir si mis réellement en place
                 query:'msft',
-                exchange:'',
+                exchange:'', // marché sur lequel chercher les indices,à mettre en place
             },
             TIME_SERIES_INTRADAY:'',
             GLOBAL_QUOTE:'',
@@ -75,7 +74,7 @@ export default {
     },
     methods:{
         searchIndiceBourse(payload) {
-            this.request.query = payload.valueSearch
+            this.request.query = payload.valueSearch;
         },
         requeteAPI(){
             let fonction = this.request.functions;
@@ -96,29 +95,29 @@ export default {
                     if (res.data.Note) {
                         throw new Error("Nombre maximal de requetes dépassé");
                     }
-                    this.TIME_SERIES_INTRADAY=res.data
+                    this.TIME_SERIES_INTRADAY=res.data;
                 },
                 API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
                     .then((res) => {
                         if (res.data.Note) {
                             throw new Error("Nombre maximal de requetes dépassé");
                         }
-                        this.GLOBAL_QUOTE=res.data
+                        this.GLOBAL_QUOTE=res.data;
                     })
                     .catch((err) => {this.error = err})
                     .then(() => {
-                        document.getElementById("loader").style.display="none",
-                        document.getElementById("titre").style.display="block"
-                        this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"]
-                        this.variation=(parseFloat(this.variation, 10))
+                        document.getElementById("loader").style.display="none";
+                        document.getElementById("titre").style.display="block";
+                        this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
+                        this.variation=(parseFloat(this.variation, 10));
                     })
                 )              
-            .catch((err) => {this.error = err})
+            .catch((err) => {this.error = err});
             
         }
     },
     mounted() {
-        this.requeteAPI()
+        this.requeteAPI();
     },
     watch:{
         'request.query'() {
@@ -127,7 +126,11 @@ export default {
     },
     computed:{
         date() {
-            return this.GLOBAL_QUOTE["Global Quote"]["07. latest trading day"].split('-').reverse().join('/')
+            return this.GLOBAL_QUOTE["Global Quote"]["07. latest trading day"].split('-').reverse().join('/');
+        },
+        dernierRafraichissement() {
+            let table = this.TIME_SERIES_INTRADAY["Meta Data"]["3. Last Refreshed"].split(' ');
+            return table[0].split('-').reverse().join("/")+' à '+table[1];
         }
     }
 }
@@ -140,7 +143,6 @@ export default {
         margin: 50px;
             #entete{
                 display: flex;
-                justify-content: center;
                 
                 #GLOBAL_QUOTE{
                 border: 2px solid rgb(129, 155, 156);
@@ -161,9 +163,6 @@ export default {
             }
 
         #corps{
-           display: flex;
-           justify-content: center;
-
             #TIME_SERIES_INTRADAY{
                 border: 2px solid rgb(129, 155, 156);
             }
