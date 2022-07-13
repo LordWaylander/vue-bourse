@@ -8,9 +8,9 @@
 
         <div id="titre">
             <div v-if="error === false">
-                <div id="entete">
+                <div v-if="GLOBAL_QUOTE" id="entete">
                     <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
-                    <div v-if="GLOBAL_QUOTE" id="GLOBAL_QUOTE">
+                    <div id="GLOBAL_QUOTE">
                         <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
                         <p>Ouverture : {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
                         <p>+ Haut : {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
@@ -24,14 +24,17 @@
                     </div>
                 </div>
 
-                <div v-if="TIME_SERIES_INTRADAY && error == false" id="TIME_SERIES_INTRADAY">
-                    <p>
-                        {{TIME_SERIES_INTRADAY["Meta Data"]}}
-                    </p>
-                    <p v-for="item in TIME_SERIES_INTRADAY['Time Series (60min)']">
-                        {{item}}
-                    </p>
+                <div v-if="TIME_SERIES_INTRADAY" id="corps">
+                    <div  id="TIME_SERIES_INTRADAY">
+                        <p>
+                            {{TIME_SERIES_INTRADAY["Meta Data"]}}
+                        </p>
+                        <p v-for="item in TIME_SERIES_INTRADAY['Time Series (60min)']">
+                            {{item}}
+                        </p>
+                    </div>
                 </div>
+                
             </div>
             <div v-else>
                 <h1>{{error}}</h1>
@@ -140,7 +143,7 @@ export default {
                 justify-content: center;
                 
                 #GLOBAL_QUOTE{
-                border: 2px solid red;
+                border: 2px solid rgb(129, 155, 156);
                 min-height: min-content;
                 padding: 10px;
                 display: grid;
@@ -156,8 +159,13 @@ export default {
                 }
             }
 
-        #TIME_SERIES_INTRADAY{
-           
+        #corps{
+           display: flex;
+           justify-content: center;
+
+            #TIME_SERIES_INTRADAY{
+                border: 2px solid rgb(129, 155, 156);
+            }
         }
     }
     #loader {
