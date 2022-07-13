@@ -7,36 +7,34 @@
         </div>
 
         <div id="titre">
-            <div id="entete">
-                <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
-                <div v-if="GLOBAL_QUOTE" id="GLOBAL_QUOTE">
-                    <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
-                    <p>Ouverture : {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
-                    <p>+ Haut : {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
-                    <p>+ Bas : {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
-                    <p>Cours Actuel : {{GLOBAL_QUOTE["Global Quote"]["05. price"]}}</p>
-                    <p>Volumes échangés : {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
-                    <p>Mise à jour : {{date}}</p>
-                    <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
-                    <p>Variation ($) : {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
-                    <p>Variation (%) : {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</p>
+            <div v-if="error === false">
+                <div id="entete">
+                    <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
+                    <div v-if="GLOBAL_QUOTE" id="GLOBAL_QUOTE">
+                        <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
+                        <p>Ouverture : {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
+                        <p>+ Haut : {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
+                        <p>+ Bas : {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
+                        <p>Cours Actuel : {{GLOBAL_QUOTE["Global Quote"]["05. price"]}}</p>
+                        <p>Volumes échangés : {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
+                        <p>Mise à jour : {{date}}</p>
+                        <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
+                        <p>Variation ($) : {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
+                        <p>Variation (%) : {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</p>
+                    </div>
                 </div>
-                <div v-else>
-                    <h1>Données non disponibles</h1>
+
+                <div v-if="TIME_SERIES_INTRADAY && error == false" id="TIME_SERIES_INTRADAY">
+                    <p>
+                        {{TIME_SERIES_INTRADAY["Meta Data"]}}
+                    </p>
+                    <p v-for="item in TIME_SERIES_INTRADAY['Time Series (60min)']">
+                        {{item}}
+                    </p>
                 </div>
-            </div>
-            
-            
-          <div v-if="TIME_SERIES_INTRADAY" id="TIME_SERIES_INTRADAY">
-                <p>
-                    {{TIME_SERIES_INTRADAY["Meta Data"]}}
-                </p>
-                <p v-for="item in TIME_SERIES_INTRADAY['Time Series (60min)']">
-                    {{item}}
-                </p>
             </div>
             <div v-else>
-                <h1>Données non disponibles</h1>
+                <h1>{{error}}</h1>
             </div>
         </div> 
     </div>
@@ -68,7 +66,8 @@ export default {
             },
             TIME_SERIES_INTRADAY:'',
             GLOBAL_QUOTE:'',
-            variation:1
+            variation:'',
+            error: false // gestion d'erreur, pour l'API - surtout gestion requete par minute
         }
     },
     methods:{
@@ -91,12 +90,19 @@ export default {
         API.Axios.get(`query?function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token}`)
             .then(
                 (res) => {
+                    if (res.data.Note) {
+                        throw new Error("Nombre maximal de requetes dépassé");
+                    }
                     this.TIME_SERIES_INTRADAY=res.data
                 },
                 API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
                     .then((res) => {
+                        if (res.data.Note) {
+                            throw new Error("Nombre maximal de requetes dépassé");
+                        }
                         this.GLOBAL_QUOTE=res.data
                     })
+                    .catch((err) => {this.error = err})
                     .then(() => {
                         document.getElementById("loader").style.display="none",
                         document.getElementById("titre").style.display="block"
@@ -104,7 +110,7 @@ export default {
                         this.variation=(parseFloat(this.variation, 10))
                     })
                 )              
-            .catch(err => console.warn(err))
+            .catch((err) => {this.error = err})
             
         }
     },
