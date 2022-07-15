@@ -36,7 +36,7 @@
                 </div>
                 
             </div>
-            <div v-else>
+            <div v-else id="error">
                 <h1>{{error}}</h1>
             </div>
         </div> 
@@ -64,7 +64,7 @@ export default {
                 },
                 interval: '', // à voir si mis réellement en place
                 query:'msft',
-                exchange:'', // marché sur lequel chercher les indices,à mettre en place
+                exchange:'', // marché sur lequel chercher les indices, à mettre en place
             },
             TIME_SERIES_INTRADAY:'',
             GLOBAL_QUOTE:'',
@@ -77,9 +77,8 @@ export default {
             this.request.query = payload.valueSearch;
         },
         requeteAPI(){
-            let fonction = this.request.functions;
+            let fonction = this.request.functions; //a mettre en place pour user
             let query = this.request.query;
-            let outputsize = this.request.outputsize;
         /**
          * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD
          * TIME_SERIES_DAILY - function=TIME_SERIES_DAILY&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD par heure
@@ -93,30 +92,34 @@ export default {
             .then(
                 (res) => {
                     if (res.data.Note) {
-                        throw new Error("Nombre maximal de requetes dépassé");
+                        throw "Nombre maximal de requetes dépassé";
                     }
                     this.TIME_SERIES_INTRADAY=res.data;
                 },
                 API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
                     .then((res) => {
                         if (res.data.Note) {
-                            throw new Error("Nombre maximal de requetes dépassé");
+                            throw "Nombre maximal de requetes dépassé";
                         }
                         this.GLOBAL_QUOTE=res.data;
                     })
-                    .catch((err) => {this.error = err})
                     .then(() => {
                         document.getElementById("loader").style.display="none";
                         document.getElementById("titre").style.display="block";
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
                         this.variation=(parseFloat(this.variation, 10));
                     })
-                )              
+                    .catch((err) => { 
+                        this.error = err 
+                        document.getElementById("loader").style.display="none";
+                        document.getElementById("titre").style.display="block";
+                    })
+                )            
             .catch((err) => {this.error = err});
             
         }
     },
-    mounted() {
+    beforeMount() {
         this.requeteAPI();
     },
     watch:{
@@ -166,6 +169,11 @@ export default {
             #TIME_SERIES_INTRADAY{
                 border: 2px solid rgb(129, 155, 156);
             }
+        }
+
+        #error{
+            display: flex;
+            justify-content: center;
         }
     }
     #loader {
