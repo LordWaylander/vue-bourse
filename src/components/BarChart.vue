@@ -1,16 +1,6 @@
 <template lang="">
-    <div style="width:200px">
-        <Bar
-            :chart-options="chartOptions"
-            :chart-data="chartData"
-            :chart-id="chartId"
-            :dataset-id-key="datasetIdKey"
-            :plugins="plugins"
-            :css-classes="cssClasses"
-            :styles="styles"
-            :width="200"
-            :height="200"
-        />
+    <div>
+      <Bar :chart-data="chartData" />
     </div>
 </template>
 
@@ -18,51 +8,41 @@
 import { Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+import testData from '../../datas.json'
 
 export default {
     components: {
         Bar
     },
-    props: {
-    chartId: {
-      type: String,
-      default: 'bar-chart'
-    },
-    datasetIdKey: {
-      type: String,
-      default: 'label'
-    },
-    width: {
-      type: Number,
-      default: 200
-    },
-    height: {
-      type: Number,
-      default: 200
-    },
-    cssClasses: {
-      default: '',
-      type: String
-    },
-    styles: {
-      type: Object,
-      default: () => {}
-    },
-    plugins: {
-      type: Object,
-      default: () => {}
-    }
-  },
+    props:['datas'],
   data() {
     return {
-        chartData: {
-                labels: [ 'January', 'February', 'March' ],
-                datasets: [ { data: [40, 20, 50] } ]
-            },
-            chartOptions: {
-                responsive: true
-            }
+      data: this.datas,
+      testData,
     }
+    
+  },
+  computed:{
+    chartData() { 
+      let label = [];
+      let datasTable = [];
+      for(let x in this.data){
+        label.push(x);
+        for( let y in this.data[x]){
+          datasTable.push(parseFloat(this.data[x]["4. close"]));
+          console.log(this.data[x]["4. close"]);
+        }
+      }
+      console.log(label);
+      console.log(datasTable);
+      return {
+        labels: label,
+        datasets: datasTable
+      } 
+    },
+  },
+  mounted() {
+    console.log(this.data);
   },
 }
 </script>

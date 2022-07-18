@@ -24,7 +24,7 @@
                     </div>
                 </div>
 
-                <div v-if="TIME_SERIES_INTRADAY" id="corps">
+                <!--<div v-if="TIME_SERIES_INTRADAY" id="corps">
                     <div  id="TIME_SERIES_INTRADAY">
                         <p>
                             Dernier rafraichissement : {{dernierRafraichissement}}
@@ -33,25 +33,23 @@
                             {{item}}
                         </p>
                     </div>
+                </div>-->
+                <div>
+                    <Graph v-bind:datas="TIME_SERIES_INTRADAY['Time Series (60min)']"/>
                 </div>
-                
             </div>
             <div v-else id="error">
                 <h1>{{error}}</h1>
             </div>
         </div> 
     </div>
-    <div>
-        <Graph />
-    </div>
+    
 </template>
 
 <script>
 import Header from '@/components/Header.vue';
 import Graph from '@/components/BarChart.vue';
 import API from '@/_services/axios.service.js'; // rename the file in _services
-
-
 
 export default {
     components: {
@@ -95,12 +93,12 @@ export default {
          * TIME_SERIES_MONTHLY - function=TIME_SERIES_MONTHLY&symbol=${query}&apikey=${API.Token} // tranding par mois
          */
 
-        API.Axios.get(`query?function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token}`)
+            API.Axios.get(`query?function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token}`)
             .then(
                 (res) => {
                     if (res.data.Note) {
-                        this.TIME_SERIES_INTRADAY=null;
-                        throw "Nombre maximal de requetes dépassé";
+                        this.TIME_SERIES_INTRADAY="";
+                        throw new Error("Nombre maximal de requetes dépassé")
                     }else if(res.data['Error Message']){
                         this.TIME_SERIES_INTRADAY=null;
                         throw "Erreur dans le nom";
@@ -113,7 +111,7 @@ export default {
 
                         if (res.data.Note) {
                             this.GLOBAL_QUOTE=null;
-                            throw "Nombre maximal de requetes dépassé";
+                            throw new Error("Nombre maximal de requetes dépassé");
                             
                         }else if(res.data['Error Message']){
                             this.TIME_SERIES_INTRADAY=null;
@@ -134,11 +132,10 @@ export default {
                     })*/
                 )            
             .catch((err) => { 
-                        this.error = err 
-                        document.getElementById("loader").style.display="none";
-                        document.getElementById("titre").style.display="block";
-                    })
-            
+                this.error = err 
+                document.getElementById("loader").style.display="none";
+                document.getElementById("titre").style.display="block";
+            })
         }
     },
     beforeMount() {
