@@ -1,5 +1,5 @@
 node_modules
-**/src/_services
+**/src/_services/axios.service.js
 package-lock.json
 
 # Editor directories and files
