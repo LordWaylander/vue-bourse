@@ -1,4 +1,5 @@
 <template lang="">
+{{data["2022-07-15 20:00:00"]}}
     <div>
       <Bar :chart-data="chartData" />
     </div>
@@ -14,7 +15,9 @@ export default {
     components: {
         Bar
     },
-    props:['datas'],
+    props:{
+      datas: Object
+    },
   data() {
     return {
       data: this.datas,
@@ -29,15 +32,18 @@ export default {
       for(let x in this.data){
         label.push(x);
         for( let y in this.data[x]){
-          datasTable.push(parseFloat(this.data[x]["4. close"]));
-          console.log(this.data[x]["4. close"]);
+          if(y == "4. close"){
+            datasTable.push(parseFloat(this.data[x][y]));
+          }
+          
         }
       }
       console.log(label);
       console.log(datasTable);
       return {
         labels: label,
-        datasets: datasTable
+        datasets: [{data: datasTable}]
+        //[ { data: [40, 20, 12] } ]
       } 
     },
   },
@@ -46,6 +52,7 @@ export default {
   },
 }
 </script>
-<style lang="">
+
+<style lang="scss">
     
 </style>
