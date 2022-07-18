@@ -92,30 +92,45 @@ export default {
             .then(
                 (res) => {
                     if (res.data.Note) {
+                        this.TIME_SERIES_INTRADAY=null;
                         throw "Nombre maximal de requetes dépassé";
+                    }else if(res.data['Error Message']){
+                        this.TIME_SERIES_INTRADAY=null;
+                        throw "Erreur dans le nom";
                     }
+
                     this.TIME_SERIES_INTRADAY=res.data;
                 },
                 API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
                     .then((res) => {
+
                         if (res.data.Note) {
+                            this.GLOBAL_QUOTE=null;
                             throw "Nombre maximal de requetes dépassé";
+                            
+                        }else if(res.data['Error Message']){
+                            this.TIME_SERIES_INTRADAY=null;
+                            throw "Erreur dans le nom";
                         }
+
                         this.GLOBAL_QUOTE=res.data;
-                    })
-                    .then(() => {
                         document.getElementById("loader").style.display="none";
                         document.getElementById("titre").style.display="block";
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
                         this.variation=(parseFloat(this.variation, 10));
                     })
-                    .catch((err) => { 
+                    /*.then(() => {
+                        document.getElementById("loader").style.display="none";
+                        document.getElementById("titre").style.display="block";
+                        this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
+                        this.variation=(parseFloat(this.variation, 10));
+                    })*/
+                )            
+            .catch((err) => { 
                         this.error = err 
                         document.getElementById("loader").style.display="none";
                         document.getElementById("titre").style.display="block";
                     })
-                )            
-            .catch((err) => {this.error = err});
             
         }
     },
