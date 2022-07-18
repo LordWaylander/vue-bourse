@@ -20,7 +20,7 @@ export default {
     },
   data() {
     return {
-      data: this.datas,
+      dataIntraday: this.datas,
       testData,
     }
     
@@ -29,11 +29,11 @@ export default {
     chartData() { 
       let label = [];
       let datasTable = [];
-      for(let x in this.data){
+      for(let x in this.dataIntraday){
         label.push(x);
-        for( let y in this.data[x]){
+        for( let y in this.dataIntraday[x]){
           if(y == "4. close"){
-            datasTable.push(parseFloat(this.data[x][y]));
+            datasTable.push(parseFloat(this.dataIntraday[x][y]));
           }
           
         }
@@ -43,7 +43,7 @@ export default {
       return {
         labels: label,
         datasets: [{data: datasTable}]
-        //[ { data: [40, 20, 12] } ]
+        //datasets:[ { data: [40, 20, 12] } ]
       } 
     },
   },
