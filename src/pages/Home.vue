@@ -41,15 +41,22 @@
             </div>
         </div> 
     </div>
+    <div>
+        <Graph />
+    </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue';
+import Graph from '@/components/BarChart.vue';
 import API from '@/_services/axios.service.js'; // rename the file in _services
+
+
 
 export default {
     components: {
-        Header
+        Header,
+        Graph
     },
     data() {
         return {
@@ -69,7 +76,7 @@ export default {
             TIME_SERIES_INTRADAY:'',
             GLOBAL_QUOTE:'',
             variation:'',
-            error: false // gestion d'erreur, pour l'API - surtout gestion requete par minute
+            error: false, // gestion d'erreur, pour l'API - surtout gestion requete par minute
         }
     },
     methods:{
