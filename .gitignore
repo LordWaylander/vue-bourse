@@ -1,5 +1,6 @@
 node_modules
-API
+**/src/_services
+package-lock.json
 
 # Editor directories and files
 .vscode/*
