@@ -45,7 +45,7 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import API from '@/_services/axios.service.js';
+import API from '@/_services/axios.service.js'; // rename the file in _services
 
 export default {
     components: {
