@@ -35,7 +35,7 @@
                     </div>
                 </div>-->
                 <div>
-                    <Graph v-bind:datas="TIME_SERIES_INTRADAY['Time Series (60min)']"/>
+                    <Graphique v-bind:datas="TIME_SERIES_INTRADAY['Time Series (60min)']"/>
                 </div>
             </div>
             <div v-else id="error">
@@ -48,13 +48,13 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import Graph from '@/components/BarChart.vue';
+import Graphique from '@/components/Graphique.vue';
 import API from '@/_services/axios.service.js'; // rename the file in _services
 
 export default {
     components: {
         Header,
-        Graph
+        Graphique
     },
     data() {
         return {
@@ -119,17 +119,17 @@ export default {
                         }
 
                         this.GLOBAL_QUOTE=res.data;
-                        document.getElementById("loader").style.display="none";
+                        /*document.getElementById("loader").style.display="none";
                         document.getElementById("titre").style.display="block";
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
-                        this.variation=(parseFloat(this.variation, 10));
+                        this.variation=(parseFloat(this.variation, 10));*/
                     })
-                    /*.then(() => {
-                        document.getElementById("loader").style.display="none";
-                        document.getElementById("titre").style.display="block";
+                    .then(() => {
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
                         this.variation=(parseFloat(this.variation, 10));
-                    })*/
+                        document.getElementById("loader").style.display="none";
+                        document.getElementById("titre").style.display="block";
+                    })
                 )            
             .catch((err) => { 
                 this.error = err 

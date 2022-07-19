@@ -1,7 +1,6 @@
 <template lang="">
-{{data["2022-07-15 20:00:00"]}}
     <div>
-      <Bar :chart-data="chartData" />
+      <Bar :chart-data="DatasGraphique" />
     </div>
 </template>
 
@@ -9,46 +8,52 @@
 import { Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-import testData from '../../datas.json'
+
 
 export default {
     components: {
         Bar
     },
     props:{
-      datas: Object
+      datas: {
+        type: Object,
+        default: {}
+      }
     },
   data() {
     return {
-      dataIntraday: this.datas,
-      testData,
     }
-    
   },
   computed:{
-    chartData() { 
+    DatasGraphique() { 
       let label = [];
       let datasTable = [];
-      for(let x in this.dataIntraday){
+      let tableDates = []
+
+      for(let x in this.datas){
         label.push(x);
-        for( let y in this.dataIntraday[x]){
+        for( let y in this.datas[x]){
           if(y == "4. close"){
-            datasTable.push(parseFloat(this.dataIntraday[x][y]));
+            datasTable.push(parseFloat(this.datas[x][y]));
           }
-          
         }
       }
-      console.log(label);
-      console.log(datasTable);
+
+      label = label.reverse()
+      label.forEach(element => {
+        let table = element.split(' ');
+        tableDates.push(table[0].split('-').reverse().join("/")+' à '+table[1])
+      });
+      datasTable.reverse();
+
       return {
-        labels: label,
+        labels: tableDates,
         datasets: [{data: datasTable}]
-        //datasets:[ { data: [40, 20, 12] } ]
       } 
     },
   },
   mounted() {
-    console.log(this.data);
+    console.log(this.datas);
   },
 }
 </script>
