@@ -1,6 +1,9 @@
 <template lang="">
     <div>
-      <Bar :chart-data="DatasGraphique" />
+      <Bar 
+        :chart-data="DatasGraphique" 
+        :chart-options="OptionsGraphique"
+      />
     </div>
 </template>
 
@@ -32,32 +35,54 @@ export default {
 
       for(let x in this.datas){
         label.push(x);
-        for( let y in this.datas[x]){
+        for(let y in this.datas[x]){
           if(y == "4. close"){
-            datasTable.push(parseFloat(this.datas[x][y]));
+            datasTable.push(this.datas[x][y]);
           }
         }
       }
 
-      label = label.reverse()
+      label.reverse();
       label.forEach(element => {
-        let table = element.split(' ');
-        tableDates.push(table[0].split('-').reverse().join("/")+' à '+table[1])
+        tableDates.push(element.split('-').reverse().join("/"))
       });
       datasTable.reverse();
 
       return {
         labels: tableDates,
-        datasets: [{data: datasTable}]
+        datasets: [{
+          label: 'Cours à la fermeture',
+          backgroundColor: 'rgb(21, 180, 219)',
+          borderColor: 'rgb(255, 0, 0)',
+          data: datasTable
+        }]
       } 
     },
+    OptionsGraphique() {
+        return {
+          responsive: true,
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+                text: 'Date'
+              },   
+              ticks: {
+                beginAtZero: true,
+                padding: 0
+              }      
+            }
+          }
+        }
+        
+      }
   },
   mounted() {
-    console.log(this.datas);
   },
 }
 </script>
 
 <style lang="scss">
-    
+
 </style>

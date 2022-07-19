@@ -35,7 +35,7 @@
                     </div>
                 </div>-->
                 <div>
-                    <Graphique v-bind:datas="TIME_SERIES_INTRADAY['Time Series (60min)']"/>
+                    <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
                 </div>
             </div>
             <div v-else id="error">
@@ -71,7 +71,7 @@ export default {
                 query:'msft',
                 exchange:'', // marché sur lequel chercher les indices, à mettre en place
             },
-            TIME_SERIES_INTRADAY:'',
+            TIME_SERIES_DAILY:'',
             GLOBAL_QUOTE:'',
             variation:'',
             error: false, // gestion d'erreur, pour l'API - surtout gestion requete par minute
@@ -86,25 +86,25 @@ export default {
             let query = this.request.query;
         /**
          * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD
-         * TIME_SERIES_DAILY - function=TIME_SERIES_DAILY&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD par heure
+         * TIME_SERIES_DAILY - function=TIME_SERIES_DAILY&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD par jour & interval=min 
          * SYMBOL_SEARCH - function=SYMBOL_SEARCH&keywords=${query}&apikey=${API.Token} // recherche d'indices
-         * TIME_SERIES_INTRADAY - function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token} // trading par jour & interval=min         
+         * TIME_SERIES_INTRADAY - function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token} // trading par heure & interval=min         
          * TIME_SERIES_WEEKLY - function=TIME_SERIES_WEEKLY&symbol=${query}&apikey=${API.Token} // trading par semaine
          * TIME_SERIES_MONTHLY - function=TIME_SERIES_MONTHLY&symbol=${query}&apikey=${API.Token} // tranding par mois
          */
 
-            API.Axios.get(`query?function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token}`)
+            API.Axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
             .then(
                 (res) => {
                     if (res.data.Note) {
-                        this.TIME_SERIES_INTRADAY="";
+                        this.TIME_SERIES_DAILY="";
                         throw new Error("Nombre maximal de requetes dépassé")
                     }else if(res.data['Error Message']){
-                        this.TIME_SERIES_INTRADAY=null;
+                        this.TIME_SERIES_DAILY=null;
                         throw "Erreur dans le nom";
                     }
 
-                    this.TIME_SERIES_INTRADAY=res.data;
+                    this.TIME_SERIES_DAILY=res.data;
                 },
                 API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
                     .then((res) => {
@@ -114,7 +114,7 @@ export default {
                             throw new Error("Nombre maximal de requetes dépassé");
                             
                         }else if(res.data['Error Message']){
-                            this.TIME_SERIES_INTRADAY=null;
+                            this.GLOBAL_QUOTE=null;
                             throw "Erreur dans le nom";
                         }
 
@@ -151,8 +151,7 @@ export default {
             return this.GLOBAL_QUOTE["Global Quote"]["07. latest trading day"].split('-').reverse().join('/');
         },
         dernierRafraichissement() {
-            let table = this.TIME_SERIES_INTRADAY["Meta Data"]["3. Last Refreshed"].split(' ');
-            return table[0].split('-').reverse().join("/")+' à '+table[1];
+            return this.TIME_SERIES_DAILY["Meta Data"]["3. Last Refreshed"].split('-').reverse().join("/");
         }
     }
 }
