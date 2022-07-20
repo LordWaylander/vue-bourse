@@ -61,41 +61,41 @@ export default {
       } 
     },
     OptionsGraphique() {
-        return {
-          responsive: true,  
-          scales: {
-            xAxis: {
+      return {
+        responsive: true,  
+        scales: {
+          xAxis: {
+            display: true,
+            title: {
               display: true,
-              title: {
-                display: true,
-                text: 'Date'
-              },   
-              ticks: {
-                beginAtZero: false,
-                padding: 0,
-                minRotation: 90
-              }      
+              text: 'Date'
+            },   
+            ticks: {
+              beginAtZero: false,
+              padding: 0,
+              minRotation: 90
+            }      
+          },
+          y: {
+            display: true,
+            title : {
+              display: true,
+              text: 'cours'
             },
-            y: {
+            ticks: {
+              minRotation: 30,
+              maxTicksLimit: 20,
+            },
+            grid: {
               display: true,
-              title : {
-                display: true,
-                text: 'cours'
-              },
-              ticks: {
-                minRotation: 30,
-                maxTicksLimit: 20,
-              },
-              grid: {
-                display: true,
-              },
-            }
+            },
           }
         }
-        
       }
+    }
   },
   mounted() {
+    
   },
 }
 </script>
