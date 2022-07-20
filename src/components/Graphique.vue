@@ -8,14 +8,15 @@
 </template>
 
 <script>
-import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+import { Bar, Line } from 'vue-chartjs';
+import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, LineController, PointElement, BarElement } from 'chart.js';
+ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, LineController, PointElement, BarElement)
 
 
 export default {
     components: {
-        Bar
+        Bar,
+        Line
     },
     props:{
       datas: {
@@ -52,26 +53,42 @@ export default {
         labels: tableDates,
         datasets: [{
           label: 'Cours à la fermeture',
+          type: 'line',
           backgroundColor: 'rgb(21, 180, 219)',
-          borderColor: 'rgb(255, 0, 0)',
+          borderColor: 'rgb(21, 0, 219)',
           data: datasTable
         }]
       } 
     },
     OptionsGraphique() {
         return {
-          responsive: true,
+          responsive: true,  
           scales: {
-            x: {
+            xAxis: {
               display: true,
               title: {
                 display: true,
                 text: 'Date'
               },   
               ticks: {
-                beginAtZero: true,
-                padding: 0
+                beginAtZero: false,
+                padding: 0,
+                minRotation: 90
               }      
+            },
+            y: {
+              display: true,
+              title : {
+                display: true,
+                text: 'cours'
+              },
+              ticks: {
+                minRotation: 30,
+                maxTicksLimit: 20,
+              },
+              grid: {
+                display: true,
+              },
             }
           }
         }
