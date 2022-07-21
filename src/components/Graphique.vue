@@ -1,6 +1,6 @@
 <template lang="">
-    <div>
-      <Bar 
+    <div id="containerGraphique">
+      <Line class="graphique"
         :chart-data="DatasGraphique" 
         :chart-options="OptionsGraphique"
       />
@@ -9,13 +9,12 @@
 
 <script>
 import { Bar, Line } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, LineController, PointElement, BarElement } from 'chart.js';
-ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, LineController, PointElement, BarElement)
+import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, LineController, PointElement, BarElement, BarController } from 'chart.js';
+ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, LineController, PointElement, BarElement, BarController)
 
 
 export default {
     components: {
-        Bar,
         Line
     },
     props:{
@@ -32,13 +31,17 @@ export default {
     DatasGraphique() { 
       let label = [];
       let datasTable = [];
-      let tableDates = []
+      let tableDates = [];
+      let datasVolumes = [];
 
       for(let x in this.datas){
         label.push(x);
         for(let y in this.datas[x]){
           if(y == "4. close"){
             datasTable.push(this.datas[x][y]);
+          }
+          if(y == "5. volume"){
+            datasVolumes.push(this.datas[x][y])
           }
         }
       }
@@ -51,44 +54,58 @@ export default {
 
       return {
         labels: tableDates,
-        datasets: [{
-          label: 'Cours à la fermeture',
-          type: 'line',
-          backgroundColor: 'rgb(21, 180, 219)',
-          borderColor: 'rgb(21, 0, 219)',
-          data: datasTable
-        }]
+        datasets: [
+          {
+            type: 'line',
+            label: 'Cours à la fermeture',
+            backgroundColor: 'rgb(21, 180, 219)',
+            borderColor: 'rgb(21, 0, 219)',
+            yAxisID: 'yCours',
+            data: datasTable
+          },
+          {
+            type: 'bar',
+            label: 'Volumes',
+            backgroundColor: 'rgb(21, 180, 219, 0.2)',
+            borderColor: 'rgb(21, 0, 219)',
+            yAxisID: 'yVolumes',
+            data: datasVolumes
+          }
+        ]
       } 
     },
     OptionsGraphique() {
       return {
-        responsive: true,  
+        responsive: true,
+        aspectRatio: 2,
+        maintainAspectRatio: false,
+        plugins:{
+          legend: {
+            display: false
+          }
+        },
         scales: {
           xAxis: {
             display: true,
             title: {
               display: true,
               text: 'Date'
-            },   
-            ticks: {
-              beginAtZero: false,
-              padding: 0,
-              minRotation: 90
-            }      
+            },  
           },
-          y: {
+          yCours:{
+            type: 'linear',
             display: true,
             title : {
               display: true,
               text: 'cours'
             },
             ticks: {
-              minRotation: 30,
               maxTicksLimit: 20,
             },
-            grid: {
-              display: true,
-            },
+          },
+          yVolumes: {
+            type: 'linear',
+            display: false,
           }
         }
       }
@@ -101,5 +118,13 @@ export default {
 </script>
 
 <style lang="scss">
-
+  #containerGraphique {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5%;
+    .graphique {
+      width: 80%;
+    }
+  }
+  
 </style>

@@ -23,17 +23,6 @@
                         <p>Variation (%) : {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</p>
                     </div>
                 </div>
-
-                <!--<div v-if="TIME_SERIES_INTRADAY" id="corps">
-                    <div  id="TIME_SERIES_INTRADAY">
-                        <p>
-                            Dernier rafraichissement : {{dernierRafraichissement}}
-                        </p>
-                        <p v-for="item in TIME_SERIES_INTRADAY['Time Series (60min)']">
-                            {{item}}
-                        </p>
-                    </div>
-                </div>-->
                 <div>
                     <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
                 </div>
