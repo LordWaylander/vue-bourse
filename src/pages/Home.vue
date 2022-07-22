@@ -17,16 +17,16 @@
                         <p>Mise à jour : {{date}}</p>
                     </div>
                 </div>
+                {{GLOBAL_QUOTE["Global Quote"]}}
                 <div id="corps">
                     
                     <div v-if="GLOBAL_QUOTE" id="corpsGLOBAL_QUOTE">
-                    <h4>Cours de la séance</h4>
-                        <p>Ouverture : {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
-                        <p>Volumes échangés : {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
-                        <p>+ Haut : {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
-                        <p>+ Bas : {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
-                        <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
-                        <p>Variation ($) : {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
+                        <h4>Cours de la séance</h4>
+                        <p><span>Ouverture :</span> {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
+                        <p><span>Volumes échangés :</span> {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
+                        <p><span>+ Haut :</span> {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
+                        <p><span>+ Bas :</span> {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
+                        <p><span>Variation ($) :</span> {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
                     </div>
                     <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
                 </div>
@@ -177,13 +177,20 @@ export default {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 grid-template-rows: repeat(4, 70px);
-                grid-template-areas: 
-                    'a a';
+                grid-template-areas: 'a a';
+                height: max-content;
                 h4{
                     grid-area: a;
                     text-align: center;
                     text-decoration: underline;
 
+                }
+                p{
+                    span{
+                        font-weight: bold;
+                        color: darkorange;
+                        text-decoration: underline;
+                    }
                 }
             }
         }
