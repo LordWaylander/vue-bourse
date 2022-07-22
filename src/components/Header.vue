@@ -1,6 +1,5 @@
 <template lang="">
     <div className='header'>
-      
         <ul>
           <RouterLink to="/" active-class="nav-active">
             <li>API</li>
@@ -42,10 +41,8 @@ export default {
       grid-area: btn;
       display: flex;
       align-items: center;
-      //justify-content: space-around;
       padding: 0;
       list-style: none;
-
       a {
         background-color: #0051ff;
         width: 125px;
@@ -90,11 +87,16 @@ export default {
           grid-column-start: 2;
           grid-column-end: 4;
           height: 25px;
-          background-color: rgb(0, 110, 255);
+          background-color: #0051ff;
+          border: 2px solid #08f;
           border-radius: 0 0 10px 10px;
           color: white;
           font-weight: bold;
+          &:hover {
+          background-color: #083cac;
         }
+        }
+        
       }
     }
 }

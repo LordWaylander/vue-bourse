@@ -7,7 +7,7 @@ Ce projet en est à ses tout débuts.
 > En cours de codage
 
 J'envisage sur la 1ere page, de pouvoir trouver les indices boursiers voulus (Euronext est indisponible par l'API)
-avec la mise en place d'un graphique qui montre l'évolution sur les 2 dernières années (voie plus), avec des outils tel que le RSI, MACD, etc..., les cours d'ouverture / fermeture du marché, les volumes, les actualités concernant l'entreprise, et les analyses financière concernant la valeur sélectionnée.
+avec la mise en place d'un graphique qui montre l'évolution sur les 2 dernières années (voir plus), avec des outils tel que le RSI, MACD, etc..., les cours d'ouverture / fermeture du marché, les volumes, les actualités concernant l'entreprise, et les analyses financière concernant la valeur sélectionnée.
 En 2nd page la mise en place d'un calcultateur de +/- value (uniquement en € et $ à l'heure actuelle, mais fonctionnel).
 
 ### Partie Back-END
