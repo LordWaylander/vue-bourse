@@ -4,6 +4,8 @@
         <div id="loader">
             <img src="../assets/loader.gif"/>
         </div>
+        <div id="modalBackground"></div>
+        
 
         <div id="titre">
             <div v-if="error === false">
@@ -59,7 +61,7 @@ export default {
                     TIME_SERIES_MONTHLY: 'TIME_SERIES_MONTHLY'
                 },
                 interval: '', // à voir si mis réellement en place
-                query:'msft',
+                query:'',
                 exchange:'', // marché sur lequel chercher les indices, à mettre en place
             },
             TIME_SERIES_DAILY:'',
@@ -73,6 +75,7 @@ export default {
             this.request.query = payload.valueSearch;
         },
         requeteAPI(){
+            document.getElementById("loader").style.display="flex";
             let fonction = this.request.functions; //a mettre en place pour user
             let query = this.request.query;
         /**
@@ -129,14 +132,28 @@ export default {
                 document.getElementById("loader").style.display="none";
                 document.getElementById("titre").style.display="block";
             })
+        },
+        searchIndice() {
+            console.log(this.request.query);
+            let query = this.request.query;
+            API.Axios.get(`query?function=SYMBOL_SEARCH&keywords=${query}&apikey=${API.Token}`)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                this.error = err;
+            })
         }
+
     },
     beforeMount() {
-        this.requeteAPI();
+        //cherche des indices au lancement
+        //this.requeteAPI();
     },
     watch:{
         'request.query'() {
-            this.requeteAPI();
+            //this.requeteAPI();
+            this.searchIndice();
         }
     },
     computed:{
@@ -154,25 +171,25 @@ export default {
     #titre{
         display: none;
         margin: 50px;
-            #entete{
+        #entete{
+            display: flex;
+            
+            #GLOBAL_QUOTE{
+            border: 2px solid rgb(129, 155, 156);
+            min-height: min-content;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            flex-grow: 1;
+            p{
                 display: flex;
-                
-                #GLOBAL_QUOTE{
-                border: 2px solid rgb(129, 155, 156);
-                min-height: min-content;
-                padding: 10px;
-                display: grid;
-                grid-template-columns: repeat(5, 1fr);
-                flex-grow: 1;
-                p{
-                    display: flex;
-                    justify-content: center;
-                }
-                }
-                #variation{
-                    width: 10px;
-                }
+                justify-content: center;
             }
+            }
+            #variation{
+                width: 10px;
+            }
+        }
 
         #corps{
             display: grid;
@@ -206,13 +223,25 @@ export default {
         }
     }
     #loader {
-        display: flex;
+        display: none;
         justify-content: center;
         align-items: center;
-        //display: none
+        
         img{
             width: 100px;
             height: 100px;
         }
+    }
+    #modalBackground{
+        background-color: rgba(221, 217, 217, 0.39);;
+        height: 500px;
+        width: 75%;
+        z-index: 10;
+        position: absolute;
+        left: 12.5%;
+        top:25%;
+        border: 1px solid black;
+        border-radius: 5%;
+        box-shadow: 1px 5px 10px #007ce8;
     }
 </style>
