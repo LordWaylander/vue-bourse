@@ -1,5 +1,4 @@
 <template lang="">
-    <div class="home">
         <Header @searchIndiceBourse="searchIndiceBourse"/>
 
         <div id="loader">
@@ -31,8 +30,6 @@
                 <h1>{{error}}</h1>
             </div>
         </div> 
-    </div>
-    
 </template>
 
 <script>
@@ -147,7 +144,6 @@ export default {
 </script>
 
 <style lang="scss">
-.home {
     #titre{
         display: none;
         margin: 50px;
@@ -193,6 +189,4 @@ export default {
             height: 100px;
         }
     }
-    
-}
 </style>
