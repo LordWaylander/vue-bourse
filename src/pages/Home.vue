@@ -11,18 +11,23 @@
                     <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
                     <div id="GLOBAL_QUOTE">
                         <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
-                        <p>Ouverture : {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
-                        <p>+ Haut : {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
-                        <p>+ Bas : {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
                         <p>Cours Actuel : {{GLOBAL_QUOTE["Global Quote"]["05. price"]}}</p>
-                        <p>Volumes échangés : {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
-                        <p>Mise à jour : {{date}}</p>
                         <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
-                        <p>Variation ($) : {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
-                        <p>Variation (%) : {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</p>
+                        <p>Variation : <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}"> {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</span></p>
+                        <p>Mise à jour : {{date}}</p>
                     </div>
                 </div>
-                <div>
+                <div id="corps">
+                    
+                    <div v-if="GLOBAL_QUOTE" id="corpsGLOBAL_QUOTE">
+                    <h4>Cours de la séance</h4>
+                        <p>Ouverture : {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
+                        <p>Volumes échangés : {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
+                        <p>+ Haut : {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
+                        <p>+ Bas : {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
+                        <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
+                        <p>Variation ($) : {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
+                    </div>
                     <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
                 </div>
             </div>
@@ -82,6 +87,7 @@ export default {
             API.Axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
             .then(
                 (res) => {
+                    console.log(res.data);
                     if (res.data.Note) {
                         this.TIME_SERIES_DAILY="";
                         throw new Error("Nombre maximal de requetes dépassé")
@@ -94,7 +100,7 @@ export default {
                 },
                 API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
                     .then((res) => {
-
+                        console.log(res.data);
                         if (res.data.Note) {
                             this.GLOBAL_QUOTE=null;
                             throw new Error("Nombre maximal de requetes dépassé");
@@ -105,10 +111,6 @@ export default {
                         }
 
                         this.GLOBAL_QUOTE=res.data;
-                        /*document.getElementById("loader").style.display="none";
-                        document.getElementById("titre").style.display="block";
-                        this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
-                        this.variation=(parseFloat(this.variation, 10));*/
                     })
                     .then(() => {
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
@@ -155,8 +157,7 @@ export default {
                 min-height: min-content;
                 padding: 10px;
                 display: grid;
-                grid-template-columns: repeat(6, 1fr);
-                grid-template-rows: repeat(2, 1fr);
+                grid-template-columns: repeat(5, 1fr);
                 flex-grow: 1;
                 p{
                     display: flex;
@@ -169,8 +170,21 @@ export default {
             }
 
         #corps{
-            #TIME_SERIES_INTRADAY{
-                border: 2px solid rgb(129, 155, 156);
+            display: grid;
+            grid-template-columns: 25% 1fr;
+            margin-top: 2.5%;
+            #corpsGLOBAL_QUOTE{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(4, 70px);
+                grid-template-areas: 
+                    'a a';
+                h4{
+                    grid-area: a;
+                    text-align: center;
+                    text-decoration: underline;
+
+                }
             }
         }
 

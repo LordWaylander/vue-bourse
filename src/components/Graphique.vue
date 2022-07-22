@@ -121,9 +121,9 @@ export default {
   #containerGraphique {
     display: flex;
     justify-content: center;
-    margin-top: 2.5%;
     .graphique {
-      width: 80%;
+      width: 100%;
+      height: 500px;
     }
   }
   
