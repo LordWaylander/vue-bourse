@@ -7,28 +7,28 @@
 
         <div id="titre">
             <div v-if="error === false">
-                <div v-if="GLOBAL_QUOTE" id="entete">
-                    <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
-                    <div id="GLOBAL_QUOTE">
-                        <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
-                        <p>Cours Actuel : {{GLOBAL_QUOTE["Global Quote"]["05. price"]}}</p>
-                        <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
-                        <p>Variation : <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}"> {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</span></p>
-                        <p>Mise à jour : {{date}}</p>
+                <div v-if="GLOBAL_QUOTE">
+                    <div id="entete">
+                        <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
+                        <div id="GLOBAL_QUOTE">
+                            <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
+                            <p>Cours Actuel : {{GLOBAL_QUOTE["Global Quote"]["05. price"]}}</p>
+                            <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
+                            <p>Variation : <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}"> {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</span></p>
+                            <p>Mise à jour : {{date}}</p>
+                        </div>
                     </div>
-                </div>
-                {{GLOBAL_QUOTE["Global Quote"]}}
-                <div id="corps">
-                    
-                    <div v-if="GLOBAL_QUOTE" id="corpsGLOBAL_QUOTE">
-                        <h4>Cours de la séance</h4>
-                        <p><span>Ouverture :</span> {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
-                        <p><span>Volumes échangés :</span> {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
-                        <p><span>+ Haut :</span> {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
-                        <p><span>+ Bas :</span> {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
-                        <p><span>Variation ($) :</span> {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
+                    <div id="corps">
+                        <div id="corpsGLOBAL_QUOTE">
+                            <h4>Cours de la séance</h4>
+                            <p><span>Ouverture :</span> {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
+                            <p><span>Volumes échangés :</span> {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
+                            <p><span>+ Haut :</span> {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
+                            <p><span>+ Bas :</span> {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
+                            <p><span>Variation ($) :</span> {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
+                        </div>
+                        <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
                     </div>
-                    <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
                 </div>
             </div>
             <div v-else id="error">
@@ -87,7 +87,6 @@ export default {
             API.Axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
             .then(
                 (res) => {
-                    console.log(res.data);
                     if (res.data.Note) {
                         this.TIME_SERIES_DAILY="";
                         throw new Error("Nombre maximal de requetes dépassé")
@@ -100,7 +99,6 @@ export default {
                 },
                 API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
                     .then((res) => {
-                        console.log(res.data);
                         if (res.data.Note) {
                             this.GLOBAL_QUOTE=null;
                             throw new Error("Nombre maximal de requetes dépassé");
@@ -118,8 +116,15 @@ export default {
                         document.getElementById("loader").style.display="none";
                         document.getElementById("titre").style.display="block";
                     })
+                    .catch((err) => { 
+                        console.log('catch 1');
+                        this.error = err 
+                        document.getElementById("loader").style.display="none";
+                        document.getElementById("titre").style.display="block";
+                    })
                 )            
             .catch((err) => { 
+                console.log('catch 2');
                 this.error = err 
                 document.getElementById("loader").style.display="none";
                 document.getElementById("titre").style.display="block";
