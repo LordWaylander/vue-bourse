@@ -243,7 +243,7 @@ export default {
     }
     #modalBackground{
         display:none;
-        background-color: rgba(221, 217, 217, 0.39);;
+        background-color: rgba(221, 217, 217, 0.9);
         height: max-content;
         width: 75%;
         z-index: 10;
@@ -255,13 +255,14 @@ export default {
         box-shadow: 1px 5px 10px #007ce8;
 
         #modalCorps{
-            background-color: aquamarine;
             display: flex;
             flex-direction: column;
             margin: 20px;
 
             #modalElement{
                 display: flex;
+                justify-content: center;
+                cursor: pointer;
                 p{
                     margin-right: 2%;
                 }
