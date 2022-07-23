@@ -4,9 +4,19 @@
         <div id="loader">
             <img src="../assets/loader.gif"/>
         </div>
-        <div id="modalBackground"></div>
-        
 
+        <div id="modalBackground" v-if="error === false">
+            <div v-if="request.research" id="modalCorps">
+                <div v-for="element in request.research">
+                    <div id="modalElement" @click="requeteAPI(element['1. symbol'])">
+                        <p>Nom : {{element["2. name"]}}</p>
+                        <p>Région : {{element["4. region"]}}</p>
+                        <p>Devise : {{element["8. currency"]}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div id="titre">
             <div v-if="error === false">
                 <div v-if="GLOBAL_QUOTE">
@@ -61,8 +71,9 @@ export default {
                     TIME_SERIES_MONTHLY: 'TIME_SERIES_MONTHLY'
                 },
                 interval: '', // à voir si mis réellement en place
-                query:'',
+                query:'msft',
                 exchange:'', // marché sur lequel chercher les indices, à mettre en place
+                research:'', // recherche searchIndice
             },
             TIME_SERIES_DAILY:'',
             GLOBAL_QUOTE:'',
@@ -74,10 +85,10 @@ export default {
         searchIndiceBourse(payload) {
             this.request.query = payload.valueSearch;
         },
-        requeteAPI(){
+        requeteAPI(element){
             document.getElementById("loader").style.display="flex";
-            let fonction = this.request.functions; //a mettre en place pour user
-            let query = this.request.query;
+            let query = element;
+
         /**
          * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD
          * TIME_SERIES_DAILY - function=TIME_SERIES_DAILY&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD par jour & interval=min 
@@ -117,6 +128,7 @@ export default {
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
                         this.variation=(parseFloat(this.variation, 10));
                         document.getElementById("loader").style.display="none";
+                        document.getElementById('modalBackground').style.display='none';
                         document.getElementById("titre").style.display="block";
                     })
                     .catch((err) => { 
@@ -134,25 +146,22 @@ export default {
             })
         },
         searchIndice() {
-            console.log(this.request.query);
             let query = this.request.query;
             API.Axios.get(`query?function=SYMBOL_SEARCH&keywords=${query}&apikey=${API.Token}`)
             .then((res) => {
-                console.log(res.data);
+                this.request.research = res.data.bestMatches
+                document.getElementById('modalBackground').style.display='block';
             })
             .catch((err) => {
                 this.error = err;
             })
         }
-
     },
-    beforeMount() {
-        //cherche des indices au lancement
-        //this.requeteAPI();
+    mounted() {
+        this.requeteAPI(this.request.query);
     },
     watch:{
         'request.query'() {
-            //this.requeteAPI();
             this.searchIndice();
         }
     },
@@ -233,8 +242,9 @@ export default {
         }
     }
     #modalBackground{
+        display:none;
         background-color: rgba(221, 217, 217, 0.39);;
-        height: 500px;
+        height: max-content;
         width: 75%;
         z-index: 10;
         position: absolute;
@@ -243,5 +253,19 @@ export default {
         border: 1px solid black;
         border-radius: 5%;
         box-shadow: 1px 5px 10px #007ce8;
+
+        #modalCorps{
+            background-color: aquamarine;
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+
+            #modalElement{
+                display: flex;
+                p{
+                    margin-right: 2%;
+                }
+            }
+        }
     }
 </style>
