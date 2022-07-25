@@ -112,16 +112,21 @@ export default {
     }
   },
   mounted() {
-    
+    let chart = document.getElementById('line-chart')
+    console.log(chart);
+    //chart.parentNode.style.width = '100%';
   },
 }
 </script>
 
 <style lang="scss">
   #containerGraphique {
+    position: relative;
     display: flex;
     justify-content: center;
+    width:100%;
     .graphique {
+      position: relative;
       width: 100%;
       height: 500px;
     }

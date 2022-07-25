@@ -6,6 +6,7 @@
         </div>
 
         <div id="modalBackground" v-if="error === false">
+            <div id="close" @click="closeModal"><img src="../assets/cross_close.png"/></div>
             <div v-if="request.research" id="modalCorps">
                 <div v-for="element in request.research">
                     <div id="modalElement" @click="requeteAPI(element['1. symbol'])">
@@ -32,12 +33,27 @@
                     </div>
                     <div id="corps">
                         <div id="corpsGLOBAL_QUOTE">
-                            <h4>Cours de la séance</h4>
-                            <p><span>Ouverture :</span> {{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</p>
-                            <p><span>Volumes échangés :</span> {{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</p>
-                            <p><span>+ Haut :</span> {{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</p>
-                            <p><span>+ Bas :</span> {{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</p>
-                            <p><span>Variation ($) :</span> {{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Séance du {{date}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><p>Ouverture :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</span></td>
+                                        <td><p>Volumes échangés :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>+ Haut :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</span></td>
+                                        <td><p>+ Bas :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Variation :</p> <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}">{{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</span></td>
+                                        <td><p>Variation :</p> <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}">{{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
                     </div>
@@ -46,7 +62,7 @@
             <div v-else id="error">
                 <h1>{{error}}</h1>
             </div>
-        </div> 
+        </div>
 </template>
 
 <script>
@@ -140,6 +156,7 @@ export default {
                 )            
             .catch((err) => { 
                 console.log('catch 2');
+                console.log(err);
                 this.error = err 
                 document.getElementById("loader").style.display="none";
                 document.getElementById("titre").style.display="block";
@@ -155,6 +172,10 @@ export default {
             .catch((err) => {
                 this.error = err;
             })
+        },
+        closeModal(){
+            document.getElementById('modalBackground').style.display='none';
+            this.request.research=""
         }
     },
     mounted() {
@@ -205,19 +226,20 @@ export default {
             grid-template-columns: 25% 1fr;
             margin-top: 2.5%;
             #corpsGLOBAL_QUOTE{
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(4, 70px);
-                grid-template-areas: 'a a';
-                height: max-content;
-                h4{
-                    grid-area: a;
-                    text-align: center;
-                    text-decoration: underline;
-
+                //height: max-content;
+                table, th, td {
+                   
                 }
-                p{
-                    span{
+                table{
+                    width: 100%;
+                    border-collapse: collapse;
+                    tbody{
+                        tr:nth-child(2n+1){
+                            background-color: rgb(234, 234, 234);
+                        }
+                    }
+                    p{
+                        margin: 0;
                         font-weight: bold;
                         color: darkorange;
                         text-decoration: underline;
@@ -253,6 +275,18 @@ export default {
         border: 1px solid black;
         border-radius: 5%;
         box-shadow: 1px 5px 10px #007ce8;
+
+        #close{
+            display: flex;
+            justify-content: end;
+            margin-right: 3%;
+            margin-top: 1%;
+            img{
+                width: 25px;
+                max-width: 3%;
+                cursor: pointer;
+            }
+        }
 
         #modalCorps{
             display: flex;
