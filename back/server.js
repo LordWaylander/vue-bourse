@@ -6,7 +6,7 @@ fastify.register(require('@fastify/cors'))
 
 //env-schema -> CF : configEnv.js
 
-const configEnv = require('./config/configEnv.js')
+const configEnv = require('./config/Env.js')
 
 fastify.listen(configEnv.config.SERVER_PORT)
 .then((address) => {

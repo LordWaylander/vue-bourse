@@ -71,7 +71,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Graphique from '@/components/Graphique.vue';
-import API from '@/_services/axios.service.js'; // rename the file in _services
+import API from '@/_services/api.service.js'; // rename the file in _services
 
 export default {
     components: {
@@ -104,22 +104,12 @@ export default {
         searchIndiceBourse(payload) {
             this.request.query = payload.valueSearch;
         },
-        requeteAPI(element){
+        requeteAPI(query){
             document.getElementById("loader").style.display="flex";
-            let query = element;
+            //let query = element;
 
-        /**
-         * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD
-         * TIME_SERIES_DAILY - function=TIME_SERIES_DAILY&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD par jour & interval=min 
-         * SYMBOL_SEARCH - function=SYMBOL_SEARCH&keywords=${query}&apikey=${API.Token} // recherche d'indices
-         * TIME_SERIES_INTRADAY - function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token} // trading par heure & interval=min         
-         * TIME_SERIES_WEEKLY - function=TIME_SERIES_WEEKLY&symbol=${query}&apikey=${API.Token} // trading par semaine
-         * TIME_SERIES_MONTHLY - function=TIME_SERIES_MONTHLY&symbol=${query}&apikey=${API.Token} // tranding par mois
-         */
-
-            API.Axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
-            .then(
-                (res) => {
+            API.get(`/time_series_daily/${query}`)
+            .then((res) => {
                     if (res.data.Note) {
                         this.TIME_SERIES_DAILY="";
                         throw new Error("Nombre maximal de requetes dépassé")
@@ -130,7 +120,7 @@ export default {
 
                     this.TIME_SERIES_DAILY=res.data;
                 },
-                API.Axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.Token}`)
+                API.get(`/global_quote/${query}`)
                     .then((res) => {
                         if (res.data.Note) {
                             this.GLOBAL_QUOTE=null;
@@ -151,15 +141,12 @@ export default {
                         document.getElementById("titre").style.display="block";
                     })
                     .catch((err) => { 
-                        console.log('catch 1');
                         this.error = err 
                         document.getElementById("loader").style.display="none";
                         document.getElementById("titre").style.display="block";
                     })
                 )            
             .catch((err) => { 
-                console.log('catch 2');
-                console.log(err);
                 this.error = err 
                 document.getElementById("loader").style.display="none";
                 document.getElementById("titre").style.display="block";
@@ -167,10 +154,9 @@ export default {
         },
         searchIndice() {
             let query = this.request.query;
-            API.Axios.get(`query?function=SYMBOL_SEARCH&keywords=${query}&apikey=${API.Token}`)
+            API.get(`/symbol_search/${query}`)
             .then((res) => {
-                console.log(res.data);
-                this.request.research = res.data.bestMatches;
+                this.request.research = res.data;
                 document.getElementById('modalBackground').style.display='block';
             })
             .catch((err) => {

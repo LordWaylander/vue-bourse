@@ -1,12 +1,10 @@
 import axios from 'axios';
 
 const Axios = axios.create({
-  baseURL:'https://www.alphavantage.co/',
+  baseURL: 'http://localhost:8080/',
   headers : {
     'Content-Type': 'application/json',
   }
 })
 
-const Token = 'API_KEY';
-
-export default {Axios, Token}
+export default Axios
