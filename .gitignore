@@ -1,7 +1,5 @@
 node_modules
-**/src/_services/api.service.js
 package-lock.json
-**/back/config/Axios.js
 
 # Editor directories and files
 **/.vscode
