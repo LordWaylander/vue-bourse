@@ -1,17 +1,10 @@
 const fastify = require('fastify')({logger: true});
+const autoload = require('@fastify/autoload');
 const path = require('path');
 
-/*
-    //Moteur template EJS
+fastify.register(require('@fastify/cors'))
 
-fastify.register(require("point-of-view"), {
-    engine: {
-      ejs: require("ejs"),
-    },
-    root: path.join(__dirname, './views')
-});
-*/
-    //env-schema -> CF : configEnv.js
+//env-schema -> CF : configEnv.js
 
 const configEnv = require('./config/configEnv.js')
 
@@ -30,4 +23,7 @@ fastify.addHook('onRoute', (routeOptions) => {
 })
 
 // définition des routes
-fastify.register(require('./routes/indexRoute'));
+//fastify.register(require('./routes/indexRoute'));
+fastify.register(autoload, {
+    dir: path.join(__dirname, 'routes')
+})

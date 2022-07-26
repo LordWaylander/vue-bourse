@@ -8,15 +8,6 @@ const schema = {
     }
 }
 
-/*
-    //@fastify/env
-exports.config = {
-    schema: schema,
-    dotenv: true
-}
-*/
-
-    //envSchema
 const envSchema = require('env-schema');
 exports.config = envSchema({
     schema: schema,
