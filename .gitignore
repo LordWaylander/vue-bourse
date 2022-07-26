@@ -12,3 +12,4 @@ package-lock.json
 *.sw?
 API
 back/config/Axios.js
+back/config/AxiosR.js
