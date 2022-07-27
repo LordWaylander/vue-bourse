@@ -111,31 +111,11 @@ export default {
 
             API.get(`/time_series_daily/${query}`)
             .then((res) => {
-                console.log(res);
-                    if (res.data.Note) {
-                        this.TIME_SERIES_DAILY="";
-                        throw new Error("Nombre maximal de requetes dépassé")
-                    }else if(res.data['Error Message']){
-                        this.TIME_SERIES_DAILY=null;
-                        throw "Erreur dans le nom";
-                    }
-
                     this.TIME_SERIES_DAILY=res.data;
                 },
                 API.get(`/global_quote/${query}`)
                     .then((res) => {
-                        if (res.data.Note) {
-                            this.GLOBAL_QUOTE=null;
-                            throw new Error("Nombre maximal de requetes dépassé");
-                            
-                        }else if(res.data['Error Message']){
-                            this.GLOBAL_QUOTE=null;
-                            throw "Erreur dans le nom";
-                        }
-
                         this.GLOBAL_QUOTE=res.data;
-                    })
-                    .then(() => {
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
                         this.variation=(parseFloat(this.variation, 10));
                         document.getElementById("loader").style.display="none";
@@ -143,12 +123,14 @@ export default {
                         document.getElementById("titre").style.display="block";
                     })
                     .catch((err) => {
+                        console.log(err);
                         this.error = err.response.data;
                         document.getElementById("loader").style.display="none";
                         document.getElementById("titre").style.display="block";
                     })
                 )            
             .catch((err) => { 
+                console.log(err);
                 this.error = err.response.data;
                 document.getElementById("loader").style.display="none";
                 document.getElementById("titre").style.display="block";
@@ -162,7 +144,7 @@ export default {
                 document.getElementById('modalBackground').style.display='block';
             })
             .catch((err) => {
-                this.error = err;
+                this.error = err.response.data;
             })
         },
         closeModal(){

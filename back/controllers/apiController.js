@@ -14,12 +14,19 @@ exports.time_series_daily = (req, reply) => {
     let query = req.params.query
     API.axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${API.token}`)
     .then(result => {
-        console.log(reply);
+        console.log(result.data);
+        if (result.data.Note) {
+            throw new Error("Nombre maximal de requetes dépassé")
+        }else if(result.data['Error Message']){
+            this.TIME_SERIES_DAILY=null;
+            throw "Erreur dans le nom";
+        }
         reply.send(result.data);
     })
     .catch((err) => {
-       let e = erreurs.error(err);
-       reply.code(500).send(e)
+        console.log(err);
+        let e = erreurs.error(err);
+        reply.code(500).send(e)
     })
 }
 
@@ -27,6 +34,13 @@ exports.global_quote = (req, reply) => {
     let query = req.params.query
     API.axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.token}`)
     .then(result => {
+        console.log(result.data);
+        if (result.data.Note) {
+            throw new Error("Nombre maximal de requetes dépassé")
+        }else if(result.data['Error Message']){
+            this.TIME_SERIES_DAILY=null;
+            throw "Erreur dans le nom";
+        }
         reply.send(result.data);
     })
     .catch((err) => {
