@@ -72,6 +72,7 @@
 import Header from '@/components/Header.vue';
 import Graphique from '@/components/Graphique.vue';
 import API from '@/_services/api.service.js'; // rename the file in _services
+//import Errors from '../errors/error.js';
 
 export default {
     components: {
@@ -110,6 +111,7 @@ export default {
 
             API.get(`/time_series_daily/${query}`)
             .then((res) => {
+                console.log(res);
                     if (res.data.Note) {
                         this.TIME_SERIES_DAILY="";
                         throw new Error("Nombre maximal de requetes dépassé")
@@ -140,14 +142,14 @@ export default {
                         document.getElementById('modalBackground').style.display='none';
                         document.getElementById("titre").style.display="block";
                     })
-                    .catch((err) => { 
-                        this.error = err 
+                    .catch((err) => {
+                        this.error = err.response.data;
                         document.getElementById("loader").style.display="none";
                         document.getElementById("titre").style.display="block";
                     })
                 )            
             .catch((err) => { 
-                this.error = err 
+                this.error = err.response.data;
                 document.getElementById("loader").style.display="none";
                 document.getElementById("titre").style.display="block";
             })

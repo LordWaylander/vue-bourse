@@ -1,4 +1,5 @@
-const API = require('../config/Axios.js')
+const API = require('../config/Axios.js');
+const erreurs = require('../config/erreurs');
 
 /**
     * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD
@@ -10,14 +11,15 @@ const API = require('../config/Axios.js')
 */
 
 exports.time_series_daily = (req, reply) => {
-    console.log(req.params.query);
     let query = req.params.query
     API.axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${API.token}`)
     .then(result => {
+        console.log(reply);
         reply.send(result.data);
     })
     .catch((err) => {
-        reply.send(err)
+       let e = erreurs.error(err);
+       reply.code(500).send(e)
     })
 }
 
@@ -28,7 +30,8 @@ exports.global_quote = (req, reply) => {
         reply.send(result.data);
     })
     .catch((err) => {
-        reply.send(err)
+        let e = erreurs.error(err);
+       reply.code(500).send(e)
     })
 }
 
@@ -36,10 +39,10 @@ exports.symbol_search = (req, reply) => {
     let query = req.params.query
     API.axios.get(`query?function=SYMBOL_SEARCH&keywords=${query}&apikey=${API.token}`)
     .then((result) => {
-        console.log(result.data.bestMatches);
         reply.send(result.data.bestMatches);
     })
     .catch((err) => {
-        reply.send(err)
+        let e = erreurs.error(err);
+        reply.code(500).send(e)
     })
 }
