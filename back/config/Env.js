@@ -2,9 +2,6 @@ const schema = {
     type: 'object',
     required: [ 
         'SERVER_PORT', 
-        'HTTP_PROXY_ADDRESS', 
-        'HTTP_PROXY_USER',
-        'HTTP_PROXY_MDP'
     ],
     properties: {
         SERVER_PORT: {
