@@ -33,7 +33,7 @@ exports.global_quote = (req, reply) => {
     API.axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.token}`)
     .then(result => {
         if (result.data.Note) {
-            throw new Error({Note: "Nombre maximal de requetes dépassé"})
+            throw new Error("Nombre maximal de requetes dépassé")
         }else if(result.data['Error Message']){
             this.TIME_SERIES_DAILY=null;
             throw "Erreur dans le nom";
