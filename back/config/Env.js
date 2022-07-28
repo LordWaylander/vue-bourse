@@ -3,7 +3,6 @@ const schema = {
     required: [ 
         'SERVER_PORT', 
         'HTTP_PROXY_ADDRESS', 
-        'HTTP_PROXY_PORT', 
         'HTTP_PROXY_USER',
         'HTTP_PROXY_MDP'
     ],
@@ -13,9 +12,6 @@ const schema = {
         },
         HTTP_PROXY_ADDRESS: {
             type: 'string'
-        },
-        HTTP_PROXY_PORT: {
-            type: 'number'
         },
         HTTP_PROXY_USER: {
             type: 'string'

@@ -11,6 +11,5 @@ package-lock.json
 *.sln
 *.sw?
 API
-back/config/Axios.js
 back/package.json
 back/.env

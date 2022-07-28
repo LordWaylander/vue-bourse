@@ -14,8 +14,6 @@ exports.time_series_daily = (req, reply) => {
     let query = req.params.query
     API.axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${API.token}`)
     .then(result => {
-        console.log(result.data);
-        
         if (result.data.Note) {
             throw new Error("Nombre maximal de requetes dépassé")
         }else if(result.data['Error Message']){

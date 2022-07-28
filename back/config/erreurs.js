@@ -15,7 +15,7 @@ exports.error =  function(err){
                 return 'Erreur interne du serveur';
                 break;
             default:
-                return 'ERREUR';
+                return err;
                 break;
         }
     }
