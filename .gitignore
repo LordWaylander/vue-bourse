@@ -11,5 +11,4 @@ package-lock.json
 *.sln
 *.sw?
 API
-back/package.json
 back/.env
