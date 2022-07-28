@@ -24,7 +24,6 @@ exports.time_series_daily = (req, reply) => {
         reply.send(result.data);
     })
     .catch((err) => {
-        console.log(err);
         let e = erreurs.error(err);
         reply.code(500).send(e)
     })
@@ -45,7 +44,7 @@ exports.global_quote = (req, reply) => {
     })
     .catch((err) => {
         let e = erreurs.error(err);
-       reply.code(500).send(e)
+        reply.code(500).send(e)
     })
 }
 

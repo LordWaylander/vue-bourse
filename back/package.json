@@ -5,6 +5,7 @@
     "axios": "^0.27.2",
     "env-schema": "^5.0.0",
     "fastify": "^4.3.0",
+    "https-proxy-agent": "^5.0.1",
     "node-fetch": "^2.6.7",
     "path": "^0.12.7"
   }

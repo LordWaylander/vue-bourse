@@ -1,4 +1,5 @@
 exports.error =  function(err){
+    console.log(err);
     if(err.code === "ERR_BAD_RESPONSE"){
         return 'Erreur interne du serveur';
     }else if (err.code === "ERR_NETWORK"){
