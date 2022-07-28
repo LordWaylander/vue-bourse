@@ -13,3 +13,4 @@ package-lock.json
 API
 back/config/Axios.js
 back/package.json
+back/.env
