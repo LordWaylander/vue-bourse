@@ -43,7 +43,7 @@ export default {
             .then(res => {
                 console.log(res.data)
                 if(res.data === 'login success'){
-                    this.$router.router.push('home');
+                    this.$router.push('home')
                 }
             })
             .catch(err => console.log(err))
