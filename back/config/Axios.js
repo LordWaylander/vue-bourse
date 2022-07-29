@@ -1,5 +1,6 @@
+const configEnv = require('../config/Env');
 const axios = require('axios');
-
+console.log(configEnv);
 exports.axios = axios.create({
     baseURL:'https://www.alphavantage.co/',
     headers : {
@@ -15,4 +16,4 @@ exports.axios = axios.create({
     }
 })
 
-exports.token = 'XXXXXXXXXXX'
+exports.token = configEnv.config.API_KEY

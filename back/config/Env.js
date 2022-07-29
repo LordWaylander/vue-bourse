@@ -1,7 +1,8 @@
 const schema = {
     type: 'object',
     required: [ 
-        'SERVER_PORT', 
+        'SERVER_PORT',
+        'API_KEY'
     ],
     properties: {
         SERVER_PORT: {
@@ -14,6 +15,9 @@ const schema = {
             type: 'string'
         },
         HTTP_PROXY_MDP: {
+            type: 'string'
+        },
+        API_KEY: {
             type: 'string'
         }
     }
