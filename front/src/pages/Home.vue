@@ -71,8 +71,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Graphique from '@/components/Graphique.vue';
-import API from '@/_services/api.service.js'; // rename the file in _services
-//import Errors from '../errors/error.js';
+import API from '@/_services/api.service.js';
 
 export default {
     components: {
@@ -107,13 +106,12 @@ export default {
         },
         requeteAPI(query){
             document.getElementById("loader").style.display="flex";
-            //let query = element;
 
-            API.get(`/time_series_daily/${query}`)
+            API.get(`/api/time_series_daily/${query}`)
             .then((res) => {
                     this.TIME_SERIES_DAILY=res.data;
                 },
-                API.get(`/global_quote/${query}`)
+                API.get(`/api/global_quote/${query}`)
                     .then((res) => {
                         this.GLOBAL_QUOTE=res.data;
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
@@ -138,7 +136,7 @@ export default {
         },
         searchIndice() {
             let query = this.request.query;
-            API.get(`/symbol_search/${query}`)
+            API.get(`/api/symbol_search/${query}`)
             .then((res) => {
                 this.request.research = res.data;
                 document.getElementById('modalBackground').style.display='block';

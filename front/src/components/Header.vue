@@ -15,6 +15,15 @@
           <input id="submit" type="submit" value="Rechercher" />
         </div>
       </form>
+
+      <div id="connexion">
+         <ul>
+        <RouterLink to="/connexion" active-class="nav-active">
+            <li>Connexion</li>
+        </RouterLink>
+        </ul>
+      </div>
+      
     </div>
 </template>
 
@@ -61,7 +70,7 @@ export default {
       }
       a.nav-active {
           background-color: #083cac;
-        }
+      }
     }
      
 
@@ -98,6 +107,12 @@ export default {
         }
         
       }
+    }
+
+    #connexion{
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 }
 </style>

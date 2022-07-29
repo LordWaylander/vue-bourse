@@ -2,7 +2,13 @@ const fastify = require('fastify')({logger: true});
 const autoload = require('@fastify/autoload');
 const path = require('path');
 
-fastify.register(require('@fastify/cors'))
+fastify.register(require('@fastify/cors'));
+
+/**
+ * utile uniquement pour postman a 1ere vue
+ */
+fastify.register(require('@fastify/formbody'));
+fastify.register(require('@fastify/multipart'));
 
 //env-schema -> CF : configEnv.js
 
