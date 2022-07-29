@@ -1,27 +1,26 @@
 <template lang="">
     <div className='header'>
-        <ul>
+        <div>
           <RouterLink to="/" active-class="nav-active">
-            <li>API</li>
+            <button>API</button>
           </RouterLink>
           <RouterLink to="/tableur" active-class="nav-active">
-            <li>Tableur</li>
+            <button>Tableur</button>
           </RouterLink>
-        </ul>
+          
+        </div>
       
-      <form @submit.prevent="submit($event)">
+      <form @submit.prevent="submit()">
         <div>
-          <input id="search" type="text" placeholder="Rechercher une valeur"  />
+          <input id="search" type="text" placeholder="Rechercher une valeur"  v-model="searchIndice"/>
           <input id="submit" type="submit" value="Rechercher" />
         </div>
       </form>
 
       <div id="connexion">
-         <ul>
-        <RouterLink to="/connexion" active-class="nav-active">
-            <li>Connexion</li>
-        </RouterLink>
-        </ul>
+          <RouterLink to="/connexion" active-class="nav-active">
+            <button>Connexion</button>
+          </RouterLink>
       </div>
       
     </div>
@@ -29,10 +28,15 @@
 
 <script>
 export default {
+  data(){
+    return{
+      searchIndice:''
+    }
+  },
   methods: {
-    submit(e) {
+    submit() {
       // envoie une "props" de l'enfant au parent, en l'occurence ici la recherche du header au parent pour faire la requete
-      this.$emit('searchIndiceBourse', { valueSearch: e.target[0].value })
+      this.$emit('searchIndiceBourse', { valueSearch: this.searchIndice })
     }
   }
 }
@@ -44,9 +48,9 @@ export default {
     border-radius: 0 0 2rem 2rem;
     display: grid;
     grid-template-columns: 30% 1fr 30%;
-    grid-template-areas: 'btn form .';
+    grid-template-areas: 'btn form connexion';
 
-    ul {
+    div {
       grid-area: btn;
       display: flex;
       align-items: center;
@@ -54,7 +58,7 @@ export default {
       list-style: none;
       a {
         background-color: #0051ff;
-        width: 125px;
+        width: 8rem;
         border: 2px solid #08f;
         border-radius: 50px;
         text-decoration: none;
@@ -67,6 +71,11 @@ export default {
         &:hover {
           background-color: rgb(0, 110, 255);
         }
+      }
+      a button{
+        border: none;
+        background:none;
+        color: white;
       }
       a.nav-active {
           background-color: #083cac;
@@ -103,16 +112,16 @@ export default {
           font-weight: bold;
           &:hover {
           background-color: #083cac;
+          }
         }
-        }
-        
       }
     }
 
     #connexion{
+      grid-area: connexion;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
     }
 }
 </style>

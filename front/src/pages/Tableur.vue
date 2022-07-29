@@ -129,7 +129,7 @@ export default {
         }
     }
     #recap{
-        margin-top: 2rem;
+        margin: 2rem 10%;
     }
     .values {
         display: grid;

@@ -1,13 +1,16 @@
 <template lang="">
-    <Header/>
-    <div id="connexionform">
-        <form  @submit.prevent="login($event)">
-            <label for="username">Nom d'utilisateur</label>
-            <input id="user" type="text" name="username" placeholder="Nom d'utilisateur"/>
-            <label for="password">Mot de passe</label>
-            <input id="password" type="password" name="password" placeholder="Mot de passe"/>
-            <input type="submit" value="Se connecter" id="submitConnexion"/>
-        </form>
+
+    <div id="background">
+        <Header/>
+        <div id="connexionform">
+            <form  @submit.prevent="login()">
+                <label for="username">Nom d'utilisateur</label>
+                <input id="user" type="text" name="username" placeholder="Nom d'utilisateur" v-model="user"/>
+                <label for="password">Mot de passe</label>
+                <input id="password" type="password" name="password" placeholder="Mot de passe" v-model="password"/>
+                <input type="submit" value="Se connecter" id="submitConnexion"/>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -19,32 +22,45 @@ export default {
      components: {
         Header,
     },
+    data() {
+        return{
+            user:'',
+            password:''
+        }
+    },
     methods: {
-        login(event) {
-            let user = event.target[0].value;
-            let password = event.target[1].value;
-
-            if(user == "" || password ==""){
+        login() {
+            if(this.user == "" || this.password ==""){
                 console.warn('ne pas envoyer le form');
             }
 
             let credentials = {
-                user:user,
-                password:password
+                user: this.user,
+                password: this.password
             }
             
             API.post(`/login`, credentials)
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err.response.data))
+            .then(res => {
+                console.log(res.data)
+                if(res.data === 'login success'){
+                    this.$router.router.push('home');
+                }
+            })
+            .catch(err => console.log(err))
         },
     },
 }
 </script>
 
 <style lang="scss">
+#background{
+    background-image: url('../assets/bourse-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
     #connexionform{
-        border: 1px solid red;
-        border: 1px solid red;
+
         width: 75%;
         display: flex;
         justify-content: center;
@@ -54,18 +70,15 @@ export default {
         form{
             flex-direction: column;
             display: flex;
+            align-items: center;
             width: 75%;
-            label{
-                display: flex;
-                justify-content: center;
-            }
             input{
                 width: 100%;
                 box-sizing: border-box;
                 text-align: center;
                 background-repeat: no-repeat;
                 background-size: contain;
-                background-position-x: 2%;
+                background-position-x: 0.5%;
                 border-radius: 50px;
                 &:focus{
                     border: 1px solid rgb(24, 148, 197)
@@ -78,8 +91,16 @@ export default {
                 background-image: url('../assets/cadenas.png');
             }
             #submitConnexion{
-                background-color: aquamarine;
+                width: 50%;
                 margin-top: 1rem;
+                background-color: #0051ff;
+                border: 2px solid #08f;
+                text-decoration: none;
+                color: white;
+                padding: 0.2rem;
+                &:hover {
+                    background-color: rgb(0, 110, 255);
+                }
                 
             }
             

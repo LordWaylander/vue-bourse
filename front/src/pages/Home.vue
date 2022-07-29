@@ -1,10 +1,11 @@
 <template lang="">
-        <Header @searchIndiceBourse="searchIndiceBourse"/>
+    <Header @searchIndiceBourse="searchIndiceBourse"/>
 
-        <div id="loader">
-            <img src="../assets/loader.gif"/>
-        </div>
+    <div id="loader">
+        <img src="../assets/loader.gif"/>
+    </div>
 
+    <div id="opacityCorps">
         <div id="modalBackground" v-if="error === false">
             <div id="close" @click="closeModal"><img src="../assets/cross_close.png"/></div>
             <div v-if="request.research.length > 0" id="modalCorps">
@@ -20,52 +21,55 @@
                 Aucune correspondance trouvée !
             </div>
         </div>
+    </div>
+    
         
-        <div id="titre">
-            <div v-if="error === false">
-                <div v-if="GLOBAL_QUOTE">
-                    <div id="entete">
-                        <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
-                        <div id="GLOBAL_QUOTE">
-                            <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
-                            <p>Cours Actuel : {{GLOBAL_QUOTE["Global Quote"]["05. price"]}}</p>
-                            <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
-                            <p>Variation : <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}"> {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</span></p>
-                            <p>Mise à jour : {{date}}</p>
-                        </div>
-                    </div>
-                    <div id="corps">
-                        <div id="corpsGLOBAL_QUOTE">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">Séance du {{date}}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><p>Ouverture :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</span></td>
-                                        <td><p>Volumes échangés :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>+ Haut :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</span></td>
-                                        <td><p>+ Bas :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>Variation :</p> <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}">{{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</span></td>
-                                        <td><p>Variation :</p> <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}">{{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
+    <div id="titre">
+        <div v-if="error === false">
+            <div v-if="GLOBAL_QUOTE">
+                <div id="entete">
+                    <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
+                    <div id="GLOBAL_QUOTE">
+                        <p>{{GLOBAL_QUOTE["Global Quote"]["01. symbol"]}}</p>
+                        <p>Cours Actuel : {{GLOBAL_QUOTE["Global Quote"]["05. price"]}}</p>
+                        <p>Cloture précédente : {{GLOBAL_QUOTE["Global Quote"]["08. previous close"]}}</p>
+                        <p>Variation : <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}"> {{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</span></p>
+                        <p>Mise à jour : {{date}}</p>
                     </div>
                 </div>
-            </div>
-            <div v-else id="error">
-                <h1>{{error}}</h1>
+                <div id="corps">
+                    <div id="corpsGLOBAL_QUOTE">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Séance du {{date}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><p>Ouverture :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["02. open"]}}</span></td>
+                                    <td><p>Volumes échangés :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["06. volume"]}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><p>+ Haut :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["03. high"]}}</span></td>
+                                    <td><p>+ Bas :</p> <span>{{GLOBAL_QUOTE["Global Quote"]["04. low"]}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Variation :</p> <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}">{{GLOBAL_QUOTE["Global Quote"]["09. change"]}}</span></td>
+                                    <td><p>Variation :</p> <span :style="variation > 0 ? {'color' : 'green'} : {'color' : 'red'}">{{GLOBAL_QUOTE["Global Quote"]["10. change percent"]}}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
+                </div>
             </div>
         </div>
+        <div v-else id="error">
+            <h1>{{error}}</h1>
+        </div>
+    </div>
+        
 </template>
 
 <script>
@@ -117,7 +121,7 @@ export default {
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
                         this.variation=(parseFloat(this.variation, 10));
                         document.getElementById("loader").style.display="none";
-                        document.getElementById('modalBackground').style.display='none';
+                        document.getElementById('opacityCorps').style.display='none';
                         document.getElementById("titre").style.display="block";
                     })
                     .catch((err) => {
@@ -139,14 +143,14 @@ export default {
             API.get(`/api/symbol_search/${query}`)
             .then((res) => {
                 this.request.research = res.data;
-                document.getElementById('modalBackground').style.display='block';
+                document.getElementById('opacityCorps').style.display='block';
             })
             .catch((err) => {
                 this.error = err.response.data;
             })
         },
         closeModal(){
-            document.getElementById('modalBackground').style.display='none';
+            document.getElementById('opacityCorps').style.display='none';
             this.request.research="";
             this.request.query="";
         }
@@ -173,6 +177,7 @@ export default {
 </script>
 
 <style lang="scss">
+
     #titre{
         display: none;
         margin: 50px;
@@ -234,50 +239,55 @@ export default {
             height: 100px;
         }
     }
-    #modalBackground{
-        display:none;
-        background-color: rgba(221, 217, 217, 0.9);
-        height: max-content;
-        width: 75%;
-        z-index: 10;
+    #opacityCorps{
+        height: 100vh;
+        z-index: 50;
         position: absolute;
-        left: 12.5%;
-        top:25%;
-        border: 1px solid black;
-        border-radius: 5%;
-        box-shadow: 1px 5px 10px #007ce8;
-
-        #close{
-            display: flex;
-            justify-content: end;
-            margin-right: 3%;
-            margin-top: 1%;
-            img{
-                width: 25px;
-                max-width: 3%;
-                cursor: pointer;
-            }
-        }
-
-        #modalCorps{
-            display: flex;
-            flex-direction: column;
-            margin: 20px;
-
-            #modalElement{
+        left: 12.5;
+        width: 100%;
+        background-color: #f0f8ffd9;
+        top: 0%;
+        display:none;
+        #modalBackground{
+            background-color: rgba(221, 217, 217, 0.9);
+            height: max-content;
+            width: 75%;
+            z-index: 10;
+            position: absolute;
+            left: 12.5%;
+            top:25%;
+            border: 1px solid black;
+            border-radius: 5%;
+            box-shadow: 1px 5px 10px #007ce8;
+            #close{
                 display: flex;
-                justify-content: center;
-                cursor: pointer;
-                p{
-                    margin-right: 2%;
+                justify-content: end;
+                margin-right: 3%;
+                margin-top: 1%;
+                img{
+                    width: 25px;
+                    max-width: 3%;
+                    cursor: pointer;
                 }
             }
+            #modalCorps{
+                display: flex;
+                flex-direction: column;
+                margin: 20px;
+                #modalElement{
+                    display: flex;
+                    justify-content: center;
+                    cursor: pointer;
+                    p{
+                        margin-right: 2%;
+                    }
+                }
+            }
+            #empty{
+                text-align: center;
+                margin-bottom: 2%;
+            }
         }
-        
-        #empty{
-            text-align: center;
-            margin-bottom: 2%;
-        }
-
     }
+    
 </style>
