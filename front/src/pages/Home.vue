@@ -75,7 +75,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Graphique from '@/components/Graphique.vue';
-import API from '@/_services/api.service.js';
+import API from '@/config/api.service.js';
 
 export default {
     components: {

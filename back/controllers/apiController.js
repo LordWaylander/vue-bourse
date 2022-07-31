@@ -1,5 +1,5 @@
 const API = require('../config/Axios.js');
-const erreurs = require('../config/erreurs');
+const erreurs = require('../errors/erreurs');
 
 /**
     * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD
