@@ -19,13 +19,15 @@ import Header from '@/components/Header.vue';
 import API from '@/config/api.service.js';
 
 export default {
-     components: {
+    //emits: ["userConnected"],
+    components: {
         Header,
     },
     data() {
         return{
             user:'',
-            password:''
+            password:'',
+            auth : false
         }
     },
     methods: {
@@ -41,8 +43,11 @@ export default {
             
             API.post(`/login`, credentials)
             .then(res => {
-                console.log(res.data)
-                if(res.data === 'login success'){
+                if(res.data.data){
+                    delete res.data.data.auth
+                    localStorage.user = JSON.stringify(res.data.data)
+                    this.authBool = true
+                    //emit('userConnected', { connected: true })
                     this.$router.push('home')
                 }
             })

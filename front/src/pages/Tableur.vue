@@ -1,5 +1,5 @@
 <template lang="">
-    <Header />
+    <Header/>
     <form v-on:submit.prevent="submit($event)" id="formTableur">
         <label for="coursAchatAction">Cours de l'action à l'achat</label>
         <input type="text" placeholder="Cout action à l'achat" name="coursAchatAction" v-model="form.coursAchatAction"/>

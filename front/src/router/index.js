@@ -9,17 +9,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
     },
     {
       path: '/tableur',
       name: 'tableur',
-      component: Tableur
+      component: Tableur,
     },
     {
       path: '/connexion',
       name: 'connexion',
-      component: Connexion
+      component: Connexion,
     },
     {
       path:'/:pathMatch(.*)*',

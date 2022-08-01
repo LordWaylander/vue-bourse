@@ -13,7 +13,6 @@ fastify.register(require('@fastify/multipart'));
 //env-schema -> CF : configEnv.js
 
 const configEnv = require('./config/Env.js');
-
 fastify.listen(configEnv.config.SERVER_PORT)
 .then((address) => {
     fastify.log.info('ADDR Serveur '+address)

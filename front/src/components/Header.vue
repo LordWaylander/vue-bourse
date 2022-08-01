@@ -17,28 +17,36 @@
         </div>
       </form>
 
-      <div id="connexion">
-          <RouterLink to="/connexion" active-class="nav-active">
-            <button>Connexion</button>
-          </RouterLink>
+      <div id="connexion" v-if="auth==false">
+        <RouterLink to="/connexion" active-class="nav-active">
+          <button>Connexion</button>
+        </RouterLink>
       </div>
+      <!--<div id="deconnexion" v-else>
+        <button>Déconnecter</button>
+      </div>-->
       
     </div>
 </template>
 
 <script>
 export default {
+  inject: ['auth'],
   data(){
     return{
-      searchIndice:''
+      searchIndice:'',
+      //authBool : this.auth
     }
   },
   methods: {
     submit() {
       // envoie une "props" de l'enfant au parent, en l'occurence ici la recherche du header au parent pour faire la requete
       this.$emit('searchIndiceBourse', { valueSearch: this.searchIndice })
-    }
-  }
+    },
+  },
+  mounted() {
+    console.log(this.auth)
+  },
 }
 </script>
 
@@ -118,6 +126,12 @@ export default {
     }
 
     #connexion{
+      grid-area: connexion;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #deconnexion{
       grid-area: connexion;
       display: flex;
       align-items: center;
