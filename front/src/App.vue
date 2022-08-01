@@ -1,6 +1,12 @@
 <template>
-  <Header @searchIndiceBourse="searchIndiceBourse" :auth="auth"/>
-  <RouterView @userConnected="userConnected" @queryValueConnected="queryValueConnected" :query="query" :querySearchIndice="querySearchIndice" />
+  <Header @searchIndiceBourse="searchIndiceBourse" :auth="auth" />
+  
+  <RouterView 
+    @userConnected="userConnected" 
+    @queryValueConnected="queryValueConnected" 
+    :query="query" 
+    :querySearchIndice="querySearchIndice" >
+  </RouterView>
   
   
 </template>
