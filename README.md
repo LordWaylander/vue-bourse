@@ -11,6 +11,6 @@ avec la mise en place d'un graphique qui montre l'évolution sur les 2 dernière
 En 2nd page la mise en place d'un calcultateur de +/- value (uniquement en € et $ à l'heure actuelle, mais fonctionnel).
 
 ### Partie Back-END
-> Partie non codée, le cahier des charges reste à définir
+> login en cours de code, le cahier des charges reste à définir
 
 Mise en place d'un système d'authentification, avec un stockage des valeurs achetés (avec date, prix d'achat, taux de change si besoin, etc..) pour un calcul complet et automatique des +/- values avec possibilité d'un export en fichier csv / excel ainsi que la mise en place d'un système "coup de coeur" pour suivre certaines valeurs plus facilement.
