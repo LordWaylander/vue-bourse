@@ -31,24 +31,21 @@
 
 <script>
 export default {
-  inject: ['auth'],
+  props:['auth'],
   data(){
     return{
       searchIndice:'',
-      //authBool : this.auth
     }
   },
   methods: {
     submit() {
       // envoie une "props" de l'enfant au parent, en l'occurence ici la recherche du header au parent pour faire la requete
       this.$emit('searchIndiceBourse', { valueSearch: this.searchIndice })
+      this.searchIndice = '';
     },
     deconnexion() {
       localStorage.removeItem('user');
     }
-  },
-  mounted() {
-    console.log(this.auth)
   },
 }
 </script>

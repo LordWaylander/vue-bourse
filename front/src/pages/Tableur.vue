@@ -1,4 +1,5 @@
 <template lang="">
+<div>
     <form v-on:submit.prevent="submit($event)" id="formTableur">
         <label for="coursAchatAction">Cours de l'action à l'achat</label>
         <input type="text" placeholder="Cout action à l'achat" name="coursAchatAction" v-model="form.coursAchatAction"/>
@@ -38,6 +39,8 @@
             <p class="v100"><span>Prix de rachat action à +value 100% : </span>{{value100}} €</p>
         </div>
     </div>
+</div>
+    
 </template>
 
 

@@ -1,10 +1,8 @@
 <template>
-  <Header @searchIndiceBourse="searchIndiceBourse"/>
-  <RouterView :query="query" @userConnected="userConnected"/>
-  <!-- 
-    <router-view @userConnected="userConnected">
-    </router-view> 
-  -->
+  <Header @searchIndiceBourse="searchIndiceBourse" :auth="auth"/>
+  <RouterView @userConnected="userConnected" @queryValueConnected="queryValueConnected" :query="query" :querySearchIndice="querySearchIndice" />
+  
+  
 </template>
 
 <script>
@@ -18,7 +16,8 @@ import Header from '@/components/Header.vue';
     data() {
       return {
         auth : false,
-        query : "msft"
+        query : "msft",
+        querySearchIndice : ""
       }
     },
     methods: {
@@ -26,14 +25,12 @@ import Header from '@/components/Header.vue';
         this.auth = payload.connected
       },
       searchIndiceBourse(payload) {
-            this.query = payload.valueSearch;
-        },
-    },
-    provide() {
-      return {
-        auth: computed(() =>  this.auth)
+        this.querySearchIndice = payload.valueSearch;
+      },
+      queryValueConnected(payload) {
+        this.query = payload.queryValueConnected
       }
-    },  
+    },
     created() {
       if (localStorage.user) {
         this.auth = true

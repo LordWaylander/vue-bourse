@@ -1,5 +1,4 @@
 <template lang="">
-
     <div id="background">
         <div id="connexionform">
             <form  @submit.prevent="login()">
@@ -26,6 +25,10 @@ export default {
     },
     methods: {
         login() {
+            /**
+             * Mettre { connected: true } dans le localStorage
+             * Tu veux un cookie ? :3
+             */
             if(this.user == "" || this.password ==""){
                 console.warn('ne pas envoyer le form');
             }

@@ -1,5 +1,6 @@
 <template lang="">
-    <div id="loader">
+<div>
+<div id="loader">
         <img src="../assets/loader.gif"/>
     </div>
 
@@ -67,6 +68,9 @@
             <h1>{{error}}</h1>
         </div>
     </div>
+</div>
+    
+    
 </template>
 
 <script>
@@ -75,9 +79,9 @@ import API from '@/config/api.service.js';
 
 export default {
     components: {
-        Graphique
+        Graphique,
     },
-    props:['query'],
+    props:['query', 'querySearchIndice'],
     data() {
         return {
             request: {
@@ -89,6 +93,7 @@ export default {
                     TIME_SERIES_WEEKLY: 'TIME_SERIES_WEEKLY',
                     TIME_SERIES_MONTHLY: 'TIME_SERIES_MONTHLY'
                 },
+                query:'',
                 interval: '', // à voir si mis réellement en place
                 exchange:'', // marché sur lequel chercher les indices, à mettre en place
                 research:'', // recherche searchIndice
@@ -100,27 +105,33 @@ export default {
         }
     },
     methods:{
+        /*searchIndiceBourse(payload) {
+            this.query = payload.valueSearch;
+        },*/
         requeteAPI(query){
+            this.request.query = query
+
             document.getElementById("loader").style.display="flex";
 
-            API.get(`/api/time_series_daily/${query}`)
+            API.get(`/api/time_series_daily/${this.request.query}`)
             .then((res) => {
                     this.TIME_SERIES_DAILY=res.data;
                 },
-                API.get(`/api/global_quote/${query}`)
+                API.get(`/api/global_quote/${this.request.query}`)
                     .then((res) => {
                         this.GLOBAL_QUOTE=res.data;
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
                         this.variation=(parseFloat(this.variation, 10));
+                        this.$emit('queryValueConnected', { queryValueConnected: this.request.query })
                         document.getElementById("loader").style.display="none";
                         document.getElementById('opacityCorps').style.display='none';
                         document.getElementById("titre").style.display="block";
                     })
                     .catch((err) => {
-                        console.log(err);
                         this.error = err.response.data;
                         document.getElementById("loader").style.display="none";
                         document.getElementById("titre").style.display="block";
+                        document.getElementById('opacityCorps').style.display='none';
                     })
                 )            
             .catch((err) => { 
@@ -128,10 +139,11 @@ export default {
                 this.error = err.response.data;
                 document.getElementById("loader").style.display="none";
                 document.getElementById("titre").style.display="block";
+                document.getElementById('opacityCorps').style.display='none';
             })
         },
         searchIndice() {
-            let query = this.query;
+            let query = this.querySearchIndice;
             API.get(`/api/symbol_search/${query}`)
             .then((res) => {
                 this.request.research = res.data;
@@ -151,8 +163,8 @@ export default {
         this.requeteAPI(this.query);
     },
     watch:{
-        'query'(){
-            if(this.query.length){
+        'querySearchIndice'(){
+            if(this.querySearchIndice.length){
                  this.searchIndice();
             }
         },
