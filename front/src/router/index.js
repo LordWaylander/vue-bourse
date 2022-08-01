@@ -10,6 +10,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home,
+      props: (route) => ({ query: '' })
     },
     {
       path: '/tableur',

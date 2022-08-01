@@ -1,5 +1,6 @@
 <template>
-  <RouterView />
+  <Header @searchIndiceBourse="searchIndiceBourse"/>
+  <RouterView :query="query"/>
   <!-- 
     <router-view @userConnected="userConnected">
     </router-view> 
@@ -8,16 +9,25 @@
 
 <script>
 import { computed } from "vue";
+import Header from '@/components/Header.vue';
+
   export default{
+    components: {
+        Header,
+    },
     data() {
       return {
-        auth : false
+        auth : false,
+        query : "msft"
       }
     },
     methods: {
       /*userConnected(payload){
         this.auth = payload.connected
       }*/
+      searchIndiceBourse(payload) {
+            this.query = payload.valueSearch;
+        },
     },
     provide() {
       return {
@@ -25,7 +35,6 @@ import { computed } from "vue";
       }
     },  
     created() {
-      console.log(localStorage.user);
       if (localStorage.user) {
         this.auth = true
       }

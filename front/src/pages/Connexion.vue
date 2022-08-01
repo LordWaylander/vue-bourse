@@ -1,7 +1,6 @@
 <template lang="">
 
     <div id="background">
-        <Header/>
         <div id="connexionform">
             <form  @submit.prevent="login()">
                 <label for="username">Nom d'utilisateur</label>
@@ -20,9 +19,6 @@ import API from '@/config/api.service.js';
 
 export default {
     //emits: ["userConnected"],
-    components: {
-        Header,
-    },
     data() {
         return{
             user:'',

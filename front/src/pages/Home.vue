@@ -1,6 +1,4 @@
 <template lang="">
-    <Header @searchIndiceBourse="searchIndiceBourse"/>
-
     <div id="loader">
         <img src="../assets/loader.gif"/>
     </div>
@@ -73,15 +71,14 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
 import Graphique from '@/components/Graphique.vue';
 import API from '@/config/api.service.js';
 
 export default {
     components: {
-        Header,
         Graphique
     },
+    props:['query'],
     data() {
         return {
             request: {
@@ -94,7 +91,6 @@ export default {
                     TIME_SERIES_MONTHLY: 'TIME_SERIES_MONTHLY'
                 },
                 interval: '', // à voir si mis réellement en place
-                query:'msft',
                 exchange:'', // marché sur lequel chercher les indices, à mettre en place
                 research:'', // recherche searchIndice
             },
@@ -105,9 +101,6 @@ export default {
         }
     },
     methods:{
-        searchIndiceBourse(payload) {
-            this.request.query = payload.valueSearch;
-        },
         requeteAPI(query){
             document.getElementById("loader").style.display="flex";
 
@@ -139,7 +132,7 @@ export default {
             })
         },
         searchIndice() {
-            let query = this.request.query;
+            let query = this.query;
             API.get(`/api/symbol_search/${query}`)
             .then((res) => {
                 this.request.research = res.data;
@@ -156,14 +149,14 @@ export default {
         }
     },
     mounted() {
-        this.requeteAPI(this.request.query);
+        this.requeteAPI(this.query);
     },
     watch:{
-        'request.query'() {
-            if(this.request.query.length){
-                this.searchIndice();
+        'query'(){
+            if(this.query.length){
+                 this.searchIndice();
             }
-        }
+        },
     },
     computed:{
         date() {
