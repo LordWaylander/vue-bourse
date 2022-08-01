@@ -14,11 +14,9 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
 import API from '@/config/api.service.js';
 
 export default {
-    //emits: ["userConnected"],
     data() {
         return{
             user:'',
@@ -40,11 +38,10 @@ export default {
             API.post(`/login`, credentials)
             .then(res => {
                 if(res.data.data){
-                    delete res.data.data.auth
-                    localStorage.user = JSON.stringify(res.data.data)
-                    this.authBool = true
-                    //emit('userConnected', { connected: true })
-                    this.$router.push('home')
+                    delete res.data.data.auth;
+                    localStorage.user = JSON.stringify(res.data.data);
+                    this.$emit('userConnected', { connected: true });
+                    this.$router.push('home');
                 }
             })
             .catch(err => console.log(err))

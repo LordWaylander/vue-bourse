@@ -1,6 +1,6 @@
 <template>
   <Header @searchIndiceBourse="searchIndiceBourse"/>
-  <RouterView :query="query"/>
+  <RouterView :query="query" @userConnected="userConnected"/>
   <!-- 
     <router-view @userConnected="userConnected">
     </router-view> 
@@ -13,7 +13,7 @@ import Header from '@/components/Header.vue';
 
   export default{
     components: {
-        Header,
+      Header
     },
     data() {
       return {
@@ -22,9 +22,9 @@ import Header from '@/components/Header.vue';
       }
     },
     methods: {
-      /*userConnected(payload){
+      userConnected(payload){
         this.auth = payload.connected
-      }*/
+      },
       searchIndiceBourse(payload) {
             this.query = payload.valueSearch;
         },

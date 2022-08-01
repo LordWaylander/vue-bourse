@@ -22,9 +22,9 @@
           <button>Connexion</button>
         </RouterLink>
       </div>
-      <!--<div id="deconnexion" v-else>
-        <button>Déconnecter</button>
-      </div>-->
+      <div id="deconnexion" v-else>
+          <button @click="deconnexion">Déconnecter</button>
+      </div>
       
     </div>
 </template>
@@ -43,6 +43,9 @@ export default {
       // envoie une "props" de l'enfant au parent, en l'occurence ici la recherche du header au parent pour faire la requete
       this.$emit('searchIndiceBourse', { valueSearch: this.searchIndice })
     },
+    deconnexion() {
+      localStorage.removeItem('user');
+    }
   },
   mounted() {
     console.log(this.auth)
@@ -136,6 +139,22 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      button {
+        background-color: #0051ff;
+        width: 8rem;
+        border: 2px solid #08f;
+        border-radius: 50px;
+        text-decoration: none;
+        color: white;
+        padding: 0.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1rem;
+        &:hover {
+          background-color: rgb(0, 110, 255);
+        }
+      }
     }
 }
 </style>

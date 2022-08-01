@@ -67,7 +67,6 @@
             <h1>{{error}}</h1>
         </div>
     </div>
-        
 </template>
 
 <script>
@@ -165,7 +164,7 @@ export default {
         dernierRafraichissement() {
             return this.TIME_SERIES_DAILY["Meta Data"]["3. Last Refreshed"].split('-').reverse().join("/");
         }
-    }
+    },
 }
 </script>
 
