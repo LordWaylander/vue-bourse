@@ -1,4 +1,4 @@
-const configEnv = require('./Env');
+const {config} = require('./Env');
 const axios = require('axios');
 
 exports.axios = axios.create({
@@ -7,13 +7,13 @@ exports.axios = axios.create({
         'Content-Type': 'application/json',
     },
     proxy: {
-        host: configEnv.config.HTTP_PROXY_ADDRESS,
+        host: config.HTTP_PROXY_ADDRESS,
         protocol: 'https',
         auth: {
-            username: configEnv.config.HTTP_PROXY_USER, 
-            password: configEnv.config.HTTP_PROXY_MDP
+            username: config.HTTP_PROXY_USER, 
+            password: config.HTTP_PROXY_MDP
         }
     }
 })
 
-exports.token = configEnv.config.API_KEY
+exports.apiKey = config.API_KEY

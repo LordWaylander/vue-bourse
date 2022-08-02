@@ -76,7 +76,6 @@
 <script>
 import Graphique from '@/components/Graphique.vue';
 import API from '@/_services/api.service.js';
-//import API from '@/config/api.service.js';
 
 export default {
     components: {

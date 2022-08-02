@@ -9,16 +9,19 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      meta:{guest:true},
       component: Home,
     },
     {
       path: '/tableur',
       name: 'tableur',
+      meta:{guest:false},
       component: Tableur,
     },
     {
       path: '/connexion',
       name: 'connexion',
+      meta:{guest:true},
       component: Connexion,
     },
     {
@@ -27,5 +30,13 @@ const router = createRouter({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if ((to.meta.guest == false) && (!!localStorage.getItem('token') == false)) {
+    return next({path:'/connexion'});
+  }
+  return next()
+})
+
 
 export default router

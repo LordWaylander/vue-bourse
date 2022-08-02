@@ -2,7 +2,8 @@ const schema = {
     type: 'object',
     required: [ 
         'SERVER_PORT',
-        'API_KEY'
+        'API_KEY',
+        'JWT_SECRET'
     ],
     properties: {
         SERVER_PORT: {
@@ -18,6 +19,9 @@ const schema = {
             type: 'string'
         },
         API_KEY: {
+            type: 'string'
+        },
+        JWT_SECRET: {
             type: 'string'
         }
     }

@@ -4,7 +4,7 @@
           <RouterLink to="/" active-class="nav-active">
             <button>API</button>
           </RouterLink>
-          <RouterLink to="/tableur" active-class="nav-active">
+          <RouterLink to="/tableur" active-class="nav-active" v-if="auth">
             <button>Tableur</button>
           </RouterLink>
           
@@ -44,7 +44,9 @@ export default {
       this.searchIndice = '';
     },
     deconnexion() {
-      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      this.$emit('userConnected', { connected: false });
+      this.$router.push('home');
     }
   },
 }

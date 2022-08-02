@@ -1,4 +1,4 @@
-const API = require('../_services/Axios.js');
+const {axios, apiKey} = require('../_services/Axios.js');
 const erreurs = require('../errors/erreurs');
 
 /**
@@ -12,7 +12,7 @@ const erreurs = require('../errors/erreurs');
 
 exports.time_series_daily = (req, reply) => {
     let query = req.params.query
-    API.axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${API.token}`)
+    axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${apiKey}`)
     .then(result => {
         if (result.data.Note) {
             throw new Error("Nombre maximal de requetes dépassé")
@@ -30,7 +30,7 @@ exports.time_series_daily = (req, reply) => {
 
 exports.global_quote = (req, reply) => {
     let query = req.params.query
-    API.axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${API.token}`)
+    axios.get(`query?function=GLOBAL_QUOTE&symbol=${query}&outputsize=compact&apikey=${apiKey}`)
     .then(result => {
         if (result.data.Note) {
             throw new Error("Nombre maximal de requetes dépassé")
@@ -48,7 +48,7 @@ exports.global_quote = (req, reply) => {
 
 exports.symbol_search = (req, reply) => {
     let query = req.params.query
-    API.axios.get(`query?function=SYMBOL_SEARCH&keywords=${query}&apikey=${API.token}`)
+    axios.get(`query?function=SYMBOL_SEARCH&keywords=${query}&apikey=${apiKey}`)
     .then((result) => {
         reply.send(result.data.bestMatches);
     })

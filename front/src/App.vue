@@ -1,5 +1,10 @@
 <template>
-  <Header @searchIndiceBourse="searchIndiceBourse" :auth="auth" />
+  <Header 
+    @searchIndiceBourse="searchIndiceBourse" 
+    @userConnected="userConnected" 
+    :auth="auth" >
+<!--     -->
+  </Header>
   
   <RouterView 
     @userConnected="userConnected" 
@@ -14,6 +19,7 @@
 <script>
 import { computed } from "vue";
 import Header from '@/components/Header.vue';
+import jwtDecode from 'vue-jwt-decode'
 
   export default{
     components: {
@@ -38,8 +44,18 @@ import Header from '@/components/Header.vue';
       }
     },
     created() {
-      if (localStorage.user) {
-        this.auth = true
+      
+      if (localStorage.token) {
+        let dateNow = Math.trunc(Date.now()/1000);
+        let decodedToken = jwtDecode.decode(localStorage.token);
+        const expDate = decodedToken.exp
+
+        if(dateNow > expDate) {
+          localStorage.removeItem('token');
+          return this.auth = false
+        }
+
+        return this.auth = true
       }
     },
   }

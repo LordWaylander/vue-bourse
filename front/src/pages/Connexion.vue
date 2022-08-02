@@ -26,7 +26,6 @@ export default {
     methods: {
         login() {
             /**
-             * Mettre { connected: true } dans le localStorage
              * Tu veux un cookie ? :3
              */
             if(this.user == "" || this.password ==""){
@@ -40,9 +39,9 @@ export default {
             
             API.post(`/login`, credentials)
             .then(res => {
-                if(res.data.data){
-                    delete res.data.data.auth;
-                    localStorage.user = JSON.stringify(res.data.data);
+                if(res.data.token){
+                    API.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
+                    localStorage.setItem('token', res.data.token);
                     this.$emit('userConnected', { connected: true });
                     this.$router.push('home');
                 }
