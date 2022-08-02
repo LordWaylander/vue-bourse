@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import API from '@/config/api.service.js';
+import API from '@/_services/api.service.js';
 
 export default {
     data() {

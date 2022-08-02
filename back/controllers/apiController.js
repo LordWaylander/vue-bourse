@@ -1,4 +1,4 @@
-const API = require('../config/Axios.js');
+const API = require('../_services/Axios.js');
 const erreurs = require('../errors/erreurs');
 
 /**

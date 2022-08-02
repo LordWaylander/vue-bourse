@@ -1,4 +1,4 @@
-const configEnv = require('../config/Env');
+const configEnv = require('./Env');
 const axios = require('axios');
 
 exports.axios = axios.create({
