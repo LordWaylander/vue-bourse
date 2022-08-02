@@ -6,14 +6,14 @@ exports.axios = axios.create({
     headers : {
         'Content-Type': 'application/json',
     },
-    proxy: {
+    /*proxy: {
         host: config.HTTP_PROXY_ADDRESS,
         protocol: 'https',
         auth: {
             username: config.HTTP_PROXY_USER, 
             password: config.HTTP_PROXY_MDP
         }
-    }
+    }*/
 })
 
 exports.apiKey = config.API_KEY
