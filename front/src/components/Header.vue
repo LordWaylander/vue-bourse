@@ -129,6 +129,11 @@ export default {
       }
     }
   }
+  #connexion{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
   #userAuth {
     grid-area: connexion;
     display: flex;
