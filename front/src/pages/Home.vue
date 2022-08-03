@@ -105,9 +105,6 @@ export default {
         }
     },
     methods:{
-        /*searchIndiceBourse(payload) {
-            this.query = payload.valueSearch;
-        },*/
         requeteAPI(query){
             this.request.query = query
 
@@ -122,7 +119,8 @@ export default {
                         this.GLOBAL_QUOTE=res.data;
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
                         this.variation=(parseFloat(this.variation, 10));
-                        this.$emit('queryValueConnected', { queryValueConnected: this.request.query })
+                        this.$emit('queryValueConnected', { queryValueConnected: this.request.query });
+                        this.error = false;
                         document.getElementById("loader").style.display="none";
                         document.getElementById('opacityCorps').style.display='none';
                         document.getElementById("titre").style.display="block";
@@ -137,6 +135,7 @@ export default {
             .catch((err) => { 
                 console.log(err);
                 this.error = err.response.data;
+                document.getElementById('opacityCorps').style.display='none';
                 document.getElementById("loader").style.display="none";
                 document.getElementById("titre").style.display="block";
                 document.getElementById('opacityCorps').style.display='none';
@@ -146,10 +145,12 @@ export default {
             let query = this.querySearchIndice;
             API.get(`/api/symbol_search/${query}`)
             .then((res) => {
+                this.error = false;
                 this.request.research = res.data;
                 document.getElementById('opacityCorps').style.display='block';
             })
             .catch((err) => {
+                console.log(err);
                 document.getElementById('opacityCorps').style.display='none';
                 this.error = err.response.data;
             })
@@ -161,6 +162,7 @@ export default {
         }
     },
     mounted() {
+        console.log(this.$route);
         this.requeteAPI(this.query);
     },
     watch:{
@@ -169,6 +171,9 @@ export default {
                  this.searchIndice();
             }
         },
+        'query'(){
+            console.log('query changé reload');
+        }
     },
     computed:{
         date() {

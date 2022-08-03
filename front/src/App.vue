@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import { computed } from "vue";
 import Header from '@/components/Header.vue';
 import jwtDecode from 'vue-jwt-decode'
 
@@ -53,6 +52,7 @@ import jwtDecode from 'vue-jwt-decode'
             if(this.auth === true){
               return this.dateNow =  Math.trunc(Date.now()/1000)
             }
+            return;
           }, 1000);
         
       }
@@ -83,7 +83,6 @@ import jwtDecode from 'vue-jwt-decode'
          * déconnexion si token expiré
          * mettre un avertissement ?
          */
-        
         let decodedToken = jwtDecode.decode(localStorage.token);
         const expDate = decodedToken.exp
         if(this.dateNow > expDate) {

@@ -43,7 +43,7 @@ export default {
                     API.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
                     localStorage.setItem('token', res.data.token);
                     this.$emit('userConnected', { connected: true });
-                    this.$router.push('home');
+                    this.$router.push('/home');
                 }
             })
             .catch(err => console.log(err))
