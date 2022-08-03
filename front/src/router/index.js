@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/pages/Home.vue';
 import Tableur from '@/pages/Tableur.vue';
 import Connexion from '@/pages/Connexion.vue';
+import Profil from '@/pages/Profil.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,12 @@ const router = createRouter({
       name: 'connexion',
       meta:{guest:true},
       component: Connexion,
+    },
+    {
+      path: '/profil',
+      name: 'profil',
+      meta:{guest:false},
+      component: Profil,
     },
     {
       path:'/:pathMatch(.*)*',

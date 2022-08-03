@@ -1,13 +1,12 @@
 <template lang="">
     <div className='header'>
-        <div>
+        <div id="routesMain">
           <RouterLink to="/" active-class="nav-active">
             <button>API</button>
           </RouterLink>
           <RouterLink to="/tableur" active-class="nav-active" v-if="auth">
             <button>Tableur</button>
           </RouterLink>
-          
         </div>
       
       <form @submit.prevent="submit()">
@@ -22,9 +21,18 @@
           <button>Connexion</button>
         </RouterLink>
       </div>
-      <div id="deconnexion" v-else>
+      <div id="userAuth" v-else >
+        <div id="deconnexion" >
           <button @click="deconnexion">Déconnecter</button>
+        </div>
+        <div id="profil">
+          <RouterLink to="/profil" active-class="nav-active">
+            <button>Profil</button>
+          </RouterLink>
+        </div>
       </div>
+      
+      
       
     </div>
 </template>
@@ -60,10 +68,11 @@ export default {
     grid-template-columns: 30% 1fr 30%;
     grid-template-areas: 'btn form connexion';
 
-    div {
+    #routesMain {
       grid-area: btn;
       display: flex;
       align-items: center;
+      justify-content: space-around;
       padding: 0;
       list-style: none;
       a {
@@ -132,13 +141,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    #deconnexion{
-      grid-area: connexion;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      button {
+      a {
         background-color: #0051ff;
         width: 8rem;
         border: 2px solid #08f;
@@ -154,6 +157,73 @@ export default {
           background-color: rgb(0, 110, 255);
         }
       }
+      a button{
+        border: none;
+        background:none;
+        color: white;
+      }
+      a.nav-active {
+          background-color: #083cac;
+      }
     }
+
+    #userAuth {
+      grid-area: connexion;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      #deconnexion{
+        width: max-content;
+        button {
+          background-color: #0051ff;
+          width: 8rem;
+          border: 2px solid #08f;
+          border-radius: 50px;
+          text-decoration: none;
+          color: white;
+          padding: 0.2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-left: 1rem;
+          &:hover {
+            background-color: rgb(0, 110, 255);
+          }
+        }
+      }
+
+      #profil{
+        width: max-content;
+        a {
+          background-color: #0051ff;
+          width: 8rem;
+          border: 2px solid #08f;
+          border-radius: 50px;
+          text-decoration: none;
+          color: white;
+          padding: 0.2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-left: 1rem;
+          &:hover {
+            background-color: rgb(0, 110, 255);
+          }
+        }
+        a button{
+          border: none;
+          background:none;
+          color: white;
+        }
+        a.nav-active {
+            background-color: #083cac;
+        }
+      }
+    }
+
+    .classButton {
+      
+    }
+    
 }
 </style>
