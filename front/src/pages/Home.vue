@@ -150,6 +150,7 @@ export default {
                 document.getElementById('opacityCorps').style.display='block';
             })
             .catch((err) => {
+                document.getElementById('opacityCorps').style.display='none';
                 this.error = err.response.data;
             })
         },
