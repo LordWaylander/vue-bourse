@@ -219,11 +219,6 @@ export default {
             background-color: #083cac;
         }
       }
-    }
-
-    .classButton {
-      
-    }
-    
+    }    
 }
 </style>
