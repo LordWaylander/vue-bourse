@@ -17,6 +17,7 @@
         </div>
     </div>
 </template>
+
 <script>
 export default {
     props:['research', 'error'],
@@ -26,9 +27,8 @@ export default {
         },
         closeModal(){
             document.getElementById('opacityCorps').style.display='none';
-
             // emit pour vider la valeur de recherche si on veut y retourner modal -> home -> app
-            // pas encore trouver pour passer de modal -> app directement
+            // pas encore trouvé pour passer de modal -> app directement
             this.$emit('emptyRequestSearch', "")
         }
     },

@@ -15,6 +15,13 @@
 <script>
 import Header from '@/components/Header.vue';
 import jwtDecode from 'vue-jwt-decode'
+/**
+ * Trouver le moyen de passer @searchIndiceBourse (header) à Home sans passer par app 
+ * @searchIndiceBourse (emit) -> :querySearchIndice (props)
+ * 
+ * Même chose pour emptyRequestSearch soit tout décaler ds Home, soit un transfert de Modal à App
+ * "relié a au dessus"
+ */
 
   export default{
     components: {

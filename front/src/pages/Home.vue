@@ -51,8 +51,6 @@
         </div>
     </div>
 </div>
-    
-    
 </template>
 
 <script>
@@ -221,6 +219,7 @@ export default {
             justify-content: center;
         }
     }
+    
     #loader {
         display: none;
         justify-content: center;
