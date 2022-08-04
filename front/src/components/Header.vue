@@ -1,42 +1,38 @@
 <template lang="">
-    <div className='header'>
-        <div id="routesMain">
-          <RouterLink to="/" active-class="nav-active" class="button">
-            <button>API</button>
-          </RouterLink>
-          <RouterLink to="/tableur" active-class="nav-active" v-if="auth" class="button">
-            <button>Tableur</button>
-          </RouterLink>
-        </div>
-      
-      <form @submit.prevent="submit()">
-        <div>
-          <input id="search" type="text" placeholder="Rechercher une valeur"  v-model="searchIndice"/>
-          <input id="submit" type="submit" value="Rechercher" />
-        </div>
-      </form>
-
-      <div id="connexion" v-if="auth==false">
-        <RouterLink to="/connexion" active-class="nav-active" class="button">
-          <button>Connexion</button>
-        </RouterLink>
-      </div>
-      <div id="userAuth" v-else >
-        <button @click="deconnexion" class="button">Déconnecter</button>
-        <RouterLink to="/profil" active-class="nav-active" class="button">
-          <button>Profil</button>
-        </RouterLink>
-      </div>
-      
-      
-      
+  <div className='header'>
+    <div id="routesMain">
+      <RouterLink to="/" active-class="nav-active" class="button">
+        <button>API</button>
+      </RouterLink>
+      <RouterLink to="/tableur" active-class="nav-active" v-if="auth" class="button">
+        <button>Tableur</button>
+      </RouterLink>
     </div>
+
+    <form @submit.prevent="submit()">
+      <div>
+        <input id="search" type="text" placeholder="Rechercher une valeur"  v-model="searchIndice"/>
+        <input id="submit" type="submit" value="Rechercher" />
+      </div>
+    </form>
+
+    <div id="connexion" v-if="auth==false">
+      <RouterLink to="/connexion" active-class="nav-active" class="button">
+        <button>Connexion</button>
+      </RouterLink>
+    </div>
+    <div id="userAuth" v-else >
+      <button @click="deconnexion" class="button">Déconnecter</button>
+      <RouterLink to="/profil" active-class="nav-active" class="button">
+        <button>Profil</button>
+      </RouterLink>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   props:['auth'],
-  
   data(){
     return{
       searchIndice:'',

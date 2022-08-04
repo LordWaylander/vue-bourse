@@ -34,7 +34,7 @@ import jwtDecode from 'vue-jwt-decode'
       userConnected(payload){
         this.auth = payload.connected
         if(this.auth === true){
-          // si authentifier lancement fonction validité token
+          // si authentifié lancement fonction validité token
           this.date();
         }
       },
