@@ -66,7 +66,7 @@ export default {
         Graphique,
         Modal
     },
-    props:['query', 'querySearchIndice'],
+    props:['querySearchIndice'],
     data() {
         return {
             request: {
@@ -91,20 +91,18 @@ export default {
     },
     methods:{
         requeteAPI(query){
-            this.request.query = query
-
+            localStorage.setItem('query', query)
             document.getElementById("loader").style.display="flex";
 
-            API.get(`/api/time_series_daily/${this.request.query}`)
+            API.get(`/api/time_series_daily/${query}`)
             .then((res) => {
                     this.TIME_SERIES_DAILY=res.data;
                 },
-                API.get(`/api/global_quote/${this.request.query}`)
+                API.get(`/api/global_quote/${query}`)
                     .then((res) => {
                         this.GLOBAL_QUOTE=res.data;
                         this.variation=this.GLOBAL_QUOTE["Global Quote"]["10. change percent"];
                         this.variation=(parseFloat(this.variation, 10));
-                        this.$emit('queryValueConnected', { queryValueConnected: this.request.query });
                         this.error = false;
                         document.getElementById("loader").style.display="none";
                         document.getElementById('opacityCorps').style.display='none';
@@ -145,7 +143,12 @@ export default {
         }
     },
     mounted() {
-        this.requeteAPI(this.query);
+        if(localStorage.query){
+            this.request.query = localStorage.query
+        } else {
+            this.request.query = 'msft'
+        }
+        this.requeteAPI(this.request.query);
     },
     watch:{
         'querySearchIndice'(){

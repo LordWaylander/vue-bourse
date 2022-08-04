@@ -6,10 +6,8 @@
   </Header>
   
   <RouterView 
-    @userConnected="userConnected" 
-    @queryValueConnected="queryValueConnected" 
+    @userConnected="userConnected"  
     @emptyRequestSearch="emptyRequestSearch"
-    :query="query" 
     :querySearchIndice="querySearchIndice" >
   </RouterView>
 </template>
@@ -25,7 +23,6 @@ import jwtDecode from 'vue-jwt-decode'
     data() {
       return {
         auth : false,
-        query : "msft",
         querySearchIndice : "",
         dateNow : ''
       }
@@ -40,9 +37,6 @@ import jwtDecode from 'vue-jwt-decode'
       },
       searchIndiceBourse(payload) {
         this.querySearchIndice = payload.valueSearch;
-      },
-      queryValueConnected(payload) {
-        this.query = payload.queryValueConnected
       },
       date() {
         // calcul de date pour vérification validité token
@@ -74,8 +68,7 @@ import jwtDecode from 'vue-jwt-decode'
           return this.auth = false
         }
         this.date()
-        return this.auth = true
-        
+        this.auth = true
       }
     },
     watch:{

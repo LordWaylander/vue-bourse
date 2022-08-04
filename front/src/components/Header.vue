@@ -46,6 +46,7 @@ export default {
     },
     deconnexion() {
       localStorage.removeItem('token');
+      localStorage.removeItem('query');
       this.$emit('userConnected', { connected: false });
       this.$router.push('/home');
     },
