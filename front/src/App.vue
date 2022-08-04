@@ -1,19 +1,17 @@
 <template>
   <Header 
-    @searchIndiceBourse="searchIndiceBourse" 
+    @searchIndiceBourse="searchIndiceBourse"
     @userConnected="userConnected" 
     :auth="auth" >
-<!--     -->
   </Header>
   
   <RouterView 
     @userConnected="userConnected" 
     @queryValueConnected="queryValueConnected" 
+    @emptyRequestSearch="emptyRequestSearch"
     :query="query" 
     :querySearchIndice="querySearchIndice" >
   </RouterView>
-  
-  
 </template>
 
 <script>
@@ -55,6 +53,9 @@ import jwtDecode from 'vue-jwt-decode'
             return;
           }, 1000);
         
+      },
+      emptyRequestSearch(payload){
+        this.querySearchIndice=payload
       }
     },
     created() {

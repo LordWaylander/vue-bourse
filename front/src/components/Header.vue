@@ -36,6 +36,7 @@
 <script>
 export default {
   props:['auth'],
+  
   data(){
     return{
       searchIndice:'',
