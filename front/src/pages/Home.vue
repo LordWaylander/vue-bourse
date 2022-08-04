@@ -145,7 +145,6 @@ export default {
         }
     },
     mounted() {
-        console.log(this.$route);
         this.requeteAPI(this.query);
     },
     watch:{
@@ -154,9 +153,6 @@ export default {
                  this.searchIndice();
             }
         },
-        'query'(){
-            console.log('query changé reload');
-        }
     },
     computed:{
         date() {

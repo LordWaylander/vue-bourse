@@ -52,7 +52,7 @@ export default {
       localStorage.removeItem('token');
       this.$emit('userConnected', { connected: false });
       this.$router.push('/home');
-    }
+    },
   },
 }
 </script>
