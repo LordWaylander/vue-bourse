@@ -19,7 +19,7 @@ exports.login = (req, reply) => {
         let token = jwt.sign(
             { 
                 userId: infoUser.id,
-                username: infoUser.auth.user
+                //username: infoUser.auth.user
             }, 
             config.JWT_SECRET,
             { expiresIn: '1h' }
