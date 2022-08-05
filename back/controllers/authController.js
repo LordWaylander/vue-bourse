@@ -24,10 +24,14 @@ exports.login = (req, reply) => {
         );
 
         reply
+        // prévoir une durée d'expiration
         .setCookie('token', token, {
             domain: 'localhost',
             path: '/',
             secure: true,
+            //httpOnly: true,
+            expires: Date.now()+(1000*60*60),
+            maxAge: 3600
           })
         .code(200)
         .send({auth : true})

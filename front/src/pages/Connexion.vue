@@ -39,7 +39,6 @@ export default {
             
             API.post(`/login`, credentials)
             .then(res => {
-                console.log(res);
                 if(!!res.data.auth){
                     this.$emit('userConnected', { connected: true });
                     this.$router.push('/home');

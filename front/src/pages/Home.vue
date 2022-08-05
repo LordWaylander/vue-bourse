@@ -89,7 +89,7 @@ export default {
     },
     methods:{
         requeteAPI(query){
-            localStorage.setItem('query', query)
+            sessionStorage.setItem('query', query)
             document.getElementById("loader").style.display="flex";
 
             API.get(`/api/time_series_daily/${query}`)
@@ -141,8 +141,8 @@ export default {
         }
     },
     mounted() {
-        if(localStorage.query){
-            this.request.query = localStorage.query
+        if(sessionStorage.query){
+            this.request.query = sessionStorage.query
         } else {
             this.request.query = 'msft'
         }
