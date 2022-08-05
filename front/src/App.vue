@@ -14,7 +14,7 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import jwtDecode from 'vue-jwt-decode'
+import API from '@/_services/api.service.js';
 /**
  * Trouver le moyen de passer @searchIndiceBourse (header) à Home sans passer par app 
  * @searchIndiceBourse (emit) -> :querySearchIndice (props)
@@ -37,23 +37,9 @@ import jwtDecode from 'vue-jwt-decode'
     methods: {
       userConnected(payload){
         this.auth = payload.connected
-        if(this.auth === true){
-          // si authentifié lancement fonction validité token
-          this.date();
-        }
       },
       searchIndiceBourse(payload) {
         this.querySearchIndice = payload.valueSearch;
-      },
-      date() {
-        // calcul de date pour vérification validité token
-          setInterval(() => {
-            if(this.auth === true){
-              return this.dateNow =  Math.trunc(Date.now()/1000)
-            }
-            return;
-          }, 1000);
-        
       },
       emptyRequestSearch(payload){
         this.querySearchIndice=payload
@@ -64,34 +50,24 @@ import jwtDecode from 'vue-jwt-decode'
        * mettre en place un check régulier du token
        * export date exp ds data et watch sur heure actuelle ?
        */
-      
-      if (localStorage.token) {
-        let dateNow = Math.trunc(Date.now()/1000);
-        let decodedToken = jwtDecode.decode(localStorage.token);
-        const expDate = decodedToken.exp
+      console.log(document);
 
-        if(dateNow > expDate) {
-          localStorage.removeItem('token');
-          return this.auth = false
-        }
-        this.date()
-        this.auth = true
+      let token = localStorage.getItem('token');
+      if (!!token){
+        console.log('passe');
+        API.post('/verifToken', {token})
+        .then(res => {
+          this.auth = res.data.auth
+          if(res.data.auth == false) {
+            localStorage.removeItem('token');
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
       }
+
     },
-    watch:{
-      'dateNow'(){
-        /**
-         * déconnexion si token expiré
-         * mettre un avertissement ?
-         */
-        let decodedToken = jwtDecode.decode(localStorage.token);
-        const expDate = decodedToken.exp
-        if(this.dateNow > expDate) {
-          localStorage.removeItem('token');
-          return this.auth = false
-        }
-      }
-    }
   }
 </script>
 

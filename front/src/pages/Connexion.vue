@@ -40,7 +40,7 @@ export default {
             API.post(`/login`, credentials)
             .then(res => {
                 if(res.data.token){
-                    API.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
+                    console.log(res);
                     localStorage.setItem('token', res.data.token);
                     this.$emit('userConnected', { connected: true });
                     this.$router.push('/home');

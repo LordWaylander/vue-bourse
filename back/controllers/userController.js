@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 exports.getProfile = (req, reply) => {
 
   /**
@@ -6,8 +8,8 @@ exports.getProfile = (req, reply) => {
    * Requete pour avoir infos user + actions achetés
    * vérifier le token ou non -> Middleware ?
    */
-
-  if(!!req.params.idUser) {
+  const tokenDecoded = jwt.decode(req.body.token)
+  if(!!tokenDecoded.userId) {
     reply.send('voici profil user')
   }else{
     reply.code(500).send('idUser à false')

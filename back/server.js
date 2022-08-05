@@ -3,6 +3,9 @@ const autoload = require('@fastify/autoload');
 const path = require('path');
 
 fastify.register(require('@fastify/cors'));
+fastify.register(require('@fastify/cookie'), {
+    secret: "my-secret", // for cookies signature
+  })
 
 /**
  * utile uniquement pour postman a 1ere vue

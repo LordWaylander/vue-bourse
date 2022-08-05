@@ -10,5 +10,8 @@ module.exports = function (fastify, opt, done) {
     fastify.get('/createAccount', {
         handler: authController.createAccount
     });
+    fastify.post('/verifToken', {
+        handler: authController.verifToken
+    });
     done();
 }

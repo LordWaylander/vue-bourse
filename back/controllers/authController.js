@@ -17,14 +17,15 @@ exports.login = (req, reply) => {
 
     if (login) {
         let token = jwt.sign(
-            { 
-                userId: infoUser.id,
-                //username: infoUser.auth.user
-            }, 
+            { userId: infoUser.id }, 
             config.JWT_SECRET,
             { expiresIn: '1h' }
         );
-        reply.send({ token : token })
+        //reply.send({ token : token })
+        //req.session.set('data', 'token')
+        reply
+        .header('set-cookie', 'foo')
+        .send({ token : token })
     } else {
         reply.code(403).send('utilisateur non présent')
     }
@@ -36,4 +37,15 @@ exports.logout = (req, reply) => {
 
 exports.createAccount = (req, reply) => {
     reply.send('create account');
+}
+
+exports.verifToken = (req, reply) => {
+    let token = req.body.token;
+
+    try {
+        jwt.verify(token, config.JWT_SECRET);
+        reply.send({auth : true})
+    } catch (error) {
+        reply.send({auth : false})
+    }
 }

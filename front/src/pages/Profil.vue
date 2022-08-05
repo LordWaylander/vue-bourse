@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import jwtDecode from 'vue-jwt-decode';
 import API from '@/_services/api.service.js';
 
 export default {
@@ -22,16 +21,20 @@ export default {
         }
     },
     mounted() {
-        let decodedToken = jwtDecode.decode(localStorage.token);
-        this.userId = decodedToken.userId
+       let token = localStorage.getItem('token');
+        if (!!token){
+            API.post(`/user/getProfile`, {token})
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }else {
+            this.$router.push('/connexion');
+        }
 
-        API.get(`/user/getProfile/${decodedToken.userId}`)
-        .then(res => {
-            console.log(res);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        
     },
 }
 </script>
