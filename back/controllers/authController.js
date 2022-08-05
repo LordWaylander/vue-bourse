@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const datas = require('../datas/datas.json')
 const {config} = require('../_services/Env');
 
+
 exports.login = (req, reply) => {
     
     let login = false
@@ -21,13 +22,17 @@ exports.login = (req, reply) => {
             config.JWT_SECRET,
             { expiresIn: '1h' }
         );
-        //reply.send({ token : token })
-        //req.session.set('data', 'token')
+
         reply
-        .header('set-cookie', 'foo')
-        .send({ token : token })
+        .setCookie('token', token, {
+            domain: 'localhost',
+            path: '/',
+            secure: true,
+          })
+        .code(200)
+        .send({auth : true})
     } else {
-        reply.code(403).send('utilisateur non présent')
+        reply.code(403).send({auth : false, error: 'erreur dans le login'})
     }
 }
 
@@ -40,12 +45,13 @@ exports.createAccount = (req, reply) => {
 }
 
 exports.verifToken = (req, reply) => {
-    let token = req.body.token;
-
+    let token = req.cookies.token;
     try {
         jwt.verify(token, config.JWT_SECRET);
         reply.send({auth : true})
     } catch (error) {
-        reply.send({auth : false})
+        reply
+        .clearCookie('token')
+        .send({auth : false})
     }
 }

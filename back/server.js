@@ -2,21 +2,10 @@ const fastify = require('fastify')({logger: true});
 const autoload = require('@fastify/autoload');
 const path = require('path');
 
-fastify.register(require('@fastify/cors'));
-fastify.register(require('@fastify/cookie'), {
-    secret: "my-secret", // for cookies signature
-  })
-
-/**
- * utile uniquement pour postman a 1ere vue
- */
-fastify.register(require('@fastify/formbody'));
-fastify.register(require('@fastify/multipart'));
-
 //env-schema -> CF : configEnv.js
 
-const configEnv = require('./_services/Env.js');
-fastify.listen(configEnv.config.SERVER_PORT)
+const {config} = require('./_services/Env.js');
+fastify.listen(config.SERVER_PORT)
 .then((address) => {
     fastify.log.info('ADDR Serveur '+address)
 })
@@ -24,6 +13,21 @@ fastify.listen(configEnv.config.SERVER_PORT)
     fastify.log.error(err), process.exit(1)
 })
 
+fastify.register(require('@fastify/cors'), {
+  // ces deux opts a true avec axios et les credentials à true
+  origin: true,
+  credentials: true,
+});
+fastify.register(require('@fastify/cookie'), {
+    secret: config.COOKIE_SECRET,
+    parseOptions: {}
+})
+
+/**
+ * utile uniquement pour postman a 1ere vue
+ */
+fastify.register(require('@fastify/formbody'));
+fastify.register(require('@fastify/multipart'));
 
 //visions des routes ouvertes à definir AVANT l'initialisation des routes
 fastify.addHook('onRoute', (routeOptions) => {

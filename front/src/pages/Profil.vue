@@ -21,18 +21,14 @@ export default {
         }
     },
     mounted() {
-       let token = localStorage.getItem('token');
-        if (!!token){
-            API.post(`/user/getProfile`, {token})
+            API.post(`/user/getProfile`)
             .then(res => {
                 console.log(res);
             })
             .catch(err => {
                 console.log(err);
+                this.$router.push('/connexion');
             })
-        }else {
-            this.$router.push('/connexion');
-        }
 
         
     },

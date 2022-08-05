@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
 export default {
   props:['auth'],
   data(){
@@ -45,8 +46,7 @@ export default {
       this.searchIndice = '';
     },
     deconnexion() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('query');
+      $cookies.remove('token')
       this.$emit('userConnected', { connected: false });
       this.$router.push('/home');
     },

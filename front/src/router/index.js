@@ -39,7 +39,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if ((to.meta.guest == false) && (!!localStorage.getItem('token') == false)) {
+  const cookie = $cookies.get('token')
+  if ((to.meta.guest == false) && (!!cookie == false)) {
     return next({path:'/connexion'});
   }
   return next()

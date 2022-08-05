@@ -15,6 +15,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import API from '@/_services/api.service.js';
+import VueCookies from 'vue-cookies'
 /**
  * Trouver le moyen de passer @searchIndiceBourse (header) à Home sans passer par app 
  * @searchIndiceBourse (emit) -> :querySearchIndice (props)
@@ -24,6 +25,7 @@ import API from '@/_services/api.service.js';
  */
 
   export default{
+    
     components: {
       Header
     },
@@ -50,23 +52,17 @@ import API from '@/_services/api.service.js';
        * mettre en place un check régulier du token
        * export date exp ds data et watch sur heure actuelle ?
        */
-      console.log(document);
-
-      let token = localStorage.getItem('token');
-      if (!!token){
-        console.log('passe');
-        API.post('/verifToken', {token})
+      
+        API.post('/verifToken')
         .then(res => {
           this.auth = res.data.auth
           if(res.data.auth == false) {
-            localStorage.removeItem('token');
+            $cookies.remove('token')
           }
         })
         .catch(err => {
           console.log(err);
         })
-      }
-
     },
   }
 </script>
