@@ -25,9 +25,6 @@ export default {
     },
     methods: {
         login() {
-            /**
-             * Tu veux un cookie ? :3
-             */
             if(this.user == "" || this.password ==""){
                 console.warn('ne pas envoyer le form');
             }
@@ -36,7 +33,6 @@ export default {
                 user: this.user,
                 password: this.password
             }
-            
             API.post(`/login`, credentials)
             .then(res => {
                 if(!!res.data.auth){

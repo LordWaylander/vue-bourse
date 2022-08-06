@@ -4,15 +4,15 @@ const {config} = require('../_services/Env');
 
 
 exports.login = (req, reply) => {
-    
     let login = false
     let infoUser;
 
     // fouille en "BDD (fichier data.json)"
     datas.forEach(element => {
+        console.log(element);
         if(req.body.user == element.auth.user && req.body.password == element.auth.password) {
             login = true;
-            infoUser = element
+            return infoUser = element
         }
     });
 
@@ -24,14 +24,12 @@ exports.login = (req, reply) => {
         );
 
         reply
-        // prévoir une durée d'expiration
         .setCookie('token', token, {
             domain: 'localhost',
             path: '/',
             secure: true,
-            //httpOnly: true,
-            expires: Date.now()+(1000*60*60),
-            maxAge: 3600
+            expires: Date.now()+(1000*60*60), //expires 1H
+            maxAge: 3600 // maxAge 1H
           })
         .code(200)
         .send({auth : true})

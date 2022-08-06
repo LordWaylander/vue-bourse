@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import VueCookies from 'vue-cookies'
 import Home from '@/pages/Home.vue';
 import Tableur from '@/pages/Tableur.vue';
 import Connexion from '@/pages/Connexion.vue';

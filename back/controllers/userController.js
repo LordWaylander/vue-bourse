@@ -1,18 +1,27 @@
 const jwt = require('jsonwebtoken');
+const datas = require('../datas/datas.json')
 
-exports.getProfile = (req, reply) => {
+exports.getProfile = (req, reply, done) => {
 
   /**
-   * obtenir idUser via req.params.iduser
-   * Vérifier si ID correct
    * Requete pour avoir infos user + actions achetés
-   * vérifier le token ou non -> Middleware ?
    */
-  const tokenDecoded = jwt.decode(req.body.token)
-  if(!!tokenDecoded.userId) {
-    reply.send('voici profil user')
+  let user;
+
+  datas.forEach(element => {
+    if(req.data.decodedToken.userId == element.id) {
+      user = {
+        userName : element.nom,
+        userFirstname: element.prenom,
+        userMail: element.email
+      }
+    }
+  });
+
+  if(!!user) {
+    reply.send({user: user})
   }else{
-    reply.code(500).send('idUser à false')
+    reply.code(500).send('erreur dans le controlleur pas de infoUser')
   }
   
 }

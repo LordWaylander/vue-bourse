@@ -89,7 +89,8 @@ export default {
     },
     methods:{
         requeteAPI(query){
-            sessionStorage.setItem('query', query)
+            // cookie pour mémoriser la dernière requete, validité 10min
+            $cookies.set('query', query, 60*10)
             document.getElementById("loader").style.display="flex";
 
             API.get(`/api/time_series_daily/${query}`)
@@ -141,9 +142,9 @@ export default {
         }
     },
     mounted() {
-        if(sessionStorage.query){
-            this.request.query = sessionStorage.query
-        } else {
+        if($cookies.isKey('query')){
+            this.request.query = $cookies.get('query')
+        }else{
             this.request.query = 'msft'
         }
         this.requeteAPI(this.request.query);

@@ -21,13 +21,15 @@ export default {
         }
     },
     mounted() {
+        console.log('*** profil');
             API.post(`/user/getProfile`)
             .then(res => {
-                console.log(res);
+                //console.log(res.data.user);
+                this.user = res.data.user.userFirstname +' '+ res.data.user.userName
             })
             .catch(err => {
                 console.log(err);
-                this.$router.push('/connexion');
+                //this.$router.push('/connexion');
             })
 
         
