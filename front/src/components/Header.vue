@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import API from '@/_services/api.service.js';
 
 export default {
   props:['auth'],
@@ -46,9 +47,17 @@ export default {
       this.searchIndice = '';
     },
     deconnexion() {
-      $cookies.remove('token')
-      this.$emit('userConnected', { connected: false });
-      this.$router.push('/home');
+      /**
+       * faire un post vers /logout pour supprimer les cookies !
+       */
+      API.post('/logout')
+      .then(res => {
+        this.$emit('userConnected', { connected: res.data.connected });
+        this.$router.push('/home'); 
+      })
+      .catch(err => {
+        console.log(err);
+      })      
     },
   },
 }

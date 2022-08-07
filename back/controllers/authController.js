@@ -39,7 +39,17 @@ exports.login = (req, reply) => {
 }
 
 exports.logout = (req, reply) => {
-    reply.send('logout');
+    try {
+        reply
+        .clearCookie('token')
+        .clearCookie('query')
+        .send({connected: false})
+    } catch (err) {
+        reply
+        .code(500)
+        .send(err)
+    }
+    //reply.send('logout');
 }
 
 exports.createAccount = (req, reply) => {
