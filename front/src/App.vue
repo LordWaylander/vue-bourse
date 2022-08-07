@@ -47,12 +47,7 @@ import VueCookies from 'vue-cookies'
         this.querySearchIndice=payload
       }
     },
-    created() {
-      /**
-       * mettre en place un check régulier du token
-       * export date exp ds data et watch sur heure actuelle ?
-       */
-      
+    created() {  
         API.post('/verifToken')
         .then(res => {
           this.auth = res.data.auth

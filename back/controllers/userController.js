@@ -6,7 +6,7 @@ exports.getProfile = (req, reply, done) => {
   /**
    * Requete pour avoir infos user + actions achetés
    */
-  let user;
+  let user = null;
 
   datas.forEach(element => {
     if(req.data.decodedToken.userId == element.id) {
@@ -17,7 +17,7 @@ exports.getProfile = (req, reply, done) => {
       }
     }
   });
-
+  
   if(!!user) {
     reply.send({user: user})
   }else{
