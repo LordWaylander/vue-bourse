@@ -51,9 +51,6 @@ import VueCookies from 'vue-cookies'
         API.post('/verifToken')
         .then(res => {
           this.auth = res.data.auth
-          if(res.data.auth == false) {
-            $cookies.remove('token')
-          }
         })
         .catch(err => {
           console.log(err);

@@ -3,7 +3,8 @@ const schema = {
     required: [ 
         'SERVER_PORT',
         'API_KEY',
-        'JWT_SECRET'
+        'JWT_SECRET',
+        'COOKIE_SECRET'
     ],
     properties: {
         SERVER_PORT: {
