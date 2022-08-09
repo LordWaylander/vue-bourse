@@ -41,6 +41,12 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="favlist" v-if="auth && favlist == false">
+                            <button>Ajouter aux coups de coeurs</button>
+                        </div>
+                        <div class="favlist" v-if="auth && favlist == true">
+                            <button>Supprimer des coups de coeurs</button>
+                        </div>
                     </div>
                     <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
                 </div>
@@ -64,7 +70,7 @@ export default {
         Graphique,
         Modal
     },
-    props:['querySearchIndice'],
+    props:['querySearchIndice', 'auth'],
     data() {
         return {
             request: {
@@ -85,6 +91,7 @@ export default {
             GLOBAL_QUOTE:'',
             variation:'',
             error: false, // gestion d'erreur, pour l'API - surtout gestion requete par minute
+            favlist: false
         }
     },
     methods:{
@@ -92,6 +99,7 @@ export default {
             // cookie pour mémoriser la dernière requete, validité 10min
             $cookies.set('query', query, 60*10)
             document.getElementById("loader").style.display="flex";
+            this.isFavList(query);
 
             API.get(`/api/time_series_daily/${query}`)
             .then((res) => {
@@ -139,15 +147,36 @@ export default {
         },
         emptyRequestSearch(payload){
             this.$emit('emptyRequestSearch', payload)
+        },
+        isFavList(query){
+            /**
+             * pète une erreur si 
+             * 1) user pas logué, logique car lancement au mounted sans vérification si user logué
+             * 2) vérification si user logué ET qu'il appuye sur F5, car la props "auth" de app.vue
+             * définie sur false passe en 1er AVANT le résultat du created de app.vue
+             * donc la props reste sur false et la fonction est pas lancée
+             * 
+             * -> résolution en vérifiant si cookie token, mais je trouve pas ça propre
+             */
+            if($cookies.isKey('token')) {
+                API.get(`/user/isFavList/${query}`)
+                .then(res => {
+                    this.favlist = res.data
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            }
         }
     },
     mounted() {
         if($cookies.isKey('query')){
             this.request.query = $cookies.get('query')
         }else{
-            this.request.query = 'msft'
+            this.request.query = 'MSFT'
         }
         this.requeteAPI(this.request.query);
+        
     },
     watch:{
         'querySearchIndice'(){
@@ -210,6 +239,18 @@ export default {
                         font-weight: bold;
                         color: darkorange;
                         text-decoration: underline;
+                    }
+                }
+                .favlist {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 1em;
+                    button {
+                        background-color: #0051ff;
+                        border: 2px solid #08f;
+                        border-radius: 50px;
+                        color: white;
+                        padding: 0.2rem;
                     }
                 }
             }

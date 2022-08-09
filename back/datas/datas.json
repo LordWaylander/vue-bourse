@@ -7,7 +7,8 @@
         "auth" : {
             "user": "paul",
             "password" : 12345678
-        }
+        },
+        "favoris": ["MSFT", "TSLA"]
     },
     {
         "id": 2,
@@ -17,7 +18,8 @@
         "auth" : {
             "user": "pierre",
             "password" : 12345678
-        }
+        },
+        "favoris": ["MSFT", "AAPL"]
     },
     {
         "id": 3,
@@ -27,7 +29,8 @@
         "auth" : {
             "user": "marie",
             "password" : 12345678
-        }
+        },
+        "favoris": ["AMD", "TSLA"]
     },
     {
         "id": 4,
@@ -37,7 +40,8 @@
         "auth" : {
             "user": "jean",
             "password" : 12345678
-        }
+        },
+        "favoris": ["MSFT", "TSLA"]
     },
     {
         "id": 5,
@@ -47,7 +51,8 @@
         "auth" : {
             "user": "valerie",
             "password" : 12345678
-        }
+        },
+        "favoris": ["MSFT", "TSLA"]
     }
 
 

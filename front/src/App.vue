@@ -8,7 +8,8 @@
   <RouterView 
     @userConnected="userConnected"  
     @emptyRequestSearch="emptyRequestSearch"
-    :querySearchIndice="querySearchIndice" >
+    :querySearchIndice="querySearchIndice"
+    :auth="auth" >
   </RouterView>
 </template>
 

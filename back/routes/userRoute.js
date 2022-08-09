@@ -6,5 +6,9 @@ module.exports = function (fastify, opts, done) {
         preHandler: userMiddleware.verifyTokenUser,
         handler: userController.getProfile,
     });
+    fastify.get('/user/isFavList/:query', {
+        preHandler: userMiddleware.verifyTokenUser,
+        handler: userController.isFavList,
+    });
     done();
 }

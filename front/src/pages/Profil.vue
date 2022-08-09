@@ -16,8 +16,7 @@ import API from '@/_services/api.service.js';
 export default {
     data() {
         return {
-            userId: "",
-            user: 'Nom_User'
+            user: ''
         }
     },
     mounted() {
