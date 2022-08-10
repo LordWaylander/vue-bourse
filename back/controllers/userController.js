@@ -10,7 +10,7 @@ exports.getProfile = (req, reply, done) => {
       user = {
         userName : element.nom,
         userFirstname: element.prenom,
-        userMail: element.email
+        userFavoris: element.favoris
       }
     }
   });

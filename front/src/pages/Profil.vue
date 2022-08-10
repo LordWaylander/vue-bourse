@@ -5,6 +5,7 @@
         </div>
         <div>
             <p>Bonjour {{ user }} bienvenue sur votre profil !</p>
+            <Card :userFavoris="userFavoris"/>
         </div>
         
     </div>
@@ -12,18 +13,24 @@
 
 <script>
 import API from '@/_services/api.service.js';
+import Card from '@/components/Card.vue'
 
 export default {
+    components: {
+        Card
+    },
     data() {
         return {
-            user: ''
+            user: '',
+            userFavoris:''
         }
     },
-    mounted() {
+    beforeCreate() {
         API.post(`/user/getProfile`)
         .then(res => {
-            //console.log(res.data.user);
             this.user = res.data.user.userFirstname +' '+ res.data.user.userName
+            console.log(res.data.user.userFavoris);
+            this.userFavoris = res.data.user.userFavoris
         })
         .catch(err => {
             console.log(err);

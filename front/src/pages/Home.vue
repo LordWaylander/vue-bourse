@@ -64,7 +64,6 @@ import Graphique from '@/components/Graphique.vue';
 import Modal from '@/components/ModalSearchIndice.vue'
 import API from '@/_services/api.service.js';
 
-
 export default {
     components: {
         Graphique,
