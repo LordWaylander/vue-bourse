@@ -9,7 +9,6 @@ exports.login = (req, reply) => {
 
     // fouille en "BDD (fichier data.json)"
     datas.forEach(element => {
-        console.log(element);
         if(req.body.user == element.auth.user && req.body.password == element.auth.password) {
             login = true;
             return infoUser = element

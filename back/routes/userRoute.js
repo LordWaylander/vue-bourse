@@ -10,5 +10,13 @@ module.exports = function (fastify, opts, done) {
         preHandler: userMiddleware.verifyTokenUser,
         handler: userController.isFavList,
     });
+    fastify.patch('/user/addFavoris', {
+        preHandler: userMiddleware.verifyTokenUser,
+        handler: userController.addFavoris,
+    });
+    fastify.delete('/user/deleteFavoris/:indice', {
+        preHandler: userMiddleware.verifyTokenUser,
+        handler: userController.deleteFavoris,
+    });
     done();
 }

@@ -42,10 +42,10 @@
                             </tbody>
                         </table>
                         <div class="favlist" v-if="auth && favlist == false">
-                            <button>Ajouter aux coups de coeurs</button>
+                            <button @click='addFavoris(GLOBAL_QUOTE["Global Quote"]["01. symbol"])'>Ajouter aux favoris</button>
                         </div>
                         <div class="favlist" v-if="auth && favlist == true">
-                            <button>Supprimer des coups de coeurs</button>
+                            <button @click='deleteFavoris(GLOBAL_QUOTE["Global Quote"]["01. symbol"])'>Supprimer des favoris</button>
                         </div>
                     </div>
                     <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
@@ -83,8 +83,8 @@ export default {
                     TIME_SERIES_MONTHLY: 'TIME_SERIES_MONTHLY'
                 },
                 query:'',
-                interval: '', // à voir si mis réellement en place
-                exchange:'', // marché sur lequel chercher les indices, à mettre en place
+                //interval: '', // à voir si mis réellement en place
+                //exchange:'', // marché sur lequel chercher les indices, à mettre en place
                 research:'', // recherche searchIndice
             },
             TIME_SERIES_DAILY:'',
@@ -167,6 +167,26 @@ export default {
                     console.log(err);
                 })
             }
+        },
+        addFavoris(indice){
+            console.log('add aux favoris : '+indice);
+            API.patch(`/user/addFavoris`, {indice: indice})
+            .then(res => {
+                this.favlist = res.data.add
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
+        deleteFavoris(indice){
+            console.log('delete des favoris : '+indice);
+            API.delete(`/user/deleteFavoris/${indice}`)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
     },
     mounted() {

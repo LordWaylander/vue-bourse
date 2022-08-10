@@ -1,7 +1,6 @@
 const fastify = require('fastify')({logger: true});
 const autoload = require('@fastify/autoload');
 const path = require('path');
-
 //env-schema -> CF : configEnv.js
 
 const {config} = require('./_services/Env.js');

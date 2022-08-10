@@ -14,3 +14,5 @@ En 2nd page la mise en place d'un calcultateur de +/- value (uniquement en € e
 > login + favoris en cours de code, le cahier des charges reste à définir
 
 Mise en place d'un système d'authentification, avec un stockage des valeurs achetés (avec date, prix d'achat, taux de change si besoin, etc..) pour un calcul complet et automatique des +/- values avec possibilité d'un export en fichier csv / excel ainsi que la mise en place d'un système "coup de coeur" pour suivre certaines valeurs plus facilement.
+
+PS: pas de BDD, même si ce serait plus simple car j'ai la flemme d'en faire une pour le moment et c'est cool de boucler / écrire un fichier =)
