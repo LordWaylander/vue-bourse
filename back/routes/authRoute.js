@@ -7,7 +7,7 @@ module.exports = function (fastify, opt, done) {
     fastify.post('/logout', {
         handler: authController.logout
     });
-    fastify.get('/createAccount', {
+    fastify.post('/createAccount', {
         handler: authController.createAccount
     });
     fastify.post('/verifToken', {
