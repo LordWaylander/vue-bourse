@@ -169,7 +169,6 @@ export default {
             }
         },
         addFavoris(indice){
-            console.log('add aux favoris : '+indice);
             API.patch(`/user/addFavoris`, {indice: indice})
             .then(res => {
                 this.favlist = res.data.add
@@ -179,10 +178,9 @@ export default {
             })
         },
         deleteFavoris(indice){
-            console.log('delete des favoris : '+indice);
             API.delete(`/user/deleteFavoris/${indice}`)
             .then(res => {
-                console.log(res);
+                this.favlist = !res.data.delete
             })
             .catch(err => {
                 console.log(err);

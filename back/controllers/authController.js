@@ -48,7 +48,6 @@ exports.logout = (req, reply) => {
         .code(500)
         .send(err)
     }
-    //reply.send('logout');
 }
 
 exports.createAccount = (req, reply) => {

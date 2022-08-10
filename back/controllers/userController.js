@@ -38,10 +38,21 @@ exports.isFavList = (req, reply, done) => {
   reply.send(isFavList)
 }
 
-exports.deleteFavoris = (req, reply, done) => {
-  console.log(req.params);
+exports.deleteFavoris = async (req, reply, done) => {
+  datas.forEach(element => {
+    if(req.data.decodedToken.userId == element.id) {
+      const index = element.favoris.indexOf(req.params.indice);
+      element.favoris.splice(index, 1)
+    }
+  });
 
-  reply.send({delete: 'ok'})
+  try {
+    let data = await JSON.stringify(datas);
+    await fs.writeFile('datas/datas.json', data)
+    reply.send({delete: true})
+  } catch (err) {
+    reply.code(500).send({err: err})
+  }
 }
 
 exports.addFavoris = async (req, reply, done) => {
@@ -58,8 +69,4 @@ exports.addFavoris = async (req, reply, done) => {
   } catch (err) {
     reply.code(500).send({err: err})
   }
-
-  
-
-  
 }
