@@ -8,7 +8,7 @@
                 <p>Variation % : <span :style="variation >0 ? {'color' : 'green'} : {'color' : 'red'}">{{value["10. change percent"]}}</span></p>
             </div>
             <button class="btnP">Calcul +/- value</button>
-             <RouterLink to="/tableur">
+             <RouterLink :to="`/tableur/${value['01. symbol']}`">
                 <button class="btnP">Calcul +/- value</button>
             </RouterLink>
             <button class="btnP" @click='deleteFavoris(value["01. symbol"])'>Retirer des favoris</button>
@@ -28,7 +28,7 @@ export default {
     data() {
         return {
             data: [],
-            variation:''
+            variation:'',
         }
     },
     methods: {

@@ -14,7 +14,7 @@ const router = createRouter({
       component: Home,
     },
     {
-      path: '/tableur',
+      path: '/tableur/:symbol',
       name: 'tableur',
       meta:{guest:false},
       component: Tableur,
