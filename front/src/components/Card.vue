@@ -5,7 +5,7 @@
                 <p>Symbol : <span>{{value["01. symbol"]}}</span></p>
                 <p>Cloture précédente : <span>{{value["08. previous close"]}}</span></p>
                 <p>Ouverture : <span>{{value["02. open"]}}</span></p>
-                <p>Variation % : <span :style="variation >= 1 ? {'color' : 'green'} : {'color' : 'red'}">{{value["10. change percent"]}}</span></p>
+                <p>Variation % : <span :style="variation >0 ? {'color' : 'green'} : {'color' : 'red'}">{{value["10. change percent"]}}</span></p>
             </div>
             <button>Calcul +/- value</button>
             <button @click='deleteFavoris(value["01. symbol"])'>Retirer des favoris</button>
@@ -15,6 +15,10 @@
 
 <script>
 import API from '@/_services/api.service.js';
+/**
+ * Ajout d'un graphique dans le Card ? (+/- 1mois max) ou btn détail et ouverture modal
+ * mettre en place le calcul de +/- value -> suppr du header + mise en place modal
+ */
 export default {
     props: ["userFavoris"],
     data() {
@@ -27,10 +31,8 @@ export default {
         requeteAPI(query) {
             API.get(`/api/global_quote/${query}`)
             .then(res => {
-                console.log(res.data);
                 this.variation=res.data["Global Quote"]["10. change percent"];
                 this.variation=(parseFloat(this.variation, 10));
-                console.log(this.variation);
                 document.getElementById('loader').style.display='none'
                 this.data.push(res.data["Global Quote"])
             })
@@ -80,6 +82,18 @@ export default {
         width: 250px;
         div {
             margin-bottom: 1em;
+        }
+        button {
+            background-color: #0051ff;
+            border: 2px solid #08f;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            padding: 0.2rem;
+            margin: 0 0 10px;
+            &:hover {
+                background-color: rgb(0, 110, 255);
+            }
         }
     }
 }
