@@ -75,7 +75,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 1rem;
   &:hover {
     background-color: rgb(0, 110, 255);
   }
