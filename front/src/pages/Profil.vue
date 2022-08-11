@@ -5,9 +5,8 @@
         </div>
         <div>
             <p>Bonjour {{ user }} bienvenue sur votre profil !</p>
-            <Card :userFavoris="userFavoris"/>
+            <Card :userFavoris="userFavoris" />
         </div>
-        
     </div>
 </template>
 
@@ -29,7 +28,6 @@ export default {
         API.post(`/user/getProfile`)
         .then(res => {
             this.user = res.data.user.userFirstname +' '+ res.data.user.userName
-            console.log(res.data.user.userFavoris);
             this.userFavoris = res.data.user.userFavoris
         })
         .catch(err => {

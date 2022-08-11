@@ -1,12 +1,14 @@
 <template lang="">
-    <div>
-        <div>
-            <div v-for="(userFavori, index) in userFavoris" :key="index">
-                {{userFavori}}
-                {{index}}
-                {{requeteAPI(userFavori)}}
-                {{symbol}}
+    <div id="conteneurCard">
+        <div v-for="value in data" class="card" v-bind:id="value['01. symbol']">
+            <div>
+                <p>Symbol : <span>{{value["01. symbol"]}}</span></p>
+                <p>Cloture précédente : <span>{{value["08. previous close"]}}</span></p>
+                <p>Ouverture : <span>{{value["02. open"]}}</span></p>
+                <p>Variation % : <span :style="variation >= 1 ? {'color' : 'green'} : {'color' : 'red'}">{{value["10. change percent"]}}</span></p>
             </div>
+            <button>Calcul +/- value</button>
+            <button @click='deleteFavoris(value["01. symbol"])'>Retirer des favoris</button>
         </div>
     </div>
 </template>
@@ -17,42 +19,69 @@ export default {
     props: ["userFavoris"],
     data() {
         return {
-            symbol: 'a',
-            a: 0
+            data: [],
+            variation:''
         }
     },
     methods: {
-        async requeteAPI(query) {
-            /**
-             * @hsdjkqf,jnffvjbh,wfds
-             * marche po, ça m'emmerde ><
-             * faut lancer la fonction ds la boucle plus haut, mais j'sais pas comment faire
-             */
-            if (query) {
-                 console.log('*** method');
-                console.log(query);
-                //query.forEach(element => {
-                    let res = await API.get(`/api/global_quote/${query}`)
-                    console.log(res.data);
-                    return res.data["Global Quote"]
-                    return this.symbol = res.data["Global Quote"]
-                    /*.then(res => {
-                        console.log(res.data["Global Quote"]);
-                        return this.symbol = res.data["Global Quote"]
-                        //console.log(this.symbol);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })*/
-                //});
-            }
-            
-            
+        requeteAPI(query) {
+            API.get(`/api/global_quote/${query}`)
+            .then(res => {
+                console.log(res.data);
+                this.variation=res.data["Global Quote"]["10. change percent"];
+                this.variation=(parseFloat(this.variation, 10));
+                console.log(this.variation);
+                document.getElementById('loader').style.display='none'
+                this.data.push(res.data["Global Quote"])
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
+        deleteFavoris(indice){
+            API.delete(`/user/deleteFavoris/${indice}`)
+            .then(res => {
+                document.getElementById(indice).style.display="none"
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
     },
+    watch:{
+        /**
+         * obligé d'utiliser un watch sur la props, car "empty string" au created / mounted, 
+         * donc voir quand elle change de valeur et lancer la fonction
+         * puis remplir le tableau
+         */
+        'userFavoris'(){
+            if(this.userFavoris) {
+                this.userFavoris.forEach(query => {
+                    this.requeteAPI(query)
+                });
+            }
+        }
+    }
 }
 </script>
 
 <style lang="scss">
+#conteneurCard{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    .card {
+        border: 1px solid red;
+        margin: 2em;
+        border-radius: 1em;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+        div {
+            margin-bottom: 1em;
+        }
+    }
+}
     
 </style>
