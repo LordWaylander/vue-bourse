@@ -7,8 +7,12 @@
                 <p>Ouverture : <span>{{value["02. open"]}}</span></p>
                 <p>Variation % : <span :style="variation >0 ? {'color' : 'green'} : {'color' : 'red'}">{{value["10. change percent"]}}</span></p>
             </div>
-            <button>Calcul +/- value</button>
-            <button @click='deleteFavoris(value["01. symbol"])'>Retirer des favoris</button>
+            <button class="btnP">Calcul +/- value</button>
+             <RouterLink to="/tableur">
+                <button class="btnP">Calcul +/- value</button>
+            </RouterLink>
+            <button class="btnP" @click='deleteFavoris(value["01. symbol"])'>Retirer des favoris</button>
+           
         </div>
     </div>
 </template>
@@ -68,6 +72,19 @@ export default {
 </script>
 
 <style lang="scss">
+.btnP{
+    background-color: #0051ff;
+    border: 2px solid #08f;
+    border-radius: 50px;
+    text-decoration: none;
+    color: white;
+    padding: 0.2rem;
+    margin: 0 0 10px;
+    width: 100%;
+    &:hover {
+        background-color: rgb(0, 110, 255);
+    }
+}
 #conteneurCard{
     display: flex;
     justify-content: space-around;
@@ -83,17 +100,10 @@ export default {
         div {
             margin-bottom: 1em;
         }
-        button {
-            background-color: #0051ff;
-            border: 2px solid #08f;
-            border-radius: 50px;
+        a{
+            display: flex;
+            justify-content: center;
             text-decoration: none;
-            color: white;
-            padding: 0.2rem;
-            margin: 0 0 10px;
-            &:hover {
-                background-color: rgb(0, 110, 255);
-            }
         }
     }
 }

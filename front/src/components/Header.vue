@@ -4,9 +4,6 @@
       <RouterLink to="/" active-class="nav-active" class="button">
         <button>API</button>
       </RouterLink>
-      <RouterLink to="/tableur" active-class="nav-active" v-if="auth" class="button">
-        <button>Tableur</button>
-      </RouterLink>
     </div>
 
     <form @submit.prevent="submit()">
