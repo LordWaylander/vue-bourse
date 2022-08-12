@@ -48,18 +48,18 @@
         ],
         "achat":[
             {
-                    "name": "MSFT",
-                    "devise" : "$",
-                    "10/08/2022": {
-                        "quantite": 10,
-                        "prixAchat": 280,
-                        "fraisAchat": 6
-                    },
-                    "17/06/2021":{
-                        "quantite": 10,
-                        "prixAchat": 220,
-                        "fraisAchat": 6
-                    }
+                "name": "MSFT",
+                "devise" : "$",
+                "10/08/2022": {
+                    "quantite": 10,
+                    "prixAchat": 280,
+                    "fraisAchat": 6
+                },
+                "17/06/2021":{
+                    "quantite": 10,
+                    "prixAchat": 220,
+                    "fraisAchat": 6
+                }
             },    
             {
                 "name": "TSLA",
