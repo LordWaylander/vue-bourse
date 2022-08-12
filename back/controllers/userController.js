@@ -70,3 +70,19 @@ exports.addFavoris = async (req, reply, done) => {
     reply.code(500).send({err: err})
   }
 }
+
+exports.tableur = (req, reply, done) => {
+  let symbol = req.params.symbol
+
+  datas.forEach(element => {
+    if(req.data.decodedToken.userId == element.id) {
+      element.achat.forEach(el => {
+        if (el.name == symbol) {
+          reply.send(el)
+        }else{
+          reply.send('Vous n\'avez pas encore acheté d\action')
+        }
+      });
+    }
+  });
+}

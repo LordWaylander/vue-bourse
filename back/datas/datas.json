@@ -1,1 +1,80 @@
-[{"id":1,"prenom":"Paul","nom":"Jean","email":"paul.jean@live.fr","auth":{"user":"paul","password":12345678},"favoris":["MSFT","TSLA"]},{"id":2,"prenom":"Pierre","nom":"Azerty","email":"pierre.azerty@live.fr","auth":{"user":"pierre","password":12345678},"favoris":["MSFT","AAPL"]},{"id":3,"prenom":"Marie","nom":"Blachère","email":"marie.blachere@live.fr","auth":{"user":"marie","password":12345678},"favoris":["AAPL","TSLA","MSFT"]},{"id":4,"prenom":"Jean","nom":"François d'Assise","email":"jean.francois@live.fr","auth":{"user":"jean","password":12345678},"favoris":["MSFT","TSLA"]},{"id":5,"prenom":"Valérie","nom":"Dupont","email":"velerie.dupont@live.fr","auth":{"user":"valerie","password":12345678},"favoris":["MSFT","TSLA"]}]
+[
+    {
+        "id":1,
+        "prenom":"Pierre",
+        "nom":"Azerty",
+        "email":"pierre.azerty@live.fr",
+        "auth":{
+            "user":"pierre",
+            "password":12345678
+        },
+        "favoris":
+        [
+            "MSFT",
+            "AAPL"
+        ],
+        "achat":[
+            { 
+               "MSFT":{
+                   "devise" : "$",
+                   "10/08/2022": {
+                       "quantite": 10,
+                       "prixAchat": 280,
+                       "fraisAchat": 6
+                   },
+                   "17/06/2021":{
+                       "quantite": 10,
+                       "prixAchat": 220,
+                       "fraisAchat": 6
+                   }
+               }
+           }
+       ]
+    },
+    {
+        "id":2,
+        "prenom":"Marie",
+        "nom":"Blachère",
+        "email":"marie.blachere@live.fr",
+        "auth":{
+            "user":"marie",
+            "password":12345678
+        },
+        "favoris":
+        [
+            "AAPL",
+            "TSLA",
+            "MSFT"
+        ],
+        "achat":[
+            {
+                    "name": "MSFT",
+                    "devise" : "$",
+                    "10/08/2022": {
+                        "quantite": 10,
+                        "prixAchat": 280,
+                        "fraisAchat": 6
+                    },
+                    "17/06/2021":{
+                        "quantite": 10,
+                        "prixAchat": 220,
+                        "fraisAchat": 6
+                    }
+            },    
+            {
+                "name": "TSLA",
+                "devise" : "$",
+                "10/08/2022": {
+                    "quantite": 10,
+                    "prixAchat": 200,
+                    "fraisAchat": 6
+                },
+                "17/06/2021":{
+                    "quantite": 10,
+                    "prixAchat": 250,
+                    "fraisAchat": 6
+                }
+            }
+        ]
+    }
+]

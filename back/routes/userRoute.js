@@ -18,5 +18,9 @@ module.exports = function (fastify, opts, done) {
         preHandler: userMiddleware.verifyTokenUser,
         handler: userController.deleteFavoris,
     });
+    fastify.get('/tableur/:symbol', {
+        preHandler: userMiddleware.verifyTokenUser,
+        handler: userController.tableur,
+    });
     done();
 }

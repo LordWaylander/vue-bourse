@@ -3,7 +3,7 @@
         <div id="loader">
             <img src="../assets/loader.gif"/>
         </div>
-        <div>
+        <div id="cardContener">
             <p>Bonjour {{ user }} bienvenue sur votre profil !</p>
             <Card :userFavoris="userFavoris" />
         </div>
@@ -48,6 +48,9 @@ export default {
             width: 100px;
             height: 100px;
         }
+    }
+    #cardContener{
+        display: none;
     }
 
 </style>

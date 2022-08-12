@@ -7,7 +7,7 @@
                 <p>Ouverture : <span>{{value["02. open"]}}</span></p>
                 <p>Variation % : <span :style="variation >0 ? {'color' : 'green'} : {'color' : 'red'}">{{value["10. change percent"]}}</span></p>
             </div>
-            <button class="btnP">Calcul +/- value</button>
+            <button class="btnP">Graphique</button>
              <RouterLink :to="`/tableur/${value['01. symbol']}`">
                 <button class="btnP">Calcul +/- value</button>
             </RouterLink>
@@ -37,8 +37,9 @@ export default {
             .then(res => {
                 this.variation=res.data["Global Quote"]["10. change percent"];
                 this.variation=(parseFloat(this.variation, 10));
-                document.getElementById('loader').style.display='none'
-                this.data.push(res.data["Global Quote"])
+                this.data.push(res.data["Global Quote"]);
+                document.getElementById('loader').style.display='none';
+                document.getElementById('cardContener').style.display="block";
             })
             .catch(err => {
                 console.log(err);

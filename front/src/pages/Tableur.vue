@@ -45,6 +45,8 @@
 
 
 <script>
+import API from '@/_services/api.service.js';
+
 export default {
     data(){
         return{
@@ -72,6 +74,7 @@ export default {
         } 
     },
     methods: {
+        // renseignement : cours dollar actuel, frais de vente, cours action acutelle
         submit(e) {
             this.deviseUSD = e.target[5].checked;
             this.form.coursAchatAction = parseFloat(this.form.coursAchatAction);
@@ -99,7 +102,21 @@ export default {
             this.value50 = (this.investissementTotalApresVente-(this.plusValue*(50/100)))/this.form.quantite;
             this.value100 = (this.investissementTotalApresVente-this.plusValue)/this.form.quantite;
         },
-    }
+        getPlusValue(){
+            let symbol = this.$route.params.symbol
+            API.get(`/tableur/${symbol}`)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+
+    },
+    mounted() {
+        this.getPlusValue();
+    },
 }
 </script>
 
