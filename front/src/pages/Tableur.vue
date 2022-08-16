@@ -51,6 +51,11 @@
 
 
 <script>
+/**
+ * Faut refaire le tableur pour afficher clairement les actions achetés + calcul auto de +/- value
+ * Faire l'interface pour ajouter / enlever des actions
+ * Si pas d'actions, proposer uniquement l'interface pour en ajouter
+ */
 import API from '@/_services/api.service.js';
 
 export default {
@@ -114,9 +119,6 @@ export default {
             API.get(`/tableur/${symbol}`)
             .then(res => {
                 console.log(res.data);
-                if(res.data.noActions){
-                    
-                }
             })
             .catch(err => {
                 console.log(err);

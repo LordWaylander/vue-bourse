@@ -12,8 +12,10 @@
                 <button class="btnP">Calcul +/- value</button>
             </RouterLink>
             <button class="btnP" @click='deleteFavoris(value["01. symbol"])'>Retirer des favoris</button>
-           
         </div>
+    </div>
+    <div id="error">
+        <h1>{{error}}</h1>
     </div>
 </template>
 
@@ -29,6 +31,7 @@ export default {
         return {
             data: [],
             variation:'',
+            error:''
         }
     },
     methods: {
@@ -43,6 +46,10 @@ export default {
             })
             .catch(err => {
                 console.log(err);
+                this.error = err.response.data
+                document.getElementById('error').style.display = "block";
+                document.getElementById('conteneurCard').style.display = "none";
+                document.getElementById('loader').style.display='none';
             })
         },
         deleteFavoris(indice){
