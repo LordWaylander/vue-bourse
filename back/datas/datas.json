@@ -14,21 +14,25 @@
             "AAPL"
         ],
         "achat":[
-            { 
-               "MSFT":{
-                   "devise" : "$",
-                   "10/08/2022": {
-                       "quantite": 10,
-                       "prixAchat": 280,
-                       "fraisAchat": 6
-                   },
-                   "17/06/2021":{
-                       "quantite": 10,
-                       "prixAchat": 220,
-                       "fraisAchat": 6
-                   }
-               }
-           }
+            {
+
+                "name": "MSFT",
+                "devise" : "$",
+                "listeAchat" :[
+                    {
+                        "date": "10/08/2022", 
+                        "quantite": 10,
+                        "prixAchat": 280,
+                        "fraisAchat": 6
+                    },
+                    {
+                        "date": "17/06/2021",
+                        "quantite": 10,
+                        "prixAchat": 220,
+                        "fraisAchat": 6
+                    }
+                ]
+            }
        ]
     },
     {
@@ -46,34 +50,43 @@
             "TSLA",
             "MSFT"
         ],
-        "achat":[
+        "achat":[ 
             {
+
                 "name": "MSFT",
                 "devise" : "$",
-                "10/08/2022": {
-                    "quantite": 10,
-                    "prixAchat": 280,
-                    "fraisAchat": 6
-                },
-                "17/06/2021":{
-                    "quantite": 10,
-                    "prixAchat": 220,
-                    "fraisAchat": 6
-                }
+                "listeAchat" :[
+                    {
+                        "date": "10/08/2022", 
+                        "quantite": 10,
+                        "prixAchat": 280,
+                        "fraisAchat": 6
+                    },
+                    {
+                        "date": "17/06/2021",
+                        "quantite": 10,
+                        "prixAchat": 220,
+                        "fraisAchat": 6
+                    }
+                ]
             },    
             {
                 "name": "TSLA",
                 "devise" : "$",
-                "10/08/2022": {
-                    "quantite": 10,
-                    "prixAchat": 200,
-                    "fraisAchat": 6
-                },
-                "17/06/2021":{
-                    "quantite": 10,
-                    "prixAchat": 250,
-                    "fraisAchat": 6
-                }
+                "listeAchat" :[
+                    {
+                        "date" : "10/08/2022",
+                        "quantite": 10,
+                        "prixAchat": 200,
+                        "fraisAchat": 6
+                    },
+                    {
+                        "date": "17/06/2021",
+                        "quantite": 10,
+                        "prixAchat": 250,
+                        "fraisAchat": 6
+                    }
+                ]
             }
         ]
     }

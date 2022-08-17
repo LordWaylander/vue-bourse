@@ -1,5 +1,6 @@
 <template lang="">
 <div>
+    <!--
     <div  id="tableur">
         <form v-on:submit.prevent="submit($event)" id="formTableur">
             <label for="coursAchatAction">Cours de l'action à l'achat</label>
@@ -41,6 +42,25 @@
             </div>
         </div>
     </div>
+    -->
+    <p>{{actions.name}}</p>
+    <div v-for="(action, index) in actions.listeAchat" :key="index" class="divFormTest">
+        <label for="">Date:</label>
+        <input type="text" :value="action.date" name="date" disabled />
+        <label for="">Quantité:</label>
+        <input type="text" :value="action.quantite" name="quantite" disabled/>
+        <label for="">Prix d'achat:</label>
+        <input type="text" :value="action.prixAchat" name="prixAchat" disabled/>
+        <label for="">Frais d'achat:</label>
+        <input type="text" :value="action.fraisAchat" name="fraisAchat" disabled/>
+    </div>
+    <form v-on:submit.prevent="submit($event)" id="formTest">
+        <div id="formAddLine"></div>
+        <input type="submit" value="Enregistrer">
+     </form>
+     <button @click="addLine(count)">Ajouter une ligne</button>
+     <button @click="updateLine()">Modifier</button>
+
     <div id="error">
         <h1>{{error}}</h1>
     </div>
@@ -82,13 +102,17 @@ export default {
             value50: 0,
             value100: 0,
             deviseUSD: 0,
-            error: false
+            error: false,
+
+            actions:'',
+            count:1
         } 
     },
     methods: {
         // renseignement : cours dollar actuel, frais de vente, cours action acutelle
         submit(e) {
-            this.deviseUSD = e.target[5].checked;
+            console.log(e.target);
+            /*this.deviseUSD = e.target[5].checked;
             this.form.coursAchatAction = parseFloat(this.form.coursAchatAction);
             this.form.quantite = parseInt(this.form.quantite);
             this.form.fraisAchat = parseFloat(this.form.fraisAchat);
@@ -112,20 +136,50 @@ export default {
 
             this.value0 = (this.investissementTotalApresVente-(this.plusValue*(0/100)))/this.form.quantite;
             this.value50 = (this.investissementTotalApresVente-(this.plusValue*(50/100)))/this.form.quantite;
-            this.value100 = (this.investissementTotalApresVente-this.plusValue)/this.form.quantite;
+            this.value100 = (this.investissementTotalApresVente-this.plusValue)/this.form.quantite;*/
         },
         getPlusValue(){
             let symbol = this.$route.params.symbol
             API.get(`/tableur/${symbol}`)
             .then(res => {
                 console.log(res.data);
+                this.actions = res.data
             })
             .catch(err => {
                 console.log(err);
                 this.error = err
                 document.getElementById('error').style.display = "block";
-                document.getElementById('tableur').style.display = "none";
+                //document.getElementById('tableur').style.display = "none";
             })
+        },
+        addLine(count){
+            /**
+             * Attention si ligne modifier !
+             */
+            const formAddLine = document.getElementById('formAddLine');
+            const newLine = `
+            <div class="divFormTest">
+                <label for="">Date:</label>
+                <input type="text" name="date${count}"/>
+                <label for="">Quantité:</label>
+                <input type="text" name="quantite${count}"/>
+                <label for="">Prix d'achat:</label>
+                <input type="text" name="prixAchat${count}"/>
+                <label for="">Frais d'achat:</label>
+                <input type="text" name="fraisAchat${count}"/>
+            </div>`;
+
+            formAddLine.innerHTML+=newLine;
+            this.count++;
+        },
+        updateLine(){
+            /**
+             * pas plus jolie un modal ?
+             */
+            const lines = document.querySelectorAll('input')
+            lines.forEach(element => {
+                element.removeAttribute('disabled')
+            });
         }
 
     },
@@ -138,6 +192,12 @@ export default {
 <style lang="scss">
 #error{
     display: none;
+}
+#formTest{
+    .divFormTest{
+        display: flex
+    }
+    
 }
     #formTableur {
         margin-top: 5%;
