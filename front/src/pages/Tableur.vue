@@ -44,18 +44,9 @@
     </div>
     -->
     <p>{{actions.name}}</p>
-    <div v-for="(action, index) in actions.listeAchat" :key="index" class="divFormTest">
-        <label for="">Date:</label>
-        <input type="text" :value="action.date" name="date" disabled />
-        <label for="">Quantité:</label>
-        <input type="text" :value="action.quantite" name="quantite" disabled/>
-        <label for="">Prix d'achat:</label>
-        <input type="text" :value="action.prixAchat" name="prixAchat" disabled/>
-        <label for="">Frais d'achat:</label>
-        <input type="text" :value="action.fraisAchat" name="fraisAchat" disabled/>
-    </div>
     <form v-on:submit.prevent="submit($event)" id="formTest">
-        <div id="formAddLine"></div>
+        <div id="getLine"></div>
+        <div id="addLine"></div>
         <input type="submit" value="Enregistrer">
      </form>
      <button @click="addLine(count)">Ajouter une ligne</button>
@@ -104,6 +95,9 @@ export default {
             deviseUSD: 0,
             error: false,
 
+            /**
+             * new format a partir d'ici
+             */
             actions:'',
             count:1
         } 
@@ -143,7 +137,25 @@ export default {
             API.get(`/tableur/${symbol}`)
             .then(res => {
                 console.log(res.data);
-                this.actions = res.data
+                this.actions = res.data;
+
+                const getLine = document.getElementById('getLine');
+                res.data.listeAchat.forEach(element => {
+                    const line = `
+                    <div class="line" id="line${this.count}">
+                        <label for="">Date:</label>
+                        <input type="text" value="${element.date}" name="date${this.count}" disabled required/>
+                        <label for="">Quantité:</label>
+                        <input type="text" value="${element.quantite}" name="quantite${this.count}" disabled required/>
+                        <label for="">Prix d'achat:</label>
+                        <input type="text" value="${element.prixAchat}" name="prixAchat${this.count}" disabled required/>
+                        <label for="">Frais d'achat:</label>
+                        <input type="text" value="${element.fraisAchat}" name="fraisAchat${this.count}" disabled required/>
+                        <input type="button" @click="deleteLine(line${this.count})" class="deleteLine" />
+                    </div>`;
+                    getLine.innerHTML+=line
+                    this.count++
+                });
             })
             .catch(err => {
                 console.log(err);
@@ -156,30 +168,34 @@ export default {
             /**
              * Attention si ligne modifier !
              */
-            const formAddLine = document.getElementById('formAddLine');
+            const addLine = document.getElementById('addLine');
             const newLine = `
-            <div class="divFormTest">
+            <div class="line" id="line${count}">
                 <label for="">Date:</label>
-                <input type="text" name="date${count}"/>
+                <input type="text" name="date${count}" placeholder="Date (format JJ/MM/AAAA)" required/>
                 <label for="">Quantité:</label>
-                <input type="text" name="quantite${count}"/>
+                <input type="text" name="quantite${count}" placeholder="Quantité acheté" required/>
                 <label for="">Prix d'achat:</label>
-                <input type="text" name="prixAchat${count}"/>
+                <input type="text" name="prixAchat${count}" placeholder="Prix d'achat" required/>
                 <label for="">Frais d'achat:</label>
-                <input type="text" name="fraisAchat${count}"/>
+                <input type="text" name="fraisAchat${count}" placeholder="Frais d'achat" required/>
+                <input type="button" onclick="deleteLine(line${this.count})" class="deleteLine" />
             </div>`;
 
-            formAddLine.innerHTML+=newLine;
+            addLine.innerHTML+=newLine;
             this.count++;
         },
         updateLine(){
             /**
-             * pas plus jolie un modal ?
+             * pas plus jolie une modal ?
              */
             const lines = document.querySelectorAll('input')
             lines.forEach(element => {
                 element.removeAttribute('disabled')
             });
+        },
+        deleteLine(line){
+            console.log('line'+line+'select');
         }
 
     },
@@ -194,9 +210,28 @@ export default {
     display: none;
 }
 #formTest{
-    .divFormTest{
-        display: flex
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+    margin: auto;
+    border: 1px solid red;
+    .line{
+    margin-bottom: 0.25em;
+        .deleteLine{
+            background-image: url(../assets/cross_close.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            cursor: pointer;
+            border-radius: 0.2em;
+            width: 1.5em;
+            height: 1.5em;
+            background-color: red;
+            border: none;
+        }
     }
+    
     
 }
     #formTableur {
