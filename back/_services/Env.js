@@ -10,15 +10,6 @@ const schema = {
         SERVER_PORT: {
             type: 'number',
         },
-        HTTP_PROXY_ADDRESS: {
-            type: 'string'
-        },
-        HTTP_PROXY_USER: {
-            type: 'string'
-        },
-        HTTP_PROXY_MDP: {
-            type: 'string'
-        },
         API_KEY: {
             type: 'string'
         },
