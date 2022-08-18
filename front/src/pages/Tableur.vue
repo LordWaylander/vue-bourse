@@ -2,7 +2,7 @@
   <div>
     <p>{{nameIndice}}</p>
     <form v-on:submit.prevent="submit($event)" id="formTest">
-      <div class="line" :id="'line'+index" v-for="(action, index) in actions" >
+      <div class="line" :id="'line'+index" v-for="(action, index) in actions" :key="index">
         <div v-html="action" class="input"></div>
         <input type="button" @click="deleteLine(index)" class="deleteLine" />
       </div>
