@@ -68,6 +68,8 @@
  * Si pas d'actions, proposer uniquement l'interface pour en ajouter
  */
 import API from '@/_services/api.service.js';
+import { h, defineComponent } from 'vue'
+
 
 export default {
     data(){
@@ -140,22 +142,24 @@ export default {
                 this.actions = res.data;
 
                 const getLine = document.getElementById('getLine');
-                res.data.listeAchat.forEach(element => {
+                //res.data.listeAchat.forEach(element => {
                     const line = `
                     <div class="line" id="line${this.count}">
                         <label for="">Date:</label>
-                        <input type="text" value="${element.date}" name="date${this.count}" disabled required/>
+                        <input type="text" value="${res.data.listeAchat[0].date}" name="date${this.count}" disabled required/>
                         <label for="">Quantité:</label>
-                        <input type="text" value="${element.quantite}" name="quantite${this.count}" disabled required/>
+                        <input type="text" value="${res.data.listeAchat[0].quantite}" name="quantite${this.count}" disabled required/>
                         <label for="">Prix d'achat:</label>
-                        <input type="text" value="${element.prixAchat}" name="prixAchat${this.count}" disabled required/>
+                        <input type="text" value="${res.data.listeAchat[0].prixAchat}" name="prixAchat${this.count}" disabled required/>
                         <label for="">Frais d'achat:</label>
-                        <input type="text" value="${element.fraisAchat}" name="fraisAchat${this.count}" disabled required/>
-                        <input type="button" @click="deleteLine(line${this.count})" class="deleteLine" />
+                        <input type="text" value="${res.data.listeAchat[0].fraisAchat}" name="fraisAchat${this.count}" disabled required/>
+                        <input type="button" onClick=${this.deleteLine(1)} class="deleteLine" />
                     </div>`;
                     getLine.innerHTML+=line
-                    this.count++
-                });
+                    this.count++;
+                    //console.log(this.deleteLine(2));
+                //});
+                //@click="deleteLine(line${this.count})"
             })
             .catch(err => {
                 console.log(err);
@@ -195,7 +199,9 @@ export default {
             });
         },
         deleteLine(line){
-            console.log('line'+line+'select');
+            console.log('line '+line+' select');
+            let lot = document.getElementById('line1');
+            console.log(lot); // null WTF
         }
 
     },
