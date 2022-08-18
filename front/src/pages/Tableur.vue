@@ -26,7 +26,6 @@ export default {
       nameIndice:'',
       deviseIndice:'',
       actions:[],
-      action:[],
       count:0
     }
   },
@@ -36,7 +35,8 @@ export default {
       API.get(`/tableur/${symbol}`)
       .then(res => {
           console.log(res.data);
-          this.nameIndice = res.data.name
+          this.nameIndice = res.data.name;
+          this.deviseIndice = res.data.devise;
           res.data.listeAchat.forEach(element => {
             const line =`
               <label for="">Date:</label>
@@ -48,8 +48,8 @@ export default {
               <label for="">Frais d'achat:</label>
               <input type="text" value="${element.fraisAchat}" name="fraisAchat${this.count}" disabled required/>
             `;
-            this.actions.push(line)
-            this.count++
+            this.actions.push(line);
+            this.count++;
           });
       })
       .catch(err => {
