@@ -3,8 +3,9 @@
     <p>{{nameIndice}}</p>
     <form v-on:submit.prevent="submit($event)" id="formTest">
       <div class="line" :id="'line'+index" v-for="(action, index) in actions" :key="index">
-        <div v-html="action" class="input"></div>
+        <div v-html="action" :id="'input'+index" class="input"></div>
         <input type="button" @click="deleteLine(index)" class="deleteLine" />
+        <input type="button" @click="updateLine('input'+index)" value="Modifier une ligne" />
       </div>
       <input type="submit" value="Enregistrer">
     </form>
@@ -17,6 +18,11 @@
 </template>
 
 <script>
+/**
+ * Faut refaire le tableur pour afficher clairement les actions achetés + calcul auto de +/- value
+ * Faire l'interface pour ajouter / enlever des actions
+ * Si pas d'actions, proposer uniquement l'interface pour en ajouter
+ */
 import API from '@/_services/api.service.js';
 
 export default {
@@ -39,14 +45,14 @@ export default {
           this.deviseIndice = res.data.devise;
           res.data.listeAchat.forEach(element => {
             const line =`
-              <label for="">Date:</label>
-              <input type="text" value="${element.date}" name="date${this.count}" disabled required/>
-              <label for="">Quantité:</label>
-              <input type="text" value="${element.quantite}" name="quantite${this.count}" disabled required/>
-              <label for="">Prix d'achat:</label>
-              <input type="text" value="${element.prixAchat}" name="prixAchat${this.count}" disabled required/>
-              <label for="">Frais d'achat:</label>
-              <input type="text" value="${element.fraisAchat}" name="fraisAchat${this.count}" disabled required/>
+              <label for="date${this.count}">Date:</label>
+              <input type="text" value="${element.date}" name="date${this.count}" id="date${this.count}" disabled required/>
+              <label for="quantite${this.count}">Quantité:</label>
+              <input type="text" value="${element.quantite}" name="quantite${this.count}" id="quantite${this.count}" disabled required/>
+              <label for="prixAchat${this.count}">Prix d'achat:</label>
+              <input type="text" value="${element.prixAchat}" name="prixAchat${this.count}" id="prixAchat${this.count}" disabled required/>
+              <label for="fraisAchat${this.count}">Frais d'achat:</label>
+              <input type="text" value="${element.fraisAchat}" name="fraisAchat${this.count}" id="fraisAchat${this.count}" disabled required/>
             `;
             this.actions.push(line);
             this.count++;
@@ -60,16 +66,15 @@ export default {
       })
     },
     addLine(){
-      let count = this.count
       const line = `
-        <label for="">Date:</label>
-        <input type="text" name="date${count}" placeholder="Date (format JJ/MM/AAAA)" required/>
-        <label for="">Quantité:</label>
-        <input type="text" name="quantite${count}" placeholder="Quantité acheté" required/>
-        <label for="">Prix d'achat:</label>
-        <input type="text" name="prixAchat${count}" placeholder="Prix d'achat" required/>
-        <label for="">Frais d'achat:</label>
-        <input type="text" name="fraisAchat${count}" placeholder="Frais d'achat" required/>
+        <label for="date${this.count}">Date:</label>
+        <input type="text" name="date${this.count}" id="date${this.count}" placeholder="Date (format JJ/MM/AAAA)" required/>
+        <label for="quantite${this.count}">Quantité:</label>
+        <input type="text" name="quantite${this.count}" id="quantite${this.count}" placeholder="Quantité acheté" required/>
+        <label for=""prixAchat${this.count}>Prix d'achat:</label>
+        <input type="text" name="prixAchat${this.count}" id="prixAchat${this.count}" placeholder="Prix d'achat" required/>
+        <label for="fraisAchat${this.count}">Frais d'achat:</label>
+        <input type="text" name="fraisAchat${this.count}" id="fraisAchat${this.count}" placeholder="Frais d'achat" required/>
       `;
       this.actions.push(line);
       this.count++
@@ -77,9 +82,22 @@ export default {
     deleteLine(line){
       this.actions.splice(line, 1);
     },
+    updateLine(inputID){
+       /**
+       * pas plus jolie une modal ?
+       */
+
+      let input = document.getElementById(inputID)
+      for (let i = 0; i < input.children.length; i++) {
+        if (input.children[i].tagName === "INPUT") {
+          input.children[i].removeAttribute('disabled');
+        }
+      }
+    },
     submit(e){
       let trueInputs = []
       let inputs = document.getElementsByClassName('input');
+      console.log(inputs);
 
       /**
        * C'est bien rangé, mais est-ce utile...? Pas sur

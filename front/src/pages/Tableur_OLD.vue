@@ -1,6 +1,5 @@
 <template lang="">
 <div>
-    <!--
     <div  id="tableur">
         <form v-on:submit.prevent="submit($event)" id="formTableur">
             <label for="coursAchatAction">Cours de l'action à l'achat</label>
@@ -42,15 +41,6 @@
             </div>
         </div>
     </div>
-    -->
-    <p>{{actions.name}}</p>
-    <form v-on:submit.prevent="submit($event)" id="formTest">
-        <div id="getLine"></div>
-        <div id="addLine"></div>
-        <input type="submit" value="Enregistrer">
-     </form>
-     <button @click="addLine(count)">Ajouter une ligne</button>
-     <button @click="updateLine()">Modifier</button>
 
     <div id="error">
         <h1>{{error}}</h1>
@@ -67,9 +57,6 @@
  * Faire l'interface pour ajouter / enlever des actions
  * Si pas d'actions, proposer uniquement l'interface pour en ajouter
  */
-import API from '@/_services/api.service.js';
-import { h, defineComponent } from 'vue'
-
 
 export default {
     data(){
@@ -96,19 +83,13 @@ export default {
             value100: 0,
             deviseUSD: 0,
             error: false,
-
-            /**
-             * new format a partir d'ici
-             */
-            actions:'',
-            count:1
         } 
     },
     methods: {
         // renseignement : cours dollar actuel, frais de vente, cours action acutelle
         submit(e) {
             console.log(e.target);
-            /*this.deviseUSD = e.target[5].checked;
+            this.deviseUSD = e.target[5].checked;
             this.form.coursAchatAction = parseFloat(this.form.coursAchatAction);
             this.form.quantite = parseInt(this.form.quantite);
             this.form.fraisAchat = parseFloat(this.form.fraisAchat);
@@ -132,77 +113,8 @@ export default {
 
             this.value0 = (this.investissementTotalApresVente-(this.plusValue*(0/100)))/this.form.quantite;
             this.value50 = (this.investissementTotalApresVente-(this.plusValue*(50/100)))/this.form.quantite;
-            this.value100 = (this.investissementTotalApresVente-this.plusValue)/this.form.quantite;*/
+            this.value100 = (this.investissementTotalApresVente-this.plusValue)/this.form.quantite;
         },
-        getPlusValue(){
-            let symbol = this.$route.params.symbol
-            API.get(`/tableur/${symbol}`)
-            .then(res => {
-                console.log(res.data);
-                this.actions = res.data;
-
-                const getLine = document.getElementById('getLine');
-                res.data.listeAchat.forEach(element => {
-                    const line = `
-                    <div class="line" id="line${this.count}">
-                        <label for="">Date:</label>
-                        <input type="text" value="${element.date}" name="date${this.count}" disabled required/>
-                        <label for="">Quantité:</label>
-                        <input type="text" value="${element.quantite}" name="quantite${this.count}" disabled required/>
-                        <label for="">Prix d'achat:</label>
-                        <input type="text" value="${element.prixAchat}" name="prixAchat${this.count}" disabled required/>
-                        <label for="">Frais d'achat:</label>
-                        <input type="text" value="${element.fraisAchat}" name="fraisAchat${this.count}" disabled required/>
-                        <input type="button" onClick=${this.deleteLine(this.count)} class="deleteLine" />
-                    </div>`;
-                    getLine.innerHTML+=line
-                    this.count++;
-                });
-                //@click="deleteLine(line${this.count})"
-            })
-            .catch(err => {
-                console.log(err);
-                this.error = err
-                document.getElementById('error').style.display = "block";
-                //document.getElementById('tableur').style.display = "none";
-            })
-        },
-        addLine(count){
-            /**
-             * Attention si ligne modifier !
-             */
-            const addLine = document.getElementById('addLine');
-            const newLine = `
-            <div class="line" id="line${count}">
-                <label for="">Date:</label>
-                <input type="text" name="date${count}" placeholder="Date (format JJ/MM/AAAA)" required/>
-                <label for="">Quantité:</label>
-                <input type="text" name="quantite${count}" placeholder="Quantité acheté" required/>
-                <label for="">Prix d'achat:</label>
-                <input type="text" name="prixAchat${count}" placeholder="Prix d'achat" required/>
-                <label for="">Frais d'achat:</label>
-                <input type="text" name="fraisAchat${count}" placeholder="Frais d'achat" required/>
-                <input type="button" onclick="deleteLine(line${this.count})" class="deleteLine" />
-            </div>`;
-
-            addLine.innerHTML+=newLine;
-            this.count++;
-        },
-        updateLine(){
-            /**
-             * pas plus jolie une modal ?
-             */
-            const lines = document.querySelectorAll('input')
-            lines.forEach(element => {
-                element.removeAttribute('disabled')
-            });
-        },
-        deleteLine(line){
-            console.log('line '+line+' select');
-            let lot = document.getElementById('line1');
-            console.log(lot); // null WTF
-        }
-
     },
     mounted() {
         this.getPlusValue();
@@ -213,31 +125,6 @@ export default {
 <style lang="scss">
 #error{
     display: none;
-}
-#formTest{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: max-content;
-    margin: auto;
-    border: 1px solid red;
-    .line{
-    margin-bottom: 0.25em;
-        .deleteLine{
-            background-image: url(../assets/cross_close.png);
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            cursor: pointer;
-            border-radius: 0.2em;
-            width: 1.5em;
-            height: 1.5em;
-            background-color: red;
-            border: none;
-        }
-    }
-    
-    
 }
     #formTableur {
         margin-top: 5%;
