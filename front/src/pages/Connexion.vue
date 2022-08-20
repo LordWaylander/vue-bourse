@@ -52,6 +52,9 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
     #connexionform{
 

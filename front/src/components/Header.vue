@@ -91,6 +91,8 @@ export default {
     display: grid;
     grid-template-columns: 30% 1fr 30%;
     grid-template-areas: 'btn form connexion';
+    z-index: 5;
+    position: relative;
 
     #routesMain {
       grid-area: btn;
