@@ -6,7 +6,7 @@
         "email":"pierre.azerty@live.fr",
         "auth":{
             "user":"pierre",
-            "password":12345678
+            "password":123456789
         },
         "favoris":
         [
@@ -42,7 +42,7 @@
         "email":"marie.blachere@live.fr",
         "auth":{
             "user":"marie",
-            "password":12345678
+            "password":123456789
         },
         "favoris":
         [

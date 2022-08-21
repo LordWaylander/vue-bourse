@@ -2,11 +2,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const {config} = require('../_services/Env');
 
-exports.login = (req, reply) => {
+exports.login = function(req, reply) {
     //pwd 123456789
-    const mongodb = req.mongodb
+    const mongodb = this.mongo.client.db('vue-bourse').collection('vue-bourse')
 
-    console.log(req.body.user);
     mongodb.findOne({"auth.user" : req.body.user})
     .then(user =>{
         if (user === null) {

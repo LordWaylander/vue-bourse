@@ -9,11 +9,6 @@ fastify.register(require('@fastify/mongodb'), {
     url: 'mongodb://localhost:27017/'
 })
 
-fastify.decorateRequest('fastify', null)    
-fastify.addHook("onRequest", async (req) => {
-        req.mongodb = fastify.mongo.client.db('vue-bourse').collection('vue-bourse');
-}); 
-
 fastify.listen(config.SERVER_PORT)
 .then((address) => {
     fastify.log.info('ADDR Serveur '+address);
