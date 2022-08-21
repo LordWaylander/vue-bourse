@@ -4,12 +4,12 @@ const path = require('path');
 const {config} = require('./_services/Env.js');
 
 // connection à MongoDB
-/*fastify.register(require('@fastify/mongodb'), {
+fastify.register(require('@fastify/mongodb'), {
     forceClose: true,
-    //url: config.BDD_URL
-    url: 'mongodb://localhost:27017'
-})*/
+    url: config.BDD_URL
+})
 
+fastify.decorateRequest('mongodb', fastify.mongo);
 
 fastify.listen(config.SERVER_PORT)
 .then((address) => {
@@ -41,7 +41,6 @@ fastify.addHook('onRoute', (routeOptions) => {
 })
 
 // définition des routes
-//fastify.register(require('./routes/indexRoute'));
 fastify.register(autoload, {
     dir: path.join(__dirname, 'routes')
 })

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const datas = require('../datas/datas.json')
 const fs = require('fs').promises;
 
-exports.getProfile = (req, reply, done) => {
+exports.getProfile = (req, reply) => {
   let user = null;
 
   datas.forEach(element => {
@@ -22,7 +22,7 @@ exports.getProfile = (req, reply, done) => {
   }
 }
 
-exports.isFavList = (req, reply, done) => {
+exports.isFavList = (req, reply) => {
   let isFavList = false;
 
   datas.forEach(element => {
@@ -38,7 +38,7 @@ exports.isFavList = (req, reply, done) => {
   reply.send(isFavList)
 }
 
-exports.deleteFavoris = async (req, reply, done) => {
+exports.deleteFavoris = async (req, reply) => {
   datas.forEach(element => {
     if(req.data.decodedToken.userId == element.id) {
       const index = element.favoris.indexOf(req.params.indice);
@@ -55,7 +55,7 @@ exports.deleteFavoris = async (req, reply, done) => {
   }
 }
 
-exports.addFavoris = async (req, reply, done) => {
+exports.addFavoris = async (req, reply) => {
   datas.forEach(element => {
     if(req.data.decodedToken.userId == element.id) {
       element.favoris.push(req.body.indice)
@@ -71,7 +71,7 @@ exports.addFavoris = async (req, reply, done) => {
   }
 }
 
-exports.tableur = (req, reply, done) => {
+exports.tableur = (req, reply) => {
   let symbol = req.params.symbol
   datas.forEach(element => {
     if(req.data.decodedToken.userId == element.id) {
@@ -85,7 +85,7 @@ exports.tableur = (req, reply, done) => {
   reply.send({noActions: 'Vous n\'avez pas encore acheté d\'action'})
 }
 
-exports.userTableur = (req, reply, done) => {
+exports.userTableur = (req, reply) => {
   let listeAchat = req.body.listeAchat
   let nameIndice = req.body.nameIndice
 
