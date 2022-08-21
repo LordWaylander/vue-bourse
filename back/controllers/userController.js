@@ -87,6 +87,19 @@ exports.tableur = (req, reply, done) => {
 
 exports.userTableur = (req, reply, done) => {
   let listeAchat = req.body.listeAchat
+  let nameIndice = req.body.nameIndice
+
+  console.log('*** datas ***');
+  datas.forEach(element => {
+    if(req.data.decodedToken.userId == element.id) {
+      element.achat.forEach(el => {
+        if(el.name === nameIndice) {
+          console.log(el);
+        }
+      });
+    }
+  });
+  console.log('******');
   
   listeAchat.forEach(element => {
     console.log('*** element ***');

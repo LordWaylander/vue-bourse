@@ -1,12 +1,19 @@
 const fastify = require('fastify')({logger: true});
 const autoload = require('@fastify/autoload');
 const path = require('path');
-//env-schema -> CF : configEnv.js
-
 const {config} = require('./_services/Env.js');
+
+// connection à MongoDB
+/*fastify.register(require('@fastify/mongodb'), {
+    forceClose: true,
+    //url: config.BDD_URL
+    url: 'mongodb://localhost:27017'
+})*/
+
+
 fastify.listen(config.SERVER_PORT)
 .then((address) => {
-    fastify.log.info('ADDR Serveur '+address)
+    fastify.log.info('ADDR Serveur '+address);
 })
 .catch((err)=> {
     fastify.log.error(err), process.exit(1)

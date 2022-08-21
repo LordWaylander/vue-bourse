@@ -113,7 +113,7 @@ export default {
         }
       }
 
-      API.post('/user/tableur',{listeAchat: trueInputs})
+      API.post('/user/tableur',{listeAchat: trueInputs, nameIndice : this.nameIndice})
       .then(res => {
         console.log(res);
       })

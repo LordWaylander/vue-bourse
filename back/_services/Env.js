@@ -4,7 +4,8 @@ const schema = {
         'SERVER_PORT',
         'API_KEY',
         'JWT_SECRET',
-        'COOKIE_SECRET'
+        'COOKIE_SECRET',
+        'BDD_URL'
     ],
     properties: {
         SERVER_PORT: {
@@ -14,6 +15,9 @@ const schema = {
             type: 'string'
         },
         JWT_SECRET: {
+            type: 'string'
+        },
+        BDD_URL: {
             type: 'string'
         }
     }
