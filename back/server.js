@@ -6,10 +6,13 @@ const {config} = require('./_services/Env.js');
 // connection à MongoDB
 fastify.register(require('@fastify/mongodb'), {
     forceClose: true,
-    url: config.BDD_URL
+    url: 'mongodb://localhost:27017/'
 })
 
-fastify.decorateRequest('mongodb', fastify.mongo);
+fastify.decorateRequest('fastify', null)    
+fastify.addHook("onRequest", async (req) => {
+        req.mongodb = fastify.mongo.client.db('vue-bourse').collection('vue-bourse');
+}); 
 
 fastify.listen(config.SERVER_PORT)
 .then((address) => {
