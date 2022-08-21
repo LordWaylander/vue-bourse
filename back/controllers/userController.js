@@ -84,3 +84,15 @@ exports.tableur = (req, reply, done) => {
   });
   reply.send({noActions: 'Vous n\'avez pas encore acheté d\'action'})
 }
+
+exports.userTableur = (req, reply, done) => {
+  let listeAchat = req.body.listeAchat
+  
+  listeAchat.forEach(element => {
+    console.log('*** element ***');
+    console.log(element);
+    console.log('******');
+  });
+
+  reply.code(200).send('ok');
+}

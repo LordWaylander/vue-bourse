@@ -85,6 +85,7 @@ export default {
     updateLine(inputID){
        /**
        * pas plus jolie une modal ?
+       * Faire un btn "annuler" pour griser a nouveau le btn
        */
 
       let input = document.getElementById(inputID)
@@ -97,21 +98,28 @@ export default {
     submit(e){
       let trueInputs = []
       let inputs = document.getElementsByClassName('input');
-      console.log(inputs);
 
       /**
-       * C'est bien rangé, mais est-ce utile...? Pas sur
+       * C'est bien rangé, mais est-ce utile...? Pas sur..
        */
       for (let i = 0; i < inputs.length; i++) {
-        trueInputs[i] = []
+        trueInputs[i] = {}
         for (let y = 0; y < inputs[i].childNodes.length; y++) {
+          
           if (inputs[i].childNodes[y].tagName == 'INPUT') {
-            trueInputs[i].push(inputs[i].childNodes[y])
+            trueInputs[i][inputs[i].childNodes[y].name] = inputs[i].childNodes[y].value
           }
+
         }
       }
 
-      console.log(trueInputs);
+      API.post('/user/tableur',{listeAchat: trueInputs})
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
     }
   },
   mounted() {

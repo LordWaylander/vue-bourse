@@ -22,5 +22,9 @@ module.exports = function (fastify, opts, done) {
         preHandler: userMiddleware.verifyTokenUser,
         handler: userController.tableur,
     });
+    fastify.post('/user/tableur', {
+        preHandler: userMiddleware.verifyTokenUser,
+        handler: userController.userTableur,
+    });
     done();
 }
