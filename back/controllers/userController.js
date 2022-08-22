@@ -99,6 +99,8 @@ exports.userTableur = function(req, reply) {
   let nameIndice = req.body.nameIndice
   console.log(listeAchat);
   console.log(nameIndice);
+  // se référer à la date pour modifier ou ajouterle champ ?
+  // ou tout supprimer et refaire ?
 
   //mongodb(this).updateOne( {id: req.data.decodedToken.userId}, { $push / pull ?: { 'achat': req.body.listeAchat }} )
 

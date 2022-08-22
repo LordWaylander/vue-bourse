@@ -45,13 +45,13 @@ export default {
           res.data.achat[0].listeAchat.forEach(element => {
             const line =`
               <label for="date${this.count}">Date:</label>
-              <input type="text" value="${element.date}" name="date${this.count}" id="date${this.count}" disabled required/>
+              <input type="text" value="${element.date}" name="date" id="date${this.count}" disabled required/>
               <label for="quantite${this.count}">Quantité:</label>
-              <input type="text" value="${element.quantite}" name="quantite${this.count}" id="quantite${this.count}" disabled required/>
+              <input type="text" value="${element.quantite}" name="quantite" id="quantite${this.count}" disabled required/>
               <label for="prixAchat${this.count}">Prix d'achat:</label>
-              <input type="text" value="${element.prixAchat}" name="prixAchat${this.count}" id="prixAchat${this.count}" disabled required/>
+              <input type="text" value="${element.prixAchat}" name="prixAchat" id="prixAchat${this.count}" disabled required/>
               <label for="fraisAchat${this.count}">Frais d'achat:</label>
-              <input type="text" value="${element.fraisAchat}" name="fraisAchat${this.count}" id="fraisAchat${this.count}" disabled required/>
+              <input type="text" value="${element.fraisAchat}" name="fraisAchat" id="fraisAchat${this.count}" disabled required/>
             `;
             this.actions.push(line);
             this.count++;
@@ -67,13 +67,13 @@ export default {
     addLine(){
       const line = `
         <label for="date${this.count}">Date:</label>
-        <input type="text" name="date${this.count}" id="date${this.count}" placeholder="Date (format JJ/MM/AAAA)" required/>
+        <input type="text" name="date" id="date${this.count}" placeholder="Date (format JJ/MM/AAAA)" required/>
         <label for="quantite${this.count}">Quantité:</label>
-        <input type="text" name="quantite${this.count}" id="quantite${this.count}" placeholder="Quantité acheté" required/>
+        <input type="text" name="quantite" id="quantite${this.count}" placeholder="Quantité acheté" required/>
         <label for=""prixAchat${this.count}>Prix d'achat:</label>
-        <input type="text" name="prixAchat${this.count}" id="prixAchat${this.count}" placeholder="Prix d'achat" required/>
+        <input type="text" name="prixAchat" id="prixAchat${this.count}" placeholder="Prix d'achat" required/>
         <label for="fraisAchat${this.count}">Frais d'achat:</label>
-        <input type="text" name="fraisAchat${this.count}" id="fraisAchat${this.count}" placeholder="Frais d'achat" required/>
+        <input type="text" name="fraisAchat" id="fraisAchat${this.count}" placeholder="Frais d'achat" required/>
       `;
       this.actions.push(line);
       this.count++
