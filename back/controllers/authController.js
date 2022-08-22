@@ -4,7 +4,7 @@ const {config} = require('../_services/Env');
 
 exports.login = function(req, reply) {
     //pwd 123456789
-    const mongodb = this.mongo.client.db('vue-bourse').collection('vue-bourse')
+    const mongodb = this.mongo.client.db('vue-bourse').collection('vue-bourse');
 
     mongodb.findOne({"auth.user" : req.body.user})
     .then(user =>{

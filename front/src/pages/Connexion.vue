@@ -3,9 +3,9 @@
         <div id="connexionform">
             <form  @submit.prevent="login()">
                 <label for="username">Nom d'utilisateur</label>
-                <input id="user" type="text" name="username" placeholder="Nom d'utilisateur" v-model="user"/>
+                <input id="user" type="text" name="username" placeholder="Nom d'utilisateur" v-model="user" required/>
                 <label for="password">Mot de passe</label>
-                <input id="password" type="password" name="password" placeholder="Mot de passe" v-model="password"/>
+                <input id="password" type="password" name="password" placeholder="Mot de passe" v-model="password" required/>
                 <input type="submit" value="Se connecter" id="submitConnexion"/>
             </form>
         </div>
