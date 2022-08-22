@@ -27,8 +27,8 @@ export default {
     beforeCreate() {
         API.post(`/user/getProfile`)
         .then(res => {
-            this.user = res.data.user.userFirstname +' '+ res.data.user.userName
-            this.userFavoris = res.data.user.userFavoris
+            this.user = res.data.user.prenom +' '+ res.data.user.nom
+            this.userFavoris = res.data.user.favoris
         })
         .catch(err => {
             console.log(err);

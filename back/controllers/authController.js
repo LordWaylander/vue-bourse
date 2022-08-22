@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const {config} = require('../_services/Env');
+const {mongodb} = require('../_services/Bdd');
 
 exports.login = function(req, reply) {
     //pwd 123456789
-    const mongodb = this.mongo.client.db('vue-bourse').collection('vue-bourse');
 
-    mongodb.findOne({"auth.user" : req.body.user})
+    mongodb(this).findOne({"auth.user" : req.body.user})
     .then(user =>{
         if (user === null) {
             reply.code(403).send({auth : false, error: 'erreur de login / mot de passe'})

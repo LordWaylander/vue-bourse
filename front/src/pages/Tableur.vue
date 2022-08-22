@@ -40,10 +40,9 @@ export default {
       let symbol = this.$route.params.symbol
       API.get(`/tableur/${symbol}`)
       .then(res => {
-          console.log(res.data);
-          this.nameIndice = res.data.name;
-          this.deviseIndice = res.data.devise;
-          res.data.listeAchat.forEach(element => {
+          this.nameIndice = res.data.achat[0].name;
+          this.deviseIndice = res.data.achat[0].devise;
+          res.data.achat[0].listeAchat.forEach(element => {
             const line =`
               <label for="date${this.count}">Date:</label>
               <input type="text" value="${element.date}" name="date${this.count}" id="date${this.count}" disabled required/>

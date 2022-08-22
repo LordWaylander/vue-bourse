@@ -6,7 +6,7 @@
         "email":"pierre.azerty@live.fr",
         "auth":{
             "user":"pierre",
-            "password":123456789
+            "password":"$2b$10$HfyWH/jMdIyPaizdHwEyOuPHvuUVvOQxAGN/jtOmIRbUwbZlZfaYS"
         },
         "favoris":
         [
@@ -42,7 +42,7 @@
         "email":"marie.blachere@live.fr",
         "auth":{
             "user":"marie",
-            "password":123456789
+            "password":"$2b$10$HfyWH/jMdIyPaizdHwEyOuPHvuUVvOQxAGN/jtOmIRbUwbZlZfaYS"
         },
         "favoris":
         [
