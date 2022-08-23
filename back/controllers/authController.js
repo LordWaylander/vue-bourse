@@ -14,7 +14,7 @@ exports.login = function(req, reply) {
 
         bcrypt.compare(req.body.password, user.auth.password)
         .then(result => {
-            if(result){
+            if(!!result){
                 let token = jwt.sign(
                     { userId: user.id }, 
                     config.JWT_SECRET,

@@ -1,7 +1,4 @@
-const jwt = require('jsonwebtoken');
-const fs = require('fs').promises;
 const {mongodb} = require('../_services/Bdd');
-//mongodb(this).findOne({id: req.data.decodedToken.userId})
 
 exports.getProfile = function(req, reply) {
   const opts = {
@@ -66,7 +63,7 @@ exports.addFavoris = function(req, reply) {
 
 exports.tableur = function(req, reply) {
   /**
-   * Non je n'ai pas trouvé plus simple pour le moment,
+   * Non je n'ai pas trouvé plus simple pour le moment pour la requete,
    * Pour obtenir UNIQUEMENT la liste d'achat selon req.params.symbol
    */
 
@@ -81,7 +78,6 @@ exports.tableur = function(req, reply) {
   }}
   ]).toArray()
   .then(res => {
-    console.log(res[0].achat);
     if (!!res[0]) {
       reply.send(res[0])
     }
@@ -99,7 +95,7 @@ exports.userTableur = function(req, reply) {
   let nameIndice = req.body.nameIndice
   console.log(listeAchat);
   console.log(nameIndice);
-  // se référer à la date pour modifier ou ajouterle champ ?
+  // se référer à la date pour modifier ou ajouter le champ ?
   // ou tout supprimer et refaire ?
 
   //mongodb(this).updateOne( {id: req.data.decodedToken.userId}, { $push / pull ?: { 'achat': req.body.listeAchat }} )
