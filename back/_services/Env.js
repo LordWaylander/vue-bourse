@@ -17,6 +17,9 @@ const schema = {
         JWT_SECRET: {
             type: 'string'
         },
+        COOKIE_SECRET: {
+            type: 'string'
+        },
         BDD_URL: {
             type: 'string'
         }
