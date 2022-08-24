@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const {config} = require('../_services/Env');
-const {mongodb} = require('../_services/Bdd');
+const User = require('../models/userModel');
 
 exports.login = function(req, reply) {
     //pwd 123456789
 
-    mongodb(this).findOne({"auth.user" : req.body.user})
+    User.findOne({"auth.username" : req.body.user})
     .then(user =>{
         if (user === null) {
             reply.code(403).send({auth : false, error: 'erreur de login / mot de passe'})
@@ -15,7 +15,7 @@ exports.login = function(req, reply) {
             .then(result => {
                 if(!!result){
                     let token = jwt.sign(
-                        { userId: user.id }, 
+                        { userId: user._id }, 
                         config.JWT_SECRET,
                         { expiresIn: '1h' }
                     );

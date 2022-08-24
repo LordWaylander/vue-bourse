@@ -1,13 +1,10 @@
-const {mongodb} = require('../_services/Bdd');
+const {User, userObjectId} = require('../models/userModel');
 
 exports.getProfile = function(req, reply) {
-  const opts = {
-    'nom': 1,
-    'prenom': 1,
-    'favoris': 1
-  };
 
-  mongodb(this).findOne({id: req.data.decodedToken.userId}, {projection: opts})
+  const opts = 'nom prenom favoris'
+
+  User.findOne({_id: req.data.decodedToken.userId}, opts)
   .then(userProfile => {
     if(!!userProfile) {
       reply.code(200).send({user: userProfile})
@@ -22,7 +19,7 @@ exports.getProfile = function(req, reply) {
 exports.isFavList = function(req, reply) {
   let isFavList = false;
 
-  mongodb(this).findOne({id: req.data.decodedToken.userId, favoris: req.params.query})
+  User.findOne({_id: req.data.decodedToken.userId, favoris: req.params.query})
   .then((res) =>{
     if(!!res){
       isFavList = true
@@ -36,7 +33,7 @@ exports.isFavList = function(req, reply) {
 }
 
 exports.deleteFavoris = function(req, reply) {
-  mongodb(this).updateOne( {id: req.data.decodedToken.userId}, { $pull: { 'favoris': req.params.indice }} )
+  User.updateOne( {_id: req.data.decodedToken.userId}, { $pull: { 'favoris': req.params.indice }} )
   .then((res) => {
     if(!!res) {
       reply.send({delete: true})
@@ -49,7 +46,7 @@ exports.deleteFavoris = function(req, reply) {
 }
 
 exports.addFavoris = function(req, reply) {
-  mongodb(this).updateOne( {id: req.data.decodedToken.userId}, { $push: { 'favoris': req.body.indice }} )
+  User.updateOne( {_id: req.data.decodedToken.userId}, { $push: { 'favoris': req.body.indice }} )
   .then((res) => {
     if(!!res) {
       reply.send({add: true})
@@ -67,16 +64,24 @@ exports.tableur = function(req, reply) {
    * Pour obtenir UNIQUEMENT la liste d'achat selon req.params.symbol
    */
 
-  mongodb(this).aggregate([
-    { $match: {id: req.data.decodedToken.userId}},
-    {$project: {
-      achat: {$filter: {
-          input: '$achat',
-          as: 'achat',
-          cond: {$eq: ['$$achat.name', req.params.symbol]}
-      }},
-  }}
-  ]).toArray()
+  User.aggregate([
+    { 
+      $match: {
+        _id: userObjectId(req.data.decodedToken.userId)
+      }
+    },
+    { 
+      $project: {
+        achat: {
+          $filter: {
+            input: '$achat',
+            as: 'achat',
+            cond: {$eq: ['$$achat.name', req.params.symbol]}
+          }
+        }
+      }
+    }
+  ])
   .then(res => {
     if (!!res[0]) {
       reply.send(res[0])

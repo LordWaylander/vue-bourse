@@ -4,30 +4,20 @@ const path = require('path');
 const {config} = require('./_services/Env.js');
 const mongoose = require('mongoose');
 
-/*mongoose.connect(config.BDD_URL)
+mongoose.connect(config.BDD_URL)
 .then(res => {
-    console.log('success');
+    fastify.listen({port: config.SERVER_PORT})
 })
 .catch(err => {
-    console.log(err);
-})*/
+    console.error(err),
+    process.exit(1)
+})
 
 /**
  * utile uniquement pour postman a 1ere vue
  */
- fastify.register(require('@fastify/formbody'));
- fastify.register(require('@fastify/multipart'));
-
-// connection à MongoDB
-fastify.register(require('@fastify/mongodb'), {
-    forceClose: true,
-    url: config.BDD_URL
-})
-
-fastify.listen({port: config.SERVER_PORT})
-.catch((err)=> {
-    console.log(err), process.exit(1)
-})
+fastify.register(require('@fastify/formbody'));
+fastify.register(require('@fastify/multipart'));
 
 fastify.register(require('@fastify/cors'), {
   /**
@@ -37,6 +27,7 @@ fastify.register(require('@fastify/cors'), {
   origin: true,
   credentials: true,
 });
+
 fastify.register(require('@fastify/cookie'), {
     secret: config.COOKIE_SECRET,
     parseOptions: {}
