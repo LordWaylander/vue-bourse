@@ -10,30 +10,30 @@ exports.login = function(req, reply) {
     .then(user =>{
         if (user === null) {
             reply.code(403).send({auth : false, error: 'erreur de login / mot de passe'})
+        } else {
+            bcrypt.compare(req.body.password, user.auth.password)
+            .then(result => {
+                if(!!result){
+                    let token = jwt.sign(
+                        { userId: user.id }, 
+                        config.JWT_SECRET,
+                        { expiresIn: '1h' }
+                    );
+                    reply
+                    .setCookie('token', token, {
+                        domain: 'localhost',
+                        path: '/',
+                        secure: true,
+                        expires: Date.now()+(1000*60*60), //expires 1H
+                        maxAge: 3600 // maxAge 1H
+                    })
+                    .code(200)
+                    .send({auth : true})
+                } else {
+                    reply.code(403).send({auth : false, error: 'erreur de login / mot de passe'})
+                }
+            })
         }
-
-        bcrypt.compare(req.body.password, user.auth.password)
-        .then(result => {
-            if(!!result){
-                let token = jwt.sign(
-                    { userId: user.id }, 
-                    config.JWT_SECRET,
-                    { expiresIn: '1h' }
-                );
-                reply
-                .setCookie('token', token, {
-                    domain: 'localhost',
-                    path: '/',
-                    secure: true,
-                    expires: Date.now()+(1000*60*60), //expires 1H
-                    maxAge: 3600 // maxAge 1H
-                  })
-                .code(200)
-                .send({auth : true})
-            } else {
-                reply.code(403).send({auth : false, error: 'erreur de login / mot de passe'})
-            }
-        })
     })
     .catch(err => {
         console.log(err);

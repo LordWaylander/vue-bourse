@@ -2,6 +2,15 @@ const fastify = require('fastify')({logger: true});
 const autoload = require('@fastify/autoload');
 const path = require('path');
 const {config} = require('./_services/Env.js');
+const mongoose = require('mongoose');
+
+/*mongoose.connect(config.BDD_URL)
+.then(res => {
+    console.log('success');
+})
+.catch(err => {
+    console.log(err);
+})*/
 
 /**
  * utile uniquement pour postman a 1ere vue
@@ -12,7 +21,7 @@ const {config} = require('./_services/Env.js');
 // connection à MongoDB
 fastify.register(require('@fastify/mongodb'), {
     forceClose: true,
-    url: 'mongodb://localhost:27017/'
+    url: config.BDD_URL
 })
 
 fastify.listen({port: config.SERVER_PORT})
