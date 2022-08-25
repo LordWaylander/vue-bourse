@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const {config} = require('../_services/Env');
-const User = require('../models/userModel');
+const {User} = require('../models/userModel');
 
 exports.login = function(req, reply) {
     //pwd 123456789
