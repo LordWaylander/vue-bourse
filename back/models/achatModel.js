@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const User = require('./userModel')
 
 const achatSchema = new Schema({
   userId: {
@@ -35,6 +36,9 @@ const achatSchema = new Schema({
       require: true,
     },
   }]
+},
+{
+  timestamps: true
 })
 
 const Achat = mongoose.model('achats', achatSchema);
