@@ -12,3 +12,4 @@ package-lock.json
 *.sw?
 API
 back/.env
+back/queries.js
