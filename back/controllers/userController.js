@@ -4,7 +4,7 @@ exports.getProfile = function(req, reply) {
 
   const opts = 'nom prenom favoris'
 
-  User.findOne({_id: req.data.decodedToken.userId}, opts)
+  User.findOne({_id: req.data.decodedToken.userId}, opts).populate('achats')
   .then(userProfile => {
     if(!!userProfile) {
       reply.code(200).send({user: userProfile})
@@ -59,12 +59,22 @@ exports.addFavoris = function(req, reply) {
 }
 
 exports.tableur = function(req, reply) {
-  /**
-   * Non je n'ai pas trouvé plus simple pour le moment pour la requete,
-   * Pour obtenir UNIQUEMENT la liste d'achat selon req.params.symbol
-   */
-
   User.aggregate([
+    {
+      $lookup: {
+        from: "achats",
+        localField: "_id",
+        foreignField: "userId",
+        as: "achat",
+        pipeline: [
+          { 
+            $match: {
+              name: req.params.symbol
+            }
+          }
+        ]
+      }
+    },
     { 
       $match: {
         _id: userObjectId(req.data.decodedToken.userId)
@@ -72,13 +82,9 @@ exports.tableur = function(req, reply) {
     },
     { 
       $project: {
-        achat: {
-          $filter: {
-            input: '$achat',
-            as: 'achat',
-            cond: {$eq: ['$$achat.name', req.params.symbol]}
-          }
-        }
+        prenom: 1,
+        nom: 1,
+        achat: 1
       }
     }
   ])

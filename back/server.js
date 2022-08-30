@@ -5,7 +5,7 @@ const {config} = require('./_services/Env.js');
 const mongoose = require('mongoose');
 
 mongoose.connect(config.BDD_URL)
-.then(res => {
+.then(() => {
     fastify.listen({port: config.SERVER_PORT})
 })
 .catch(err => {

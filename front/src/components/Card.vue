@@ -48,7 +48,7 @@ export default {
                 console.log(err);
                 this.error = err.response.data
                 document.getElementById('error').style.display = "block";
-                document.getElementById('conteneurCard').style.display = "none";
+                document.getElementById('cardContener').style.display = "block";
                 document.getElementById('loader').style.display='none';
             })
         },
@@ -69,13 +69,18 @@ export default {
          * puis remplir le tableau
          */
         'userFavoris'(){
-            if(this.userFavoris) {
+            if(this.userFavoris.length) {
                 this.userFavoris.forEach(query => {
                     this.requeteAPI(query)
                 });
+            }else{
+                this.error = "Merci de rajouter des favoris"
+                document.getElementById('error').style.display = "block";
+                document.getElementById('cardContener').style.display = "block";
+                document.getElementById('loader').style.display='none';
             }
         }
-    }
+    },
 }
 </script>
 
