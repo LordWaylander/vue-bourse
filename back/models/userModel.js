@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Achat = require('./achatModel')
+const {Achat} = require('./achatModel')
 
 const userSchema = new Schema({
   prenom: {
