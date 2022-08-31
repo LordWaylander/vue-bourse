@@ -2,7 +2,7 @@ const {config} = require('./Env');
 const axios = require('axios');
 
 exports.axios = axios.create({
-    baseURL:'https://www.alphavantage.co/',
+    baseURL: config.API_URL,
     headers : {
         'Content-Type': 'application/json',
     }

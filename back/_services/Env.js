@@ -3,6 +3,7 @@ const schema = {
     required: [ 
         'SERVER_PORT',
         'API_KEY',
+        'API_URL',
         'JWT_SECRET',
         'COOKIE_SECRET',
         'BDD_URL'
@@ -12,6 +13,9 @@ const schema = {
             type: 'number',
         },
         API_KEY: {
+            type: 'string'
+        },
+        API_URL: {
             type: 'string'
         },
         JWT_SECRET: {
