@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Achat = require('./achatModel')
 
 const userSchema = new Schema({
   prenom: {
@@ -32,11 +31,7 @@ const userSchema = new Schema({
   },
   favoris: [{
     type: String
-  }],
-  achats: [{
-    type: Schema.Types.ObjectId, 
-    ref: 'achats'
-  }],
+  }]
 },
 {
   timestamps: true

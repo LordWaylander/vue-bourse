@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 
 mongoose.connect(config.BDD_URL)
 .then(() => {
+    //require des models, pour pas les importer dans les models, ou il faut
+    require('./models/userModel');
+    require('./models/achatModel');
     fastify.listen({port: config.SERVER_PORT})
 })
 .catch(err => {
@@ -29,6 +32,7 @@ fastify.register(require('@fastify/cors'), {
 });
 
 fastify.register(require('@fastify/cookie'), {
+    //regarder les options dispo ! ...
     secret: config.COOKIE_SECRET,
     parseOptions: {}
 })

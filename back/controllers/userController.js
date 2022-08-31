@@ -4,7 +4,7 @@ exports.getProfile = function(req, reply) {
 
   const opts = 'nom prenom favoris'
 
-  User.findOne({_id: req.data.decodedToken.userId}, opts).populate('achats')
+  User.findOne({_id: req.data.decodedToken.userId}, opts)
   .then(userProfile => {
     if(!!userProfile) {
       reply.code(200).send({user: userProfile})

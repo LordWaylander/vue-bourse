@@ -1,16 +1,21 @@
 <template lang="">
   <div>
     <p>{{nameIndice}}</p>
-    <form v-on:submit.prevent="submit($event)" id="formTest">
+    <form v-on:submit.prevent="submit($event)" id="form" v-if="actions.length">
       <div class="line" :id="'line'+index" v-for="(action, index) in actions" :key="index">
         <div v-html="action" :id="'input'+index" class="input"></div>
         <input type="button" @click="deleteLine(index)" class="deleteLine" />
-        <input type="button" @click="updateLine('input'+index)" value="Modifier une ligne" />
+        <input type="button" @click="updateLine('input'+index)" value="Modifier" />
       </div>
       <input type="submit" value="Enregistrer">
     </form>
+    <div v-else>
+      <p>Vous n'avez pas effectuer encore d'achat, pour pouvez en ajouter en cliquant sur le boutton "Ajouter une ligne"</p>
+    </div>
 
-    <button @click="addLine()">Ajouter une ligne</button>
+    <div id="addLine">
+      <button  @click="addLine()">Ajouter une ligne</button>
+    </div>
     <div id="error">
         <h1>{{error}}</h1>
     </div>
@@ -40,6 +45,7 @@ export default {
       let symbol = this.$route.params.symbol
       API.get(`/tableur/${symbol}`)
       .then(res => {
+        if(!!res.data.achat[0]){
           this.nameIndice = res.data.achat[0].name;
           this.deviseIndice = res.data.achat[0].devise;
           res.data.achat[0].listeAchat.forEach(element => {
@@ -56,6 +62,7 @@ export default {
             this.actions.push(line);
             this.count++;
           });
+        }
       })
       .catch(err => {
           console.log(err);
@@ -131,7 +138,7 @@ export default {
 #error{
     display: none;
 }
-#formTest{
+#form{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -154,5 +161,10 @@ export default {
           border: none;
         }
     } 
+}
+#addLine{
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
 }
 </style>
