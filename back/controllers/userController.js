@@ -102,8 +102,16 @@ exports.tableur = function(req, reply) {
 }
 
 exports.userTableur = function(req, reply) {
-  Achat.updateOne({userId: req.data.decodedToken.userId, name: req.body.nameIndice}, {$set: {'listeAchat': req.body.listeAchat}})
-  .then(()=> {
+  Achat.updateOne(
+    { userId: req.data.decodedToken.userId, name: req.body.nameIndice }, 
+    { $set: {
+      listeAchat: req.body.listeAchat, 
+      name: req.body.nameIndice, 
+      devise: req.body.devise
+      }
+    }, 
+    { upsert: true, setDefaultsOnInsert: true })
+  .then((res)=> {
     reply.code(200).send({update: true});
   })
   .catch((err) => {

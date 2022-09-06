@@ -7,6 +7,12 @@
         <input type="button" @click="deleteLine(index)" class="deleteLine" />
         <input type="button" @click="updateLine('input'+index)" value="Modifier" />
       </div>
+      <div>
+        <input type="radio" id="dollar" value="dollar" v-model="deviseIndice">
+        <label for="dollar">Dollar</label>
+        <input type="radio" id="euro" value="euro" v-model="deviseIndice">
+        <label for="euro">Euro</label>
+      </div>
       <input type="submit" value="Enregistrer">
     </form>
     <div v-else>
@@ -41,12 +47,10 @@ export default {
     }
   },
   methods: {
-    getPlusValue(){
-      let symbol = this.$route.params.symbol
+    getPlusValue(symbol){
       API.get(`/tableur/${symbol}`)
       .then(res => {
         if(!!res.data.achat[0]){
-          this.nameIndice = res.data.achat[0].name;
           this.deviseIndice = res.data.achat[0].devise;
           res.data.achat[0].listeAchat.forEach(element => {
             const line =`
@@ -119,7 +123,7 @@ export default {
         }
       }
 
-      API.post('/user/tableur',{listeAchat: trueInputs, nameIndice : this.nameIndice})
+      API.post('/user/tableur',{listeAchat: trueInputs, nameIndice : this.nameIndice, devise: this.deviseIndice})
       .then(res => {
         console.log(res);
       })
@@ -129,7 +133,9 @@ export default {
     }
   },
   mounted() {
-    this.getPlusValue();
+    let symbol = this.$route.params.symbol
+    this.nameIndice = symbol;
+    this.getPlusValue(symbol);
   },
 }
 </script>
