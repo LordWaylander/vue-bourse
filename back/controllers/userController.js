@@ -1,4 +1,5 @@
 const {User, userObjectId} = require('../models/userModel');
+const {Achat} = require('../models/achatModel');
 
 exports.getProfile = function(req, reply) {
 
@@ -101,33 +102,12 @@ exports.tableur = function(req, reply) {
 }
 
 exports.userTableur = function(req, reply) {
-  console.log('*** userTableur ***');
-  let listeAchat = req.body.listeAchat
-  let nameIndice = req.body.nameIndice
-  console.log(listeAchat);
-  console.log(nameIndice);
-  // se référer à la date pour modifier ou ajouter le champ ?
-  // ou tout supprimer et refaire ?
-
-  //mongodb(this).updateOne( {id: req.data.decodedToken.userId}, { $push / pull ?: { 'achat': req.body.listeAchat }} )
-
-  /*console.log('*** datas ***');
-  datas.forEach(element => {
-    if(req.data.decodedToken.userId == element.id) {
-      element.achat.forEach(el => {
-        if(el.name === nameIndice) {
-          console.log(el);
-        }
-      });
-    }
-  });
-  console.log('******');
-  
-  listeAchat.forEach(element => {
-    console.log('*** element ***');
-    console.log(element);
-    console.log('******');
-  });*/
-
-  reply.code(200).send('ok');
+  Achat.updateOne({userId: req.data.decodedToken.userId, name: req.body.nameIndice}, {$set: {'listeAchat': req.body.listeAchat}})
+  .then(()=> {
+    reply.code(200).send({update: true});
+  })
+  .catch((err) => {
+    console.log(err);
+    reply.code(500).send(err);
+  })
 }
