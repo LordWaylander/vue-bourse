@@ -109,9 +109,6 @@ export default {
       let trueInputs = []
       let inputs = document.getElementsByClassName('input');
 
-      /**
-       * C'est bien rangé, mais est-ce utile...? Pas sur..
-       */
       for (let i = 0; i < inputs.length; i++) {
         trueInputs[i] = {}
         for (let y = 0; y < inputs[i].childNodes.length; y++) {
