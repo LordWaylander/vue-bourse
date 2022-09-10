@@ -15,7 +15,7 @@
 
     <div id="connexion" v-if="auth==false">
       <RouterLink to="/connexion" active-class="nav-active" class="button">
-        <button>Connexion</button>
+        <button>Connexion / Inscription</button>
       </RouterLink>
     </div>
     <div id="userAuth" v-else >
@@ -63,7 +63,7 @@ export default {
 <style lang="scss">
 .button{
   background-color: #0051ff;
-  width: 8rem;
+  min-width: 8rem;
   border: 2px solid #08f;
   border-radius: 50px;
   text-decoration: none;

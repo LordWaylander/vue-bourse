@@ -3,6 +3,7 @@ import Home from '@/pages/Home.vue';
 import Tableur from '@/pages/Tableur.vue';
 import Connexion from '@/pages/Connexion.vue';
 import Profil from '@/pages/Profil.vue';
+import Inscription from '@/pages/Inscription.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,12 @@ const router = createRouter({
       name: 'connexion',
       meta:{guest:true},
       component: Connexion,
+    },
+    {
+      path: '/inscription',
+      name: 'inscription',
+      meta:{guest:true},
+      component: Inscription,
     },
     {
       path: '/profil',

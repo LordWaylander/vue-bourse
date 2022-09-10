@@ -48,14 +48,32 @@ exports.logout = (req, reply) => {
         .clearCookie('query')
         .send({connected: false})
     } catch (err) {
-        reply
-        .code(500)
-        .send(err)
+        reply.code(500).send(err)
     }
 }
 
-exports.createAccount = (req, reply) => {
-    reply.send('create account');
+exports.createAccount = (req, reply) => {//"auth.username" : req.body.user
+    User.findOne({$or: [
+        {"auth.username" : req.body.auth.user},
+        {email: req.body.email}
+    ]})
+    .then(user => {
+        if (user === null) {
+            bcrypt.hash(req.body.auth.password, 10, function(err, hash) {
+                req.body.auth.password = hash;
+                User.create(req.body)
+                .then(() => {
+                    reply.send({created : true});
+                })
+                .catch((err) => {
+                    console.log(err);
+                    reply.code(500).send(err)
+                })
+            });
+        } else {
+            reply.code(403).send({created : false, error: 'Un user existe déjà avec ce couple username / email'})
+        }
+    })
 }
 
 exports.verifToken = (req, reply) => {

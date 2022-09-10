@@ -8,6 +8,10 @@
                 <input id="password" type="password" name="password" placeholder="Mot de passe" v-model="password" required/>
                 <input type="submit" value="Se connecter" id="submitConnexion"/>
             </form>
+            
+            <RouterLink to="/inscription" id="inscriptionLink">
+                Pas de compte ? <span>cliquer ici !</span>
+            </RouterLink>
         </div>
     </div>
 </template>
@@ -57,13 +61,21 @@ export default {
     width: 100%;
 }
     #connexionform{
-
         width: 75%;
         display: flex;
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
         position: absolute;
         left: 12.5%;
         top: 50%;
+        #inscriptionLink{
+            color: black;
+            text-decoration: none;
+            span {
+                text-decoration: underline;
+            }
+        }
         form{
             flex-direction: column;
             display: flex;
