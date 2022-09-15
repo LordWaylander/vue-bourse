@@ -52,12 +52,13 @@ exports.logout = (req, reply) => {
     }
 }
 
-exports.createAccount = (req, reply) => {//"auth.username" : req.body.user
+exports.createAccount = (req, reply) => {
     if(req.body.auth.password !== req.body.auth.passwordRepeat){
         reply.code(403).send({created : false, error: 'Les mots de passe de correspondent pas'});
     }
+    
     User.findOne({$or: [
-        {"auth.username" : req.body.auth.user},
+        {"auth.username" : req.body.auth.username},
         {email: req.body.email}
     ]})
     .then(user => {

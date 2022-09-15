@@ -63,15 +63,12 @@ export default {
         .then(res => {
           if(!!res.data.created){
             inscription.createdAccount = res.data.created
-            /**
-             * renvoyer vers la page d'accueil / connexion avec modal ?
-             */
-              this.prenom = ''
-              this.nom = ''
-              this.email = ''
-              this.username = ''
-              this.passwordRepeat = ''
-              this.$router.push('/connexion');
+            this.prenom = ''
+            this.nom = ''
+            this.email = ''
+            this.username = ''
+            this.passwordRepeat = ''
+            this.$router.push('/connexion');
           }
         })
         .catch(err => {
