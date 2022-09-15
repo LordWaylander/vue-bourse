@@ -13,22 +13,28 @@
                 Pas de compte ? <span>cliquer ici !</span>
             </RouterLink>
         </div>
+        <div v-if="createdAccount" id="ValidationInscription" class="modalInscription">
+          <p>Votre compte est créé vous pouvez à présent vous connecter</p>
+        </div>
     </div>
 </template>
 
 <script>
 import API from '@/_services/api.service.js';
+import {inscription}  from './Inscription.vue'
 
 export default {
     data() {
         return{
             user:'',
             password:'',
-            auth : false
+            auth : false,
+            createdAccount : inscription.createdAccount,
         }
     },
     methods: {
         login() {
+            inscription.createdAccount = '';
             if(this.user == "" || this.password ==""){
                 console.warn('ne pas envoyer le form');
             }
@@ -114,5 +120,16 @@ export default {
             }
             
         }
+    }
+    .modalInscription {
+        position: absolute;
+        z-index: 5;
+        top: 15vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+    #ValidationInscription {
+        background: #35bb358f;
     }
 </style>

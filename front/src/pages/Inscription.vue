@@ -18,54 +18,67 @@
               <input id="passwordRepeat" type="password" name="passwordRepeat" placeholder="Répétez le mot de passe" v-model="passwordRepeat" required/>
               <input type="submit" value="S'inscrire" id="submitSignup"/>
             </form>
+            <RouterLink to="/connexion" id="connexionLink">
+                Déjà un compte ? <span>cliquer ici !</span>
+            </RouterLink>
+        </div>
+        <div v-if="error" id="RefusInscription" class="modalInscription">
+          <p>{{error}}</p>
         </div>
     </div>
   </div>
 </template>
 <script>
 import API from '@/_services/api.service.js';
+import { reactive } from 'vue'
+export const inscription = reactive({
+  createdAccount: ''
+})
 
 export default {
   data() {
-        return{
-          prenom:'',
-          nom:'',
-          email:'',
-          username:'',
-          password:'',
-          passwordRepeat:''
-        }
+      return{
+        prenom:'',
+        nom:'',
+        email:'',
+        username:'',
+        password:'',
+        passwordRepeat:'',
+        error: '',
+      }
     },
     methods: {
       signup(){
-        if(this.password != this.passwordRepeat){
-          throw new Error('Mauvais MDP')
-        }
         let credentials = {
           prenom: this.prenom,
           nom: this.nom,
           email: this.email,
           auth: {
             username: this.username,
-            password: this.password
+            password: this.password,
+            passwordRepeat : this.passwordRepeat
           }
         }
         API.post(`/inscription`, credentials)
         .then(res => {
-            console.log(res.data);
-            if(!!res.data.created){
-              /**
-               * afficher modal pour dire si user bien créer ?
-               * renvoyer vers la page d'accueil avec modal ?
-               */
-               this.prenom = ''
-               this.nom = ''
-               this.email = ''
-               this.username = ''
-               this.passwordRepeat = ''
-            }
+          if(!!res.data.created){
+            inscription.createdAccount = res.data.created
+            /**
+             * renvoyer vers la page d'accueil / connexion avec modal ?
+             */
+              this.prenom = ''
+              this.nom = ''
+              this.email = ''
+              this.username = ''
+              this.passwordRepeat = ''
+              this.$router.push('/connexion');
+          }
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          console.log(err);
+          console.log(err.response.data);
+          this.error = err.response.data.error
+        })
       }
     }
 }
@@ -110,5 +123,23 @@ export default {
         }
       }
     }
+    #connexionLink{
+      color: black;
+      text-decoration: none;
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+  .modalInscription {
+    position: absolute;
+    z-index: 5;
+    top: 15vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+  }
+  #RefusInscription {
+    background-color: #ec0e0e94;
   }
 </style>

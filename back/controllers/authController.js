@@ -53,6 +53,9 @@ exports.logout = (req, reply) => {
 }
 
 exports.createAccount = (req, reply) => {//"auth.username" : req.body.user
+    if(req.body.auth.password !== req.body.auth.passwordRepeat){
+        reply.code(403).send({created : false, error: 'Les mots de passe de correspondent pas'});
+    }
     User.findOne({$or: [
         {"auth.username" : req.body.auth.user},
         {email: req.body.email}
@@ -71,7 +74,7 @@ exports.createAccount = (req, reply) => {//"auth.username" : req.body.user
                 })
             });
         } else {
-            reply.code(403).send({created : false, error: 'Un user existe déjà avec ce couple username / email'})
+            reply.code(403).send({created : false, error: 'Un user existe déjà avec ce couple username / email'});
         }
     })
 }
