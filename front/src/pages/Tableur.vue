@@ -5,7 +5,8 @@
       <div class="line" :id="'line'+index" v-for="(action, index) in actions" :key="index">
         <div v-html="action" :id="'input'+index" class="input"></div>
         <input type="button" @click="deleteLine(index)" class="deleteLine" />
-        <input type="button" @click="updateLine('input'+index)" value="Modifier" />
+        <input type="button" :id="'updateLine'+index" @click="updateLine(index)" value="Modifier"/>
+        <input type="button" :id="'cancelUpdateLine'+index" class="cancelUpdateLine" @click="cancelUpdateLine(index)" value="Annuler"/>
       </div>
       <div>
         <input type="radio" id="dollar" value="dollar" v-model="deviseIndice">
@@ -22,8 +23,12 @@
     <div id="addLine">
       <button  @click="addLine()">Ajouter une ligne</button>
     </div>
-    <div id="error">
+    <div id="error" v-if="error">
         <h1>{{error}}</h1>
+        ERREUR
+    </div>
+    <div>
+      <h1>Affichage +/- values ici</h1>
     </div>
   </div>
 </template>
@@ -33,6 +38,7 @@
  * Faut refaire le tableur pour afficher clairement les actions achetés + calcul auto de +/- value
  * Faire l'interface pour ajouter / enlever des actions
  * Si pas d'actions, proposer uniquement l'interface pour en ajouter
+ * Pour le nom de l'indice, le centre + logo entreprise ?
  */
 import API from '@/_services/api.service.js';
 
@@ -43,7 +49,8 @@ export default {
       nameIndice:'',
       deviseIndice:'',
       actions:[],
-      count:0
+      count:0,
+      input: ''
     }
   },
   methods: {
@@ -71,8 +78,6 @@ export default {
       .catch(err => {
           console.log(err);
           this.error = err
-          document.getElementById('error').style.display = "block";
-          //document.getElementById('tableur').style.display = "none";
       })
     },
     addLine(){
@@ -92,18 +97,33 @@ export default {
     deleteLine(line){
       this.actions.splice(line, 1);
     },
-    updateLine(inputID){
+    updateLine(ID){
        /**
        * pas plus jolie une modal ?
-       * Faire un btn "annuler" pour griser a nouveau le btn
+       * problème mémoire pour le cancel , il garde juste la dernière
+       * input en mémoire (logique), faut régler ça, si l'user veu modifer 2 ou + de lignes et les annuler
        */
 
-      let input = document.getElementById(inputID)
+      let input = document.getElementById('input'+ID)
+      this.input = input.innerHTML
+      document.getElementById('updateLine'+ID).style.display = 'none';
+      document.getElementById('cancelUpdateLine'+ID).style.display = 'block';
       for (let i = 0; i < input.children.length; i++) {
         if (input.children[i].tagName === "INPUT") {
           input.children[i].removeAttribute('disabled');
         }
       }
+    },
+    cancelUpdateLine(ID) {
+      let input = document.getElementById('input'+ID)
+      for (let i = 0; i < input.children.length; i++) {
+        if (input.children[i].tagName === "INPUT") {
+          input.children[i].setAttribute("disabled", "");
+        }
+      }
+      document.getElementById('input'+ID).innerHTML = this.input;
+      document.getElementById('updateLine'+ID).style.display = 'block';
+      document.getElementById('cancelUpdateLine'+ID).style.display = 'none';
     },
     submit(e){
       let trueInputs = []
@@ -137,10 +157,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-#error{
-    display: none;
-}
+<style lang="scss" scoped>
 #form{
   display: flex;
   flex-direction: column;
@@ -163,7 +180,10 @@ export default {
           background-color: red;
           border: none;
         }
-    } 
+    }
+    .cancelUpdateLine{
+      display: none;
+    }
 }
 #addLine{
   display: flex;

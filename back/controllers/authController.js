@@ -48,7 +48,8 @@ exports.logout = (req, reply) => {
         .clearCookie('query')
         .send({connected: false})
     } catch (err) {
-        reply.code(500).send(err)
+        console.log(err);
+        reply.code(500).send(err);
     }
 }
 
@@ -75,7 +76,7 @@ exports.createAccount = (req, reply) => {
                 })
             });
         } else {
-            reply.code(403).send({created : false, error: 'Un user existe déjà avec ce couple username / email'});
+            reply.code(403).send({created : false, error: 'Un utilisateur existe déjà avec ce couple username / email'});
         }
     })
 }
@@ -86,6 +87,7 @@ exports.verifToken = (req, reply) => {
         jwt.verify(token, config.JWT_SECRET);
         reply.send({auth : true})
     } catch (error) {
+        // fausse erreur, juste JWT qui claque une erreur si le token est périmé
         reply
         .clearCookie('token')
         .send({auth : false})

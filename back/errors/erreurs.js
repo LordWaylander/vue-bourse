@@ -1,5 +1,5 @@
-exports.error =  function(err){
-    console.log('****** err ******');
+exports.errorsAPI =  function(err) {
+    console.log('****** errorsAPI ******');
     console.log(err);
     if (err == 'Error: Nombre maximal de requetes dépassé') {
         return 'Nombre maximal de requetes dépassé'
@@ -18,7 +18,5 @@ exports.error =  function(err){
                 return err;
                 break;
         }
-    }
-
-    
+    } 
 }

@@ -1,5 +1,5 @@
 <template lang="">
-    <div id="conteneurCard">
+    <div id="conteneurCard" v-if="data.length">
         <div v-for="value in data" class="card" v-bind:id="value['01. symbol']">
             <div>
                 <p>Symbol : <span>{{value["01. symbol"]}}</span></p>
@@ -14,8 +14,11 @@
             <button class="btnP" @click='deleteFavoris(value["01. symbol"])'>Retirer des favoris</button>
         </div>
     </div>
-    <div id="error">
+    <div id="errors" v-else-if="error">
         <h1>{{error}}</h1>
+    </div>
+    <div v-else>
+        <h1>Erreur quelquonque à gérer ! (card.vue ligne 21)</h1>
     </div>
 </template>
 
@@ -42,13 +45,10 @@ export default {
                 this.variation=(parseFloat(this.variation, 10));
                 this.data.push(res.data["Global Quote"]);
                 document.getElementById('loader').style.display='none';
-                document.getElementById('cardContener').style.display="block";
             })
             .catch(err => {
                 console.log(err);
                 this.error = err.response.data
-                document.getElementById('error').style.display = "block";
-                document.getElementById('cardContener').style.display = "block";
                 document.getElementById('loader').style.display='none';
             })
         },
@@ -75,8 +75,7 @@ export default {
                 });
             }else{
                 this.error = "Merci de rajouter des favoris"
-                document.getElementById('error').style.display = "block";
-                document.getElementById('cardContener').style.display = "block";
+                //document.getElementById('cardContener').style.display = "block";
                 document.getElementById('loader').style.display='none';
             }
         }
@@ -84,7 +83,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .btnP{
     background-color: #0051ff;
     border: 2px solid #08f;

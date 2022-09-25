@@ -81,6 +81,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  #background{
+    background-image: url('../assets/bourse-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
   #inscriptionForm {
         width: 75%;
         display: flex;

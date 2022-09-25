@@ -30,15 +30,11 @@ export default {
             this.user = res.data.user.prenom +' '+ res.data.user.nom
             this.userFavoris = res.data.user.favoris
         })
-        .catch(err => {
-            console.log(err);
-            //this.$router.push('/connexion');
-        })
     },
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     #loader {
         display: flex;
         justify-content: center;
@@ -49,8 +45,4 @@ export default {
             height: 100px;
         }
     }
-    #cardContener{
-        display: none;
-    }
-
 </style>

@@ -34,7 +34,7 @@ export default {
     },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
     #opacityCorps{
         height: 100vh;
         z-index: 50;

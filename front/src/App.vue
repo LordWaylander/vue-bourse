@@ -53,9 +53,6 @@ import VueCookies from 'vue-cookies'
         .then(res => {
           this.auth = res.data.auth
         })
-        .catch(err => {
-          console.log(err);
-        })
     },
   }
 </script>

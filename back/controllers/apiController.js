@@ -1,5 +1,5 @@
 const {axios, apiKey} = require('../_services/Axios.js');
-const erreurs = require('../errors/erreurs');
+const {errorsAPI} = require('../errors/erreurs');
 
 /**
     * GLOBAL_QUOTE - function=GLOBAL_QUOTE&symbol=${query}${exchange}&outputsize=compact&apikey=${API.Token} // trading AJD
@@ -23,7 +23,7 @@ exports.time_series_daily = (req, reply) => {
         reply.send(result.data);
     })
     .catch((err) => {
-        let e = erreurs.error(err);
+        let e = errorsAPI(err);
         reply.code(500).send(e)
     })
 }
@@ -41,7 +41,7 @@ exports.global_quote = (req, reply) => {
         reply.send(result.data);
     })
     .catch((err) => {
-        let e = erreurs.error(err);
+        let e = errorsAPI(err);
         reply.code(500).send(e)
     })
 }
@@ -53,7 +53,7 @@ exports.symbol_search = (req, reply) => {
         reply.send(result.data.bestMatches);
     })
     .catch((err) => {
-        let e = erreurs.error(err);
+        let e = errorsAPI(err);
         reply.code(500).send(e)
     })
 }

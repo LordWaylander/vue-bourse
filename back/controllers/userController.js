@@ -29,7 +29,7 @@ exports.isFavList = function(req, reply) {
   })
   .catch(err => {
     console.log(err);
-    reply.send({err: err})
+    reply.code(500).send({err: err})
   })
 }
 

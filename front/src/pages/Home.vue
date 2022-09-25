@@ -5,8 +5,8 @@
     </div>
    <Modal :research="request.research" :error="error" @requeteAPI="requeteAPI" @emptyRequestSearch="emptyRequestSearch"/>
     
-    <div id="titre">
-        <div v-if="error === false">
+    <div id="titre" v-if="error === false">
+        <div>
             <div v-if="GLOBAL_QUOTE">
                 <div id="entete">
                     <span id="variation" :style="variation > 0 ? {'background-color' : 'green'} : {'background-color' : 'red'}"></span>
@@ -52,10 +52,11 @@
                 </div>
             </div>
         </div>
-        <div v-else id="error">
-            <h1>{{error}}</h1>
-        </div>
+        
     </div>
+    <div v-else id="error">
+            <h1>{{error}}, car c'est la version gratuite ! =/</h1>
+        </div>
 </div>
 </template>
 
@@ -112,21 +113,17 @@ export default {
                         this.error = false;
                         document.getElementById("loader").style.display="none";
                         document.getElementById('opacityCorps').style.display='none';
-                        document.getElementById("titre").style.display="block";
                     })
                     .catch((err) => {
                         this.error = err.response.data;
                         document.getElementById("loader").style.display="none";
-                        document.getElementById("titre").style.display="block";
                         document.getElementById('opacityCorps').style.display='none';
                     })
                 )            
             .catch((err) => { 
                 console.log(err);
                 this.error = err.response.data;
-                document.getElementById('opacityCorps').style.display='none';
                 document.getElementById("loader").style.display="none";
-                document.getElementById("titre").style.display="block";
                 document.getElementById('opacityCorps').style.display='none';
             })
         },
@@ -162,9 +159,6 @@ export default {
                 .then(res => {
                     this.favlist = res.data
                 })
-                .catch(err => {
-                    console.log(err);
-                })
             }
         },
         addFavoris(indice){
@@ -172,17 +166,11 @@ export default {
             .then(res => {
                 this.favlist = res.data.add
             })
-            .catch(err => {
-                console.log(err);
-            })
         },
         deleteFavoris(indice){
             API.delete(`/user/deleteFavoris/${indice}`)
             .then(res => {
                 this.favlist = !res.data.delete
-            })
-            .catch(err => {
-                console.log(err);
             })
         }
     },
@@ -193,7 +181,6 @@ export default {
             this.request.query = 'MSFT'
         }
         this.requeteAPI(this.request.query);
-        
     },
     watch:{
         'querySearchIndice'(){
@@ -213,10 +200,10 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
     #titre{
-        display: none;
+        display: block;
         margin: 50px;
         #entete{
             display: flex;
@@ -272,12 +259,11 @@ export default {
                 }
             }
         }
-
-        #error{
+    }
+    #error{
             display: flex;
             justify-content: center;
         }
-    }
     
     #loader {
         display: none;

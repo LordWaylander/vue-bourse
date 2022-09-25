@@ -44,9 +44,6 @@ export default {
       this.searchIndice = '';
     },
     deconnexion() {
-      /**
-       * faire un post vers /logout pour supprimer les cookies !
-       */
       API.post('/logout')
       .then(res => {
         this.$emit('userConnected', { connected: res.data.connected });
@@ -60,7 +57,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .button{
   background-color: #0051ff;
   min-width: 8rem;

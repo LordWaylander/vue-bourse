@@ -50,13 +50,18 @@ export default {
                     this.$router.push('/home');
                 }
             })
-            .catch(err => console.log(err))
+            /**
+             * Faire modal erreur connexion
+             */
+            .catch(err => {
+                console.log(err)
+            })
         },
     },
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #background{
     background-image: url('../assets/bourse-background.jpg');
     background-repeat: no-repeat;
