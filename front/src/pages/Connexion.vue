@@ -1,6 +1,9 @@
 <template lang="">
     <div id="background">
         <div id="connexionform">
+            <div id="error" v-if="error">
+                <p>{{error}}</p>
+            </div>
             <form  @submit.prevent="login()">
                 <label for="username">Nom d'utilisateur</label>
                 <input id="user" type="text" name="username" placeholder="Nom d'utilisateur" v-model="user" required/>
@@ -8,10 +11,13 @@
                 <input id="password" type="password" name="password" placeholder="Mot de passe" v-model="password" required/>
                 <input type="submit" value="Se connecter" id="submitConnexion"/>
             </form>
+
+            
             
             <RouterLink to="/inscription" id="inscriptionLink">
                 Pas de compte ? <span>cliquer ici !</span>
             </RouterLink>
+
         </div>
         <div v-if="createdAccount" id="ValidationInscription" class="modalInscription">
           <p>Votre compte est créé vous pouvez à présent vous connecter</p>
@@ -30,6 +36,7 @@ export default {
             password:'',
             auth : false,
             createdAccount : inscription.createdAccount,
+            error:''
         }
     },
     methods: {
@@ -50,11 +57,8 @@ export default {
                     this.$router.push('/home');
                 }
             })
-            /**
-             * Faire modal erreur connexion
-             */
             .catch(err => {
-                console.log(err)
+                this.error = err.response.data.error
             })
         },
     },
@@ -136,5 +140,9 @@ export default {
     }
     #ValidationInscription {
         background: #35bb358f;
+    }
+    #error{
+        color: red;
+        text-decoration: underline;
     }
 </style>
