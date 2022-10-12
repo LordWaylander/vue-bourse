@@ -17,7 +17,7 @@
       <input type="submit" value="Enregistrer">
     </form>
     <div v-else>
-      <p>Vous n'avez pas effectuer encore d'achat, pour pouvez en ajouter en cliquant sur le boutton "Ajouter une ligne"</p>
+      <p>Vous n'avez pas effectué encore d'achat, pour pouvez en ajouter en cliquant sur le boutton "Ajouter une ligne"</p>
     </div>
 
     <div id="addLine">
