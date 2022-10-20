@@ -18,9 +18,9 @@
               <input id="passwordRepeat" type="password" name="passwordRepeat" placeholder="Répétez le mot de passe" v-model="passwordRepeat" required/>
               <input type="submit" value="S'inscrire" id="submitSignup"/>
             </form>
-            <RouterLink to="/connexion" id="connexionLink">
-                Déjà un compte ? <span>cliquer ici !</span>
-            </RouterLink>
+            <div  id="connexionLink">
+                Déjà un compte ? <router-link to="/connexion">cliquer ici !</router-link>
+            </div>
         </div>
         <div v-if="error" id="RefusInscription" class="modalInscription">
           <p>{{error}}</p>
@@ -132,8 +132,9 @@ export default {
     #connexionLink{
       color: black;
       text-decoration: none;
-      span {
+      a {
         text-decoration: underline;
+        color: inherit;
       }
     }
   }

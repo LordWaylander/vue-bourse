@@ -2,7 +2,7 @@ exports.errorsAPI =  function(err) {
     console.log('****** errorsAPI ******');
     console.log(err);
     if (err == 'Error: Nombre maximal de requetes dépassé') {
-        return 'Nombre maximal de requetes dépassé'
+        return 'Nombre maximal de requetes dépassé !'
     }else{
         switch (err.code) {
             case 'ETIMEDOUT':

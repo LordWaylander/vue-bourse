@@ -14,9 +14,9 @@
 
             
             
-            <RouterLink to="/inscription" id="inscriptionLink">
-                Pas de compte ? <span>cliquer ici !</span>
-            </RouterLink>
+            <div id="inscriptionLink">
+                Pas de compte ? <router-link to="/inscription">cliquer ici !</router-link>
+            </div>
 
         </div>
         <div v-if="createdAccount" id="ValidationInscription" class="modalInscription">
@@ -87,8 +87,9 @@ export default {
         #inscriptionLink{
             color: black;
             text-decoration: none;
-            span {
+            a {
                 text-decoration: underline;
+                color: inherit;
             }
         }
         form{

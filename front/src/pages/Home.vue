@@ -55,7 +55,7 @@
         
     </div>
     <div v-else id="error">
-            <h1>{{error}}, car c'est la version gratuite ! =/</h1>
+            <h1>{{error}}</h1>
         </div>
 </div>
 </template>
@@ -261,9 +261,9 @@ export default {
         }
     }
     #error{
-            display: flex;
-            justify-content: center;
-        }
+        display: flex;
+        justify-content: center;
+    }
     
     #loader {
         display: none;
@@ -275,6 +275,5 @@ export default {
             height: 100px;
         }
     }
-    
     
 </style>
