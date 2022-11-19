@@ -48,7 +48,7 @@
                             <button @click='deleteFavoris(GLOBAL_QUOTE["Global Quote"]["01. symbol"])'>Supprimer des favoris</button>
                         </div>
                     </div>
-                    <Graphique v-bind:datas="TIME_SERIES_DAILY['Time Series (Daily)']"/>
+                    <Graphique v-bind:datas="TIME_SERIES_DAILY_ADJUSTED['Time Series (Daily)']"/>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@ export default {
             request: {
                 functions: {
                     GLOBAL_QUOTE: 'GLOBAL_QUOTE',
-                    TIME_SERIES_DAILY: 'TIME_SERIES_DAILY',
+                    TIME_SERIES_DAILY_ADJUSTED: 'TIME_SERIES_DAILY_ADJUSTED',
                     SYMBOL_SEARCH: 'SYMBOL_SEARCH',
                     TIME_SERIES_INTRADAY: 'TIME_SERIES_INTRADAY',
                     TIME_SERIES_WEEKLY: 'TIME_SERIES_WEEKLY',
@@ -87,7 +87,7 @@ export default {
                 //exchange:'', // marché sur lequel chercher les indices, à mettre en place
                 research:'', // recherche searchIndice
             },
-            TIME_SERIES_DAILY:'',
+            TIME_SERIES_DAILY_ADJUSTED:'',
             GLOBAL_QUOTE:'',
             variation:'',
             error: false, // gestion d'erreur, pour l'API - surtout gestion requete par minute
@@ -101,9 +101,10 @@ export default {
             document.getElementById("loader").style.display="flex";
             this.isFavList(query);
 
-            API.get(`/api/time_series_daily/${query}`)
+            API.get(`/api/time_series_daily_adjusted/${query}`)
             .then((res) => {
-                    this.TIME_SERIES_DAILY=res.data;
+                    console.log(res);
+                    this.TIME_SERIES_DAILY_ADJUSTED=res.data;
                 },
                 API.get(`/api/global_quote/${query}`)
                     .then((res) => {
@@ -194,7 +195,7 @@ export default {
             return this.GLOBAL_QUOTE["Global Quote"]["07. latest trading day"].split('-').reverse().join('/');
         },
         dernierRafraichissement() {
-            return this.TIME_SERIES_DAILY["Meta Data"]["3. Last Refreshed"].split('-').reverse().join("/");
+            return this.TIME_SERIES_DAILY_ADJUSTED["Meta Data"]["3. Last Refreshed"].split('-').reverse().join("/");
         }
     },
 }

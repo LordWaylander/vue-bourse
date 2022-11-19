@@ -8,11 +8,13 @@ const {errorsAPI} = require('../errors/erreurs');
     * TIME_SERIES_INTRADAY - function=TIME_SERIES_INTRADAY&symbol=${query}&interval=60min&apikey=${API.Token} // trading par heure & interval=min         
     * TIME_SERIES_WEEKLY - function=TIME_SERIES_WEEKLY&symbol=${query}&apikey=${API.Token} // trading par semaine
     * TIME_SERIES_MONTHLY - function=TIME_SERIES_MONTHLY&symbol=${query}&apikey=${API.Token} // tranding par mois
+    * TIME_SERIES_DAILY_ADJUSTED - function=TIME_SERIES_DAILY_ADJUSTED&symbol=${query}&apikey=${API.Token}
 */
 
-exports.time_series_daily = (req, reply) => {
+exports.time_series_daily_adjusted = (req, reply) => {
     let query = req.params.query
-    axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${apiKey}`)
+    //axios.get(`query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=compact&apikey=${apiKey}`)
+    axios.get(`query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${query}&apikey=${apiKey}`)
     .then(result => {
         if (result.data.Note) {
             throw new Error("Nombre maximal de requetes dépassé")
