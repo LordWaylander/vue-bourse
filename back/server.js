@@ -39,7 +39,7 @@ fastify.register(require('@fastify/cookie'), {
 
 //visions des routes ouvertes à definir AVANT l'initialisation des routes
 fastify.addHook('onRoute', (routeOptions) => {
-    console.log(`Registered route: ${routeOptions.url}`)
+    console.log(routeOptions)
 })
 
 // définition des routes

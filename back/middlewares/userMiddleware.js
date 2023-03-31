@@ -1,7 +1,7 @@
 const {config} = require('../_services/Env');
 const jwt = require('jsonwebtoken');
 
-exports.verifyTokenUser = (req, reply, done) => {
+function verifyTokenUser (req, reply, done) {
   let token = req.cookies.token
 
   try {
@@ -18,3 +18,5 @@ exports.verifyTokenUser = (req, reply, done) => {
   }
 
 }
+
+module.exports = verifyTokenUser

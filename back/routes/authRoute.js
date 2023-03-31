@@ -1,6 +1,6 @@
 const authController = require('../controllers/authController');
 
-module.exports = function (fastify, opt, done) {
+function routesAuth(fastify, opt, done) {
     fastify.post('/login', {
         handler: authController.login,
     });
@@ -15,3 +15,4 @@ module.exports = function (fastify, opt, done) {
     });
     done();
 }
+module.exports = routesAuth

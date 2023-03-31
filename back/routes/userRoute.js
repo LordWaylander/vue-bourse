@@ -1,7 +1,7 @@
 const userController = require('../controllers/userController');
 const {verifyTokenUser} = require('../middlewares/userMiddleware');
 
-module.exports = function (fastify, opts, done) {
+function routesUser(fastify, opts, done) {
     fastify.post('/user/getProfile', {
         preHandler: verifyTokenUser,
         handler: userController.getProfile,
@@ -28,3 +28,5 @@ module.exports = function (fastify, opts, done) {
     });
     done();
 }
+
+module.exports = routesUser;

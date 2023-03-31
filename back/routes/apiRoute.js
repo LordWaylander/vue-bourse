@@ -1,6 +1,6 @@
 const apiController = require('../controllers/apiController.js');
 
-module.exports = function (fastify, opt, done) {
+function routesApi(fastify, opt, done) {
     fastify.get('/api/time_series_daily_adjusted/:query', {
         handler: apiController.time_series_daily_adjusted,
     });
@@ -12,3 +12,5 @@ module.exports = function (fastify, opt, done) {
     });
     done();
 }
+
+module.exports = routesApi
